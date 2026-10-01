@@ -1,0 +1,1 @@
+export function GET(){return Response.json({mode:'synthetic',event:'The Last Projection (2026)',metric:'domestic opening-weekend box-office revenue',currency:'USD',value:42500000,warning:'Invented data. Local rehearsal only. Not a real publisher or validator capture.'});}

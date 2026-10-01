@@ -1,0 +1,70 @@
+{
+  "contract": "0x59B95Fea49959A37655821eD6DaB57264350455A",
+  "network": "studionet",
+  "roundId": "barbie-network-demo",
+  "transactions": {
+    "deploy": "0xbb69f6adc698b5d6f0e24a45397760fef0c5c2b9011c48bbc0b3c47eb958a8e1",
+    "specification": "0x0a698fb432e56d06cdb123dd1f9d09a4ccc75d8ac7811d3c458405fca2449412",
+    "specification-callback-0": "0xe4de061d2ac64c2ecc28528c157ca83df1d782130e581e8552d9ed3852bbef67",
+    "adjudication": "0x7f6e672cfc00d1a2cd81ec1c108c7b4d2ed829c269581838f717388a4d44db9c",
+    "adjudication-callback-0": "0xae55d8902c536f2733dbd8e0fbeb59c58ec36601e3b51798636a544f36fdb750"
+  },
+  "record": {
+    "evidence": {
+      "approved_capture_url": "https://www.the-numbers.com/movie/Barbie-(2023)",
+      "capture_timestamp": 1790872306,
+      "content_hash": "2f548154b1be1dd71c1e1495a040d8b139587c413d4256ec63ba4e405b74ab05",
+      "extracted_passage": "Metrics Opening&nbsp;Weekend: $162,022,044 (25.4% of total gross)",
+      "hash_scope": "exact extracted passage, UTF-8",
+      "normalized_value": 162022044,
+      "original_source": "https://www.the-numbers.com/movie/Barbie-(2023)",
+      "provenance": "validator-fetched live publisher page; passage retained in contract state",
+      "publication_timestamp": null,
+      "specification_hash": "bbd44e22a0605b68767c4e549aff76092ac2167177e98cc14a48001ba4fbb466"
+    },
+    "histogram": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "proposal": "Forecast Barbie (2023) domestic opening-weekend box-office revenue for July 21–23, 2023 in United States and Canada, in exact integer USD dollars, reported at https://www.the-numbers.com/movie/Barbie-(2023). Historical practice only. All ranges, deadlines, correction and missing-evidence rules are exactly the attached canonical specification.",
+    "spec": {
+      "correction_policy": "first successful consensus observation; ignore later corrections",
+      "currency": "USD",
+      "entry_deadline": 1790871840,
+      "event": "Barbie (2023), 2023-07-21 to 2023-07-23",
+      "geography": "United States and Canada",
+      "metric": "domestic opening-weekend box-office revenue",
+      "missing_evidence": "pending until deadline then void",
+      "mode": "historical",
+      "observation_time": 1790871845,
+      "ranges": [
+        {
+          "lower": 0,
+          "upper": 100000000
+        },
+        {
+          "lower": 100000000,
+          "upper": 150000000
+        },
+        {
+          "lower": 150000000,
+          "upper": 200000000
+        },
+        {
+          "lower": 200000000,
+          "upper": null
+        }
+      ],
+      "resolution_deadline": 1790875350,
+      "rounding": "exact published integer; no rounding",
+      "scale": 1,
+      "source_url": "https://www.the-numbers.com/movie/Barbie-(2023)",
+      "unit": "dollars"
+    },
+    "specification_hash": "bbd44e22a0605b68767c4e549aff76092ac2167177e98cc14a48001ba4fbb466",
+    "status": "resolved",
+    "winner": 2
+  }
+}

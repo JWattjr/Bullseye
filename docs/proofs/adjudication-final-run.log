@@ -1,0 +1,17 @@
+- Searching for deploy scripts...
+- Transpiling TypeScript file: C:\Users\User\Desktop\Genlayer apps\bullseye\deploy\deployScript.ts
+- Executing file: C:\Users\User\Desktop\Genlayer apps\bullseye\deploy\deployScript.ts
+
+Error:
+× Error executing: C:\Users\User\Desktop\Genlayer apps\bullseye\deploy\deployScript.ts
+Error: Timed out waiting for transaction 0x9cf9e8bd7a9c602b038afc681ac9029700b8b4d8a225a1f253277ef6c21af867 to reach status "FINALIZED" (current status: 3).
+    at Object.waitForTransactionReceipt (file:///C:/Users/User/AppData/Roaming/npm/node_modules/genlayer/dist/index.js:51752:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async finalized (file:///C:/Users/User/Desktop/Genlayer%20apps/bullseye/deploy/deployScript.compiled.js:16:21)
+    at async write (file:///C:/Users/User/Desktop/Genlayer%20apps/bullseye/deploy/deployScript.compiled.js:26:5)
+    at async Module.main (file:///C:/Users/User/Desktop/Genlayer%20apps/bullseye/deploy/deployScript.compiled.js:48:30)
+    at async DeployAction.executeJsScript (file:///C:/Users/User/AppData/Roaming/npm/node_modules/genlayer/dist/index.js:54950:7)
+    at async DeployAction.executeTsScript (file:///C:/Users/User/AppData/Roaming/npm/node_modules/genlayer/dist/index.js:54934:7)
+    at async DeployAction.deployScripts (file:///C:/Users/User/AppData/Roaming/npm/node_modules/genlayer/dist/index.js:54980:11)
+    at async Command.<anonymous> (file:///C:/Users/User/AppData/Roaming/npm/node_modules/genlayer/dist/index.js:55337:7)
+

@@ -1,0 +1,11 @@
+# Submission-description draft
+
+Bullseye is a free film forecasting league. Film fans pick one of four clearly bounded revenue ranges, keep a visible record of their calls, and inspect the published evidence behind every result. Correct finalized competitive predictions earn 100 free league points; points have no monetary value.
+
+GenLayer provides the two interpretive decisions: validators determine whether a creator's natural-language rule matches an unambiguous frozen specification, and later independently identify the number satisfying that exact event and metric on the approved publisher page. Deterministic code enforces authorization, time windows, integer normalization, interval boundaries and 100/0 scoring. Entries and resolved outcomes pass through protected finalization callbacks. Missing evidence stays pending, then voids under a fixed deadline.
+
+The MVP includes an original mobile-first interface, instant historical guest practice with reload persistence, an isolated ten-second synthetic rehearsal, creator previews, wallet participation, finalized-state indexing, an honest leaderboard and expandable evidence records. Its historical Barbie demonstration has an actual finalized specification and adjudication on StudioNet, including successful finalization callbacks and independently verified hashes. The observed result was $162,022,044 in the $150m–under $200m range.
+
+Historical practice, synthetic local evidence and the real protocol proof are clearly separated. The Numbers retrieval/extraction succeeded from validators. Box Office Mojo consensus retrieval was undetermined and is excluded. An exact Archive.org capture was accessibility-tested but not silently substituted for the frozen live publisher rule. A failed adjudication quotation was rejected and preserved as a failed receipt.
+
+Limitations are explicit: StudioNet development simulation, owner-only creators, a single metric/source adapter, browser-local hosted practice and no completed future competitive round. No real-money wagering, Arc settlement or general marketplace is included. No Portal award, additive reward total or eligibility is promised. This text is a draft, not a posted submission.

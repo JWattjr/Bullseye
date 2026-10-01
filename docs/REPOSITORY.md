@@ -1,0 +1,13 @@
+# Repository
+
+Source: [JWattjr/Bullseye](https://github.com/JWattjr/Bullseye).
+
+Description: A free film forecasting league with GenLayer-validated rules, evidence-backed results, historical practice and finalized-state scoring.
+
+Suggested topics: `genlayer`, `intelligent-contracts`, `nextjs`, `forecasting`, `film`, `evidence`.
+
+Publish only this Bullseye directory. Exclude `.env.local`, `.data`, `.vercel`, caches and CLI account material. The supplied `.gitignore` and `.vercelignore` preserve those boundaries. No wallet key is required in the frontend or server environment. Proof transaction hashes and retained excerpts are public evidence.
+
+The README contains setup, actual proof, test commands and limitations. `docs/TUTORIAL.md` and `docs/SUBMISSION.md` are drafts ready for review. No external tutorial or Portal submission has been posted.
+
+Licensing: application and original typographic art MIT; fonts SIL Open Font License; library license notices remain in their packages. Film titles are factual event identifiers; no studio poster, logo or copyrighted still is shipped.

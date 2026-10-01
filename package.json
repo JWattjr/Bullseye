@@ -1,0 +1,6 @@
+{
+  "name": "bullseye", "version": "0.1.0", "private": true, "type": "module",
+  "scripts": {"dev":"next dev --port 3100", "build":"next build", "start":"next start --port 3100", "lint":"eslint .", "typecheck":"tsc --noEmit", "test":"tsx --test tests/*.test.ts", "test:browser":"tsx scripts/browser-check.ts", "test:network":"tsx scripts/verify-network.ts", "deploy:contract":"powershell -ExecutionPolicy Bypass -File scripts/deploy.ps1", "rehearse":"tsx scripts/rehearse.ts"},
+  "dependencies": {"next":"16.3.8", "react":"19.2.0", "react-dom":"19.2.0", "genlayer-js":"1.1.8", "lucide-react":"0.548.0", "@fontsource/bebas-neue":"5.2.7", "@fontsource/dm-sans":"5.2.8", "@noble/hashes":"1.8.0"},
+  "devDependencies": {"typescript":"5.9.3", "@types/node":"24.9.1", "@types/react":"19.2.2", "@types/react-dom":"19.2.2", "tsx":"4.20.6", "eslint":"9.38.0", "eslint-config-next":"16.3.8", "@playwright/test":"1.56.1"}
+}
