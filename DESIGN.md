@@ -231,7 +231,7 @@ Creator inputs and textareas are full width, with Light Paper fill, a Paper Rule
 
 ### Navigation
 
-Desktop navigation uses medium DM Sans, muted text, and an orange underline for the active or hovered route. Mobile navigation wraps below the brand and creator link with a top rule. A keyboard-visible skip link leads directly to the main content.
+Desktop navigation uses medium DM Sans, muted text, and an orange underline for the active or hovered route. The creator link stays in navigation. A visible orange Connect wallet control sits beside the brand on mobile and at the right of the desktop header; its connected state shows the authorized address. Mobile navigation wraps below the brand and wallet control with a top rule. Wallet errors explain MetaMask/plugin requirements or rejected permission without blocking guest practice. A keyboard-visible skip link leads directly to the main content.
 
 ### Range Picker
 

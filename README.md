@@ -65,6 +65,8 @@ The seed is historical and never competitive. The CLI's generated `.compiled.js`
 
 ## Identity and persistence
 
+Use **Connect wallet** in the header on any page. Live participation requires MetaMask and the GenLayer wallet plugin; the SDK requests StudioNet setup and plugin access. The header shows the wallet-authorized address, while guest practice remains available without connection. No transaction is sent merely by connecting. The wallet-control regression covers missing-provider and permission rejection plus a simulated EIP-1193 provider; real browser-wallet signing remains unverified.
+
 Public browsing and guest practice need no wallet. With `NEXT_PUBLIC_PRACTICE_STORAGE=browser` (the hosted preview), practice, drafts, receipts and cached public protocol projections persist in that browser's local storage. Clearing site data removes practice. Practice is user-editable and has no competitive standing.
 
 Without that setting, a single local Node process uses an opaque HttpOnly guest cookie and an atomic, serialized JSON database under `.data/`. Set `BULLSEYE_DATA_DIR` to a durable directory. This file mode is not a multi-process production database and must not be deployed to an ephemeral filesystem.
