@@ -1,8 +1,9 @@
-import {chromium,expect} from '@playwright/test';
+import {chromium,expect as baseExpect} from '@playwright/test';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {existsSync} from 'node:fs';
 import {join} from 'node:path';
 const base=process.env.BULLSEYE_URL??'http://localhost:3100';
+const expect=baseExpect.configure({timeout:Number(process.env.BULLSEYE_EXPECT_TIMEOUT??5000)});
 const captureDirectory=process.env.BULLSEYE_CAPTURE_DIR??'.impeccable/review';
 const verificationPath=process.env.BULLSEYE_VERIFICATION_PATH??'docs/browser-verification.json';
 const cached=join(process.env.LOCALAPPDATA??'','ms-playwright','chromium-1243','chrome-win64','chrome.exe');

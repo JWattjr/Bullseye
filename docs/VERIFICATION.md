@@ -20,4 +20,6 @@ The Numbers and an exact Archive.org capture were fetched by validators. Box Off
 
 The local `/api/live` sync returned one resolved protocol round with the actual value 162022044. Practice remains excluded from competitive standings. No completed future competitive round, browser-wallet signing session, multi-process production database, or full HTML archive is claimed as verified.
 
+After user-approved production publication, the complete desktop/mobile/recovery suite also passed on https://bullseye-genlayer.vercel.app, recorded in [browser-hosted-verification.json](browser-hosted-verification.json). Anonymous API checks returned HTTP 200 and matched the finalized manifest; a fresh-browser check confirmed the corrected synthetic source link. A missing production storage setting found during promotion was fixed before recording these successful checks; see [DEPLOYMENT.md](DEPLOYMENT.md).
+
 Reproduce application checks with `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build`. Contract checks: install the pinned `requirements.txt`, run `genvm-lint check contracts/bullseye.py`, then `python -m pytest tests/direct -q`. Run `npm run test:network` for live read-only receipt/state verification. Start the production app before `npm run test:browser`. `npm run rehearse` runs an isolated, invented ten-second rehearsal without a protocol transaction.
