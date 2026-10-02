@@ -1,4 +1,4 @@
-param([ValidateSet('deploy','spec','adjudicate','resume-adjudicate','proof')][string]$Step='proof')
+param([ValidateSet('deploy','spec','adjudicate','resume-adjudicate','proof','pool-deploy','pool-start','pool-resolve','pool-proof')][string]$Step='proof','pool-deploy','pool-start','pool-resolve','pool-proof')
 $ErrorActionPreference='Stop'
 $bullseyeRoot=Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $bullseyeRoot

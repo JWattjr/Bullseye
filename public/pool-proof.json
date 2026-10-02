@@ -1,0 +1,58 @@
+{
+  "network": "StudioNet",
+  "simulated": true,
+  "transactions": {
+    "deploy": "0xee479d61fb594e5d65f3f61fe7d69bffc98388b3e8f3ef16589d1870353bd7c5",
+    "start": "0xcfad70e83bb62ebe144324180a5ad7eeccb8eb25cd1694372032503eb8816612",
+    "stake": "0x80d759412a1f373c9db64f32d26e82490773c7af782cbef4c132d7c44413c9db",
+    "resolve": "0xe50df018a2eacbfec3c21485e3dc295153c011b3616c5347b5111f1c9db233cd",
+    "resolve-child-0": "0xda201c42eadcd09c016cc29a16e778c160ff41b6efdd64f169223057bf855e95",
+    "claim": "0xd3248469a76a3caabc064266d3a8938a85b6550b951b2566a912d0f4e5e797fa",
+    "claim-child-0": "0xfecff80e35d8a1e4e799ba2c1d3383d2c470bc5189c1bc1e8bd20aa38ea8cee3"
+  },
+  "contract": "0x8Dd889b59dE382749412B26FC5fDb2DE5cA08673",
+  "record": {
+    "claims": {
+      "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": "2000000000000000000"
+    },
+    "entries": {
+      "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+        "range": 1,
+        "stake": "2000000000000000000"
+      }
+    },
+    "entry_deadline": 1790946018,
+    "fixture": "SYNTHETIC domestic opening weekend USD $42,500,000; winning range 1 is known before entry. This tests wallets and accounting, not prediction skill.",
+    "id": "pool-1",
+    "maximum": "100000000000000000000",
+    "minimum": "2000000000000000000",
+    "mode": "synthetic",
+    "network": "StudioNet",
+    "observation_time": 1790946021,
+    "participants": [
+      "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+    ],
+    "pools": [
+      "0",
+      "2000000000000000000",
+      "0"
+    ],
+    "resolution_deadline": 1790946498,
+    "status": "resolved",
+    "title": "The Last Projection",
+    "total": "2000000000000000000",
+    "value": 42500000,
+    "winner": 1
+  },
+  "roundId": "pool-1",
+  "payoutVerified": true,
+  "transferVerification": "Finalized native EOA value_credited=true and wallet balance increased by 2 GEN; Studio labels this transfer NO_MAJORITY because it has no contract consensus execution.",
+  "balanceVerification": {
+    "account": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+    "beforeClaimWei": "2999999999999999997",
+    "afterClaimWei": "4999999999999999997",
+    "differenceWei": "2000000000000000000",
+    "method": "eth_getBalance latest via https://studio.genlayer.com/api",
+    "simulated": true
+  }
+}

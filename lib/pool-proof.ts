@@ -1,0 +1,3 @@
+// Studio's native EOA transfers have no consensus execution receipt. Verify
+// explicit value credit separately; never reinterpret NO_MAJORITY as execution success.
+export function creditedTransfer(receipt:Record<string,unknown>,from:string,to?:string,amount?:string){return String(receipt.statusName??receipt.status_name)==='FINALIZED'&&receipt.value_credited===true&&receipt.consensus_data===null&&String(receipt.from_address??receipt.sender).toLowerCase()===from.toLowerCase()&&(!to||String(receipt.to_address??receipt.recipient).toLowerCase()===to.toLowerCase())&&(!amount||String(receipt.value)===amount);}

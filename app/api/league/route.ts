@@ -2,14 +2,14 @@ import {cookies} from 'next/headers';
 import {NextResponse} from 'next/server';
 import {guestToken,transaction,refreshRehearsal,startRehearsal,submitPractice} from '@/lib/store';
 import {score} from '@/lib/domain';
-import {historicalRound} from '@/lib/seed';
+import {historicalRounds} from '@/lib/seed';
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
 async function identity(){const jar=await cookies();const existing=jar.get('bullseye_guest')?.value;const token=existing&&/^[a-f0-9]{64}$/.test(existing)?existing:guestToken();return {token,fresh:token!==existing};}
 function response(body:unknown,token:string,fresh:boolean,status=200){const res=NextResponse.json(body,{status,headers:{'Cache-Control':'no-store'}});if(fresh)res.cookies.set('bullseye_guest',token,{httpOnly:true,sameSite:'strict',secure:process.env.NODE_ENV==='production',maxAge:365*86400,path:'/'});return res;}
 export async function GET(){
   const {token,fresh}=await identity();
-  if(process.env.NEXT_PUBLIC_PRACTICE_STORAGE==='browser')return response({rounds:[historicalRound()],predictions:[],receipts:[],profile:{name:'Guest forecaster'},leaderboard:[],draft:'',serverTime:Math.floor(Date.now()/1000)},token,fresh);
+  if(process.env.NEXT_PUBLIC_PRACTICE_STORAGE==='browser')return response({rounds:historicalRounds(),predictions:[],receipts:[],profile:{name:'Guest forecaster'},leaderboard:[],draft:'',serverTime:Math.floor(Date.now()/1000)},token,fresh);
   const data=await transaction(db=>{
     db.profiles[token]??={name:'Guest forecaster'};
     db.rounds.forEach(r=>refreshRehearsal(r,Math.floor(Date.now()/1000)));

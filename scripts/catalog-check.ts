@@ -1,0 +1,16 @@
+import {chromium,expect} from '@playwright/test';
+import {writeFile} from 'node:fs/promises';
+import {historicalRound} from '../lib/seed';
+import {submitPractice,type Database} from '../lib/practice';
+const base=process.env.BULLSEYE_URL??'http://localhost:3104';
+const browser=await chromium.launch({headless:true,executablePath:'C:/Users/User/AppData/Local/ms-playwright/chromium-1243/chrome-win64/chrome.exe'});
+const checks:string[]=[];
+try{for(const width of [320,1440]){const context=await browser.newContext({viewport:{width,height:900}}),page=await context.newPage();
+  const db:Database={rounds:[historicalRound()],predictions:[],profiles:{'browser-guest':{name:'Guest forecaster'}},drafts:{}};submitPractice(db,'browser-guest','barbie-practice',3,0);
+  await page.addInitScript('if(!localStorage.getItem("bullseye.practice.v1"))localStorage.setItem("bullseye.practice.v1",'+JSON.stringify(JSON.stringify(db))+');');
+  await page.goto(base);await expect(page.getByRole('heading',{name:'Oppenheimer',exact:true})).toBeVisible();await expect(page.getByRole('heading',{name:'Dune: Part Two',exact:true})).toBeVisible();
+  await page.goto(base+'/rounds/barbie-practice/result');await expect(page.getByText('Your call is on the record.',{exact:true})).toBeVisible();await expect(page.getByText('0',{exact:true}).first()).toBeVisible();
+  for(const [id,title,date] of [['oppenheimer-practice','Oppenheimer','2023-07-21 to 2023-07-23'],['dune-two-practice','Dune: Part Two','2024-03-01 to 2024-03-03']]){await page.goto(base+'/rounds/'+id);await expect(page.getByRole('heading',{level:1}).filter({hasText:title})).toBeVisible();await expect(page.getByText(date,{exact:false}).first()).toBeVisible();await page.locator('input[type=radio]').nth(2).check();const submit=page.getByRole('button',{name:/Confirm|Put my call|Make my call|Lock in|Record|Submit/}).first();await expect(submit).toBeVisible();await submit.click();await expect(page.getByText('100',{exact:true}).first()).toBeVisible();await page.reload();await expect(page.getByText('100',{exact:true}).first()).toBeVisible();}
+  await page.goto(base+'/pools');await expect(page.getByRole('heading',{level:1}).filter({hasText:'MAKE A POOL.'})).toBeVisible();await expect(page.getByText('Simulated GEN. Known synthetic result.',{exact:true})).toBeVisible();await expect(page.getByRole('button',{name:'Refresh pools'})).toBeVisible();if(process.env.BULLSEYE_VERIFY_POOLS==='yes'){await expect(page.getByRole('button',{name:'Start a two-minute pool'})).toBeEnabled({timeout:30000});await expect(page.getByRole('heading',{name:'The Last Projection / pool-1'})).toBeVisible();}
+  await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await context.close();checks.push(width+': old Barbie loss preserved, three-film catalog, independent practice scores saved across reload, dates, pool disclosure and no overflow');}
+await writeFile('docs/catalog-ui-verification.json',JSON.stringify({base,verifiedAt:new Date().toISOString(),checks},null,2));console.log(checks.join('\n'));}finally{await browser.close();}
