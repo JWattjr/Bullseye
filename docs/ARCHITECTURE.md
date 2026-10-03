@@ -17,3 +17,7 @@ Live indexing and leaderboard reads require finalized state. Contract finalizati
 Persistence modes: local single-process serialized file database with HttpOnly guest cookie, or hosted browser storage for practice/drafts/receipt projections. Browser practice and wall-clock timers are not trusted competitively. Wallet identity and protocol state are public; selecting a watch address is not authentication to a private account. No operator signing key or custodial relay exists in Next.js.
 
 Limits: latest 20 rounds indexed per refresh, 200 players per round, only The Numbers film URLs, one MVP metric, owner-only creators, no production-network claim. A future multi-process service should replace file storage with a durable database and indexer; browser practice can remain local.
+
+## Historical film GEN sessions
+
+`MovieStakes` on the existing film pages reads `/api/film-pools`. Source-round IDs and the new pool contract come from `film-pool-proof.json`. Source and pool state are read at `LATEST_FINAL`. The permissionless payable first entry opens a shared two-minute historical pool; the winner is read from the immutable, previously resolved Bullseye v2 source, never from the practice seed. Settlement is gated by its own finalized self-callback. Later sessions preserve earlier claims. Free points, including closeness bonuses, remain independent of GEN stakes. Older synthetic and round-pool deployments remain available for outstanding claims.

@@ -92,4 +92,5 @@ Film evidence is not just a number: a page contains domestic, worldwide, cumulat
 
 Read [architecture](docs/ARCHITECTURE.md), [tutorial draft](docs/TUTORIAL.md), [submission draft](docs/SUBMISSION.md), and [verification records](docs/VERIFICATION.md).
 
-The catalog now includes Barbie, Oppenheimer and Dune: Part Two. Existing practice predictions survive the catalog expansion. **GEN pools** adds a separate StudioNet rehearsal with native simulated GEN deposits and proportional claims, starting at 2 GEN. One signed deposit and payout have been verified; the synthetic result is disclosed before entry. Historical films remain free practice. See [pool scope, proof and instructions](docs/POOLS.md).
+
+GEN stakes now live directly on the Barbie, Oppenheimer and Dune: Part Two market pages, above free points practice. Minimum 2 GEN on StudioNet. Historical pool sessions use the actual finalized Bullseye validator result and preserve old claims when a new session starts. Closeness scoring remains available for free points predictions. See [staking and proof instructions](docs/POOLS.md).

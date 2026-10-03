@@ -8,3 +8,8 @@
 @media(max-width:650px){.pool-options{grid-template-columns:1fr}.pool-options button{min-height:88px}.pool-card .section-heading{align-items:start;gap:8px;flex-direction:column}.header nav{justify-content:flex-start;gap:12px}}
 
 .pool-options button:disabled{opacity:1;color:var(--ink);cursor:default}.pool-options button[data-winning=true]{background:var(--lime);border-color:var(--ink)}
+
+.movie-stakes{border-top:2px solid var(--orange);border-bottom:1px solid var(--line);padding:24px 0;margin:24px 0 32px}.movie-stakes .section-heading{gap:12px;flex-wrap:wrap}.movie-stakes h2{font-size:22px}.movie-stakes>p{margin:12px 0}.movie-stakes code,.film-pool-history h3{overflow-wrap:anywhere}.movie-options{grid-template-columns:repeat(2,minmax(0,1fr))}.movie-stakes .notice{margin:20px 0}.movie-stakes .notice p{margin:12px 0}.film-pool-history{padding:20px 0;border-top:1px solid var(--line)}.film-pool-history p{margin:10px 0}.free-practice-heading{margin:24px 0;font-size:18px}.movie-market-directory{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:32px 0}.movie-market-directory article{padding:24px 0;border-top:2px solid var(--orange)}.movie-market-directory h2{font-size:30px}.movie-market-directory p{margin:16px 0}.movie-market-directory .button{white-space:normal}.movie-stakes .disclosure p{margin:16px 0}
+@media(max-width:650px){.movie-options{grid-template-columns:1fr}.movie-market-directory{grid-template-columns:1fr}.movie-stakes .pool-entry .button{width:100%}.movie-stakes .tag{font-size:10px}}
+
+.movie-stakes>.text-action{border:0;background:transparent;color:var(--orange);padding:8px 0;min-height:44px;text-decoration:underline;text-underline-offset:4px}

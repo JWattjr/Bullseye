@@ -1,33 +1,35 @@
-# StudioNet GEN pools
+# GEN staking on the movie markets
 
-This release adds three historical practice films (Barbie, Oppenheimer and Dune: Part Two) and a separate StudioNet native GEN pool rehearsal at `/pools`. It does not offer cash wagers or funded historical film predictions. StudioNet balances and transfers are simulated development funds.
+Barbie, Oppenheimer and Dune: Part Two accept native StudioNet GEN on their existing `/rounds/...-practice` pages. Staking appears above free points practice. A saved points prediction does not block a GEN entry. `/pools` links to these three markets; `/pools/rehearsal` retains access to earlier synthetic-pool claims.
 
-The deterministic pool tests escrow and proportional payouts. The existing Bullseye film contract continues to own evidence adjudication; this rehearsal does not claim an AI-generated result. Its synthetic fixture is openly known before staking: The Last Projection opens at $42,500,000, the middle range wins.
+StudioNet GEN is simulated development currency. These are historical films whose published results are already known and shown before staking. They are funded historical practice, excluded from competitive rankings. This release does not advertise them as future film wagers.
 
-Each wallet gets one immutable entry, 2–100 simulated GEN. Entries close 120 seconds after creation, resolution opens after 123 seconds, and an unresolved pool can be voided after 600 seconds. Successful finalized self-callbacks enable claims. Winners divide the entire pot proportionally, with cumulative integer allocation conserving wei dust. Voided pools and empty winning pools refund all entrants. No administrator withdraws funds; wallets sign directly. Root transactions and emitted transfer transactions have separate receipts.
+## Contract and settlement
 
-## Verification
+The new `contracts/film_pools.py` contract builds on Claude's `BullseyeRoundPools` implementation and keeps its essential boundary: the winning range comes from the Bullseye validator contract, rather than from frontend constants or administrator input. Bullseye v2 remains `0x756ddF8D588DA4D598F9F90947DB92Bced10D68E`. The historical-session pool contract is `0x6Ff023F19cE3e661A9F5Cf3e7782fec17f067Ed2`, StudioNet chain ID 61999, with the pinned runner in its first source line.
 
-Contract: `0x8Dd889b59dE382749412B26FC5fDb2DE5cA08673` on StudioNet, chain ID 61999. Deployment rejects other networks. Runner is pinned in the source. `docs/proofs/pools/manifest.json` and `/pool-proof.json` retain deployment, start, 2 GEN stake, resolution callback, claim and transfer hashes.
+Each source round must already have a resolved validator result. The first signed 2�100 GEN stake starts a shared two-minute pool for that film in the same payable transaction. Subsequent wallets join it until entries close. One immutable entry is allowed per wallet per pool. After closing, anyone can settle; the contract re-reads the source result and checks its frozen specification hash. Claims open only after a successful finalized self-callback. Winners divide the whole pot proportionally, with cumulative integer allocation conserving all wei. An empty winning range refunds everyone. No pool fee is deducted. New sessions preserve all earlier entries and claims.
 
-The configured development account completed one winning 2 GEN deposit and payout. Its balance changed from 2,999,999,999,999,999,997 wei before claiming to 4,999,999,999,999,999,997 wei afterward. The native transfer receipt is finalized and explicitly has `value_credited=true`. Studio returns `NO_MAJORITY` and no consensus data on this EOA transfer; that label is not reinterpreted as successful contract execution. The UI checks native value credit separately from successful finalized contract execution.
+The API reads source rounds and pools with `LATEST_FINAL`; browser caches and free practice scores do not authorize payouts. Wallets sign directly. There is no operator withdrawal or backend-held signing key. Claim requests and their emitted native transfers are checked separately. A transfer is reported credited only when its receipt is finalized and explicitly has `value_credited=true`; Studio's EOA `NO_MAJORITY` result label is not treated as successful consensus execution.
 
-Direct tests cover stake bounds, duplicates, closing deadlines, unauthorized callbacks, pending claims, whole-pot allocation and refund arithmetic. Frontend tests cover precision, bounds, finality and strict native credit validation. Desktop and 320px browser tests verify the film catalog and saved independent practice scores. Browser wallet tests use a simulated provider; the user's MetaMask signature flow has not been automated or independently verified.
+## Evidence and verification
 
-The network proof has one entrant. Multi-entrant allocation and void/empty-winner refunds are directly tested, not yet demonstrated with multiple signed accounts on StudioNet. Failed emitted transfers do not have a retry mechanism; a claim record means transfer requested. The UI exposes follow-up receipt state rather than treating requested claims as delivered funds. This contract is a development rehearsal, not production escrow.
+`public/film-pool-proof.json` and `docs/proofs/films/manifest.json` map the three local market IDs to their actual source-round IDs. They retain source specifications, adjudications, finalized callbacks and pool transactions. Barbie uses the existing finalized `barbie-network-demo`; Oppenheimer and Dune have newly proposed and adjudicated source rounds in the same v2 Bullseye deployment. Dune's first extraction returned insufficient evidence and stayed pending. Its retry resolved under the unchanged source and rules; the first attempt is retained.
 
-## Pools that settle on a real Bullseye round
+Direct tests cover each film's pool, shared stakes, proportional whole-pot allocation, closed entries, repeat sessions, preservation of old claims, rejected unfinalized source results, changed specification hashes and empty-winner refunds. Browser checks at 320 and 1440 pixels cover all three same-page staking forms, default 2 GEN, invalid minimum and missing-provider recovery, and staking after a saved Barbie points prediction. The full practice regression preserves Claude's optional closeness bonus and existing 100/0 outcomes when no exact guess is supplied.
 
-`contracts/movie_pools.py` (`BullseyeRoundPools`) replaces hardcoded outcomes. A pool is tied to one Bullseye round: stakes close at that round's entry deadline, and `settle` reads the round from the Bullseye contract. It settles only once the round is `resolved` or `void`, which Bullseye reaches solely through its finality callbacks. It refuses to settle if the round's specification hash changed.
+A 2 GEN stake and credited 2 GEN payout completed for each of the three movies, with successful finalized settlement callbacks. The configured development account finished with its original balance; the pool contract held zero after these proof claims. The signing proof uses the configured development account. Browser tests with mocked RPC state do not establish real MetaMask signing. Production checks read actual finalized RPC state. Failed native transfers have no automatic retry mechanism; the claim record represents a transfer request, and the credited follow-up receipt plus wallet balance establishes delivery. Multi-wallet proportional allocation is directly tested; the live proof uses one entrant per movie.
 
-StudioNet proof: pool `0x54fdb94340Ce8B9cE37EBb3d6C3179130c95c1b9` on Bullseye `0x756ddF8D588DA4D598F9F90947DB92Bced10D68E`, round `barbie-network-demo`. One 2 GEN stake on the $150m–under $200m range, settled on the validator-read $162,022,044 and claimed back (single entrant). Receipts are in `docs/proofs/round-pool/`. Run it again with `deploy.ps1 spec` (set `BULLSEYE_ENTRY_SECONDS=900`), `round-pool-deploy`, `round-pool-stake`, `adjudicate`, then `round-pool-settle`.
+## Trying a movie pool
 
-## Running another proof
+1. Open Barbie, Oppenheimer or Dune from GEN pools or the programme.
+2. Choose a GEN range, leave the amount at 2 or enter up to 100 GEN, and sign **Stake GEN on [movie]**.
+3. Use **Check GEN receipt & pools** to confirm successful finalization. This also refreshes your entry and pot.
+4. When the two-minute entry window closes, sign **Settle [movie] pool**, then refresh until its callback finalizes.
+5. If a payout or refund is due, sign **Claim ... GEN** and check its separate credited transfer and your wallet balance.
 
-Use the configured unlocked development CLI account without exporting its key. `scripts/deploy.ps1` accepts `pool-deploy`, `pool-start`, `pool-resolve` and `pool-proof`. `pool-start` creates a new demo and signs a 2 GEN winning entry. Run `pool-resolve` after its observation time and before its resolution deadline. Read balances before and after the claim independently; `pool-proof` checks the saved native transfer and refreshes finalized state. Proof writes replace the current rehearsal manifest; retain prior receipts before running another deployment.
+Free points practice stays below the staking form and keeps its own saved prediction and optional exact-number bonus. Those points are not GEN balances.
 
-## Trying the interface
+## Reproducing the development proof
 
-Connect MetaMask to StudioNet with the GenLayer wallet plugin, open GEN pools, and start a pool. Refresh its receipt until finalized and the new pool appears. Choose a range, leave the amount at 2 GEN, and sign the stake. After entries close, finalize the synthetic result and refresh until its callback resolves the pool. A winning entry can then claim; refresh the receipt to inspect the emitted transfer's credit and check your wallet balance.
-
-Upcoming funded film rounds still require a future event catalog, audited production escrow, and verified final film adjudication linked to payouts. Neither the historical seeds nor this deterministic wallet rehearsal substitute for that work.
+Use the already configured unlocked StudioNet CLI account without reading or exporting its key. `scripts/deploy.ps1` accepts `film-deploy`, `film-spec`, `film-adjudicate`, `film-stake` and `film-claim`; set `BULLSEYE_FILM` to the local movie ID. `film-claim` waits for the entry window, verifies settlement and its callback, then requires a finalized credited 2 GEN transfer to the account that made the proof stake. It is a single-entrant proof helper, not a general payout estimator. Earlier synthetic and Claude round-pool proof files remain intact.

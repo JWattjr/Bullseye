@@ -11,9 +11,44 @@ function successfulFinalized(receipt:unknown){
   const leader=r.consensus_data?.leader_receipt?.[0];
   return (r.statusName??r.status_name)==='FINALIZED'&&['SUCCESS','FINISHED_WITH_RETURN'].includes(r.txExecutionResultName??leader?.execution_result??'')&&leader?.result?.status!=='rollback';
 }
+
+async function filmRun(client:GenLayerClient<typeof studionet>){
+  const folder='docs/proofs/films';mkdirSync(folder,{recursive:true});
+  const path=folder+'/manifest.json';
+  const proof=existsSync(path)?JSON.parse(readFileSync(path,'utf8')):{network:'StudioNet',simulated:true,bullseye:JSON.parse(readFileSync(file,'utf8')).contract,sourceRounds:{'barbie-practice':'barbie-network-demo','oppenheimer-practice':'oppenheimer-film-source','dune-two-practice':'dune-film-source'},transactions:{},sources:{},pools:{}};
+  const save=()=>{writeFileSync(path,JSON.stringify(proof,null,2));writeFileSync('public/film-pool-proof.json',JSON.stringify(proof,null,2));};
+  async function final(hash:TransactionHash,name:string){const receipt=await client.waitForTransactionReceipt({hash,status:TransactionStatus.FINALIZED,retries:36,interval:5000});writeFileSync(folder+'/'+name+'.json',JSON.stringify(receipt,(_,v)=>typeof v==='bigint'?v.toString():v,2));if(name.includes('claim-child')&&creditedTransfer(receipt as unknown as Record<string,unknown>,proof.contract)){console.log(name,'native credit finalized');return receipt;}if(!successfulFinalized(receipt))throw Error('Finalized execution failed: '+name);console.log(name,'successful and finalized');return receipt;}
+  async function write(address:`0x${string}`,name:string,method:string,args:Parameters<typeof client.writeContract>[0]['args'],value=0n){const hash=await client.writeContract({address,functionName:method,args,value});proof.transactions[name]=hash;save();await final(hash as TransactionHash,name);const children=await client.getTriggeredTransactionIds({hash});for(let i=0;i<children.length;i++){proof.transactions[name+'-child-'+i]=children[i];save();await final(children[i] as TransactionHash,name+'-child-'+i);}}
+  const step=process.env.BULLSEYE_STEP;
+  const movie=process.env.BULLSEYE_FILM??'barbie-practice';const sourceId=proof.sourceRounds[movie];if(!sourceId)throw Error('Unknown movie');
+  if(step==='film-deploy'){const hash=await client.deployContract({code:readFileSync('contracts/film_pools.py','utf8'),args:[proof.bullseye]});proof.transactions.deploy=hash;save();proof.contract=(await final(hash as TransactionHash,'deploy')).recipient;save();}
+  if(step==='film-spec'){
+    const dune=movie==='dune-two-practice';const title=dune?'Dune: Part Two (2024)':'Oppenheimer (2023)';const weekend=dune?'2024-03-01 to 2024-03-03':'2023-07-21 to 2023-07-23';const url=dune?'https://www.the-numbers.com/movie/Dune-Part-Two-(2024)':'https://www.the-numbers.com/movie/Oppenheimer-(2023)';const time=Math.floor(Date.now()/1000);
+    const spec={event:title+', '+weekend,metric:'domestic opening-weekend box-office revenue',source_url:url,geography:'United States and Canada',currency:'USD',unit:'dollars',scale:1,rounding:'exact published integer; no rounding',ranges:[{lower:0,upper:50000000},{lower:50000000,upper:75000000},{lower:75000000,upper:100000000},{lower:100000000,upper:null}],entry_deadline:time+30,observation_time:time+35,resolution_deadline:time+7200,correction_policy:'first successful consensus observation; ignore later corrections',missing_evidence:'pending until deadline then void',mode:'historical'};
+    await write(proof.bullseye,movie+'-spec','propose',[sourceId,'Validate historical '+title+' domestic opening-weekend box office for '+weekend+' in United States and Canada, in exact integer USD dollars, published by '+url+'. For Dune use the March 1 wide release weekend, not an early screening. All attached canonical source, metric, ranges, deadlines and policies apply.',JSON.stringify(spec)]);
+  }
+  if(step==='film-adjudicate')await write(proof.bullseye,movie+'-adjudicate','adjudicate',[sourceId]);
+  if(step==='film-stake'){
+    await write(proof.contract,movie+'-stake','stake',[sourceId,2],2n*10n**18n);
+    const ids=await client.readContract({address:proof.contract,functionName:'get_source_pool_ids',args:[sourceId],transactionHashVariant:TransactionHashVariant.LATEST_FINAL}) as string[];proof.pools[movie]=ids.at(-1);save();
+  }
+  if(step==='film-claim'){
+    const id=proof.pools[movie];const record=JSON.parse(String(await client.readContract({address:proof.contract,functionName:'get_pool',args:[id],transactionHashVariant:TransactionHashVariant.LATEST_FINAL})));
+    const remaining=record.entry_deadline-Math.floor(Date.now()/1000)+2;if(remaining>0){console.log('Waiting for entry close:',remaining,'seconds');await new Promise(resolve=>setTimeout(resolve,remaining*1000));}
+    await write(proof.contract,movie+'-settle','settle',[id]);await write(proof.contract,movie+'-claim','claim',[id]);
+    const transfer=JSON.parse(readFileSync(folder+'/'+movie+'-claim-child-0.json','utf8')),deposit=JSON.parse(readFileSync(folder+'/'+movie+'-stake.json','utf8'));
+    if(!creditedTransfer(transfer,proof.contract,deposit.from_address,'2000000000000000000'))throw Error('Movie payout has no verified native value credit');
+    proof.payoutVerified=true;proof.payouts??={};proof.payouts[movie]={pool:id,recipient:deposit.from_address,creditedWei:'2000000000000000000'};save();
+  }
+  for(const [key,id] of Object.entries(proof.sourceRounds)){
+    try{proof.sources[key]=JSON.parse(String(await client.readContract({address:proof.bullseye,functionName:'get_round',args:[id as string],transactionHashVariant:TransactionHashVariant.LATEST_FINAL})));}catch{/* Source not created yet. */}
+  }
+  save();
+}
 type Manifest={contract:`0x${string}`;network:string;roundId:string;transactions:Record<string,`0x${string}`>;record?:unknown};
 const file='docs/proofs/manifest.json';
 export default async function main(client:GenLayerClient<typeof studionet>){
+  if(process.env.BULLSEYE_STEP?.startsWith('film-')){await filmRun(client);return;}
   if(process.env.BULLSEYE_STEP?.startsWith('pool-')){await poolRun(client);return;}
   if(process.env.BULLSEYE_STEP?.startsWith('round-pool-')){await roundPoolRun(client);return;}
   mkdirSync('docs/proofs',{recursive:true});mkdirSync('public',{recursive:true});
