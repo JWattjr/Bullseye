@@ -1,45 +1,48 @@
 {
-  "contract": "0x72bAb093224a81823f2Cc83A6d374B5C72df2A09",
+  "contract": "0x756ddF8D588DA4D598F9F90947DB92Bced10D68E",
   "network": "studionet",
   "roundId": "barbie-network-demo",
   "transactions": {
-    "deploy": "0x3819c5b0b5cb91d8514d511c16a19f838d90ad1e9bea8fe5d8be41fd9fc3d29d",
-    "specification": "0x3e37eda6e035b119fff3487a496edb5172f26929ef1870862125a743ad7950fc",
-    "specification-callback-0": "0x0498658c96e6213be18cf6c9cfc06a7cf71c9b23bf96dc9c0d169336b04c9a68",
-    "adjudication": "0xd709d0b950f017d0394be3b8402bc03b69dfc261787f22b753d3eb18aa3d5f1f",
-    "adjudication-callback-0": "0x41446f889e68835683c0e8c928edce0b18bcdda2431f702f98d1df461bac2133"
+    "deploy": "0x0a81ee8624884a8072d063268c20e4ce1bc6b403eccb18eb66fd8d3d95aea648",
+    "specification": "0x85c2400a7fbf251866a5d0e56554e02a576849a923ca4d6cce182f4de8c0ee5d",
+    "specification-callback-0": "0x354f469cd60f7f5975ded3075336d7577c08158abd38cf03575a46d978fa815d",
+    "prediction": "0xa44a0a1265250ec4078bb89c9e3477fbfffb15a1decf096c206bc170cefcd601",
+    "adjudication": "0x33827e917db45f627de3ed37a8690b0b1d7569fb089c3903edf4a03e420be24b",
+    "adjudication-callback-0": "0xebbc72a099b3a33012b04458b15122dcbccf91b1c235c5b8e461d7acf5228f44"
   },
   "record": {
     "evidence": {
       "approved_capture_url": "https://www.the-numbers.com/movie/Barbie-(2023)",
-      "capture_timestamp": 1790873609,
-      "content_hash": "b25ba1a71bd553414eb809066765e77f3777ea1a693e7525ffd25d742d1be280",
-      "extracted_passage": "Opening&nbsp;Weekend: $162,022,044 (25.4% of total gross)",
+      "capture_timestamp": 1790986917,
+      "content_hash": "d5ac6c16bbbfaa0737e3915599e43f231d01d7f097bd8759e588a5992c89f85f",
+      "extracted_passage": "Metrics Opening Weekend: $162,022,044 (25.4% of total gross) Legs: 3.93 (domestic box office/biggest weekend) Domestic Share: 44.0% (domestic box office/worldwide)",
       "hash_scope": "exact extracted passage, UTF-8",
       "normalized_value": 162022044,
       "original_source": "https://www.the-numbers.com/movie/Barbie-(2023)",
-      "provenance": "validator-fetched live publisher page; passage retained in contract state",
+      "provenance": "validator-fetched live publisher page; every validator confirmed the passage is on the page it read",
       "publication_timestamp": null,
-      "specification_hash": "39d2442cf3c2cb38bcea13a8c3d70852803beb0400dbfd1a99d4f05696a31d92"
+      "specification_hash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96"
     },
     "histogram": [
       0,
       0,
-      0,
+      1,
       0
     ],
-    "participants": [],
+    "participants": [
+      "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+    ],
     "proposal": "Forecast Barbie (2023) domestic opening-weekend box-office revenue for July 21–23, 2023 in United States and Canada, in exact integer USD dollars, reported at https://www.the-numbers.com/movie/Barbie-(2023). Historical practice only. All ranges, deadlines, correction and missing-evidence rules are exactly the attached canonical specification.",
     "spec": {
       "correction_policy": "first successful consensus observation; ignore later corrections",
       "currency": "USD",
-      "entry_deadline": 1790873079,
+      "entry_deadline": 1790986872,
       "event": "Barbie (2023), 2023-07-21 to 2023-07-23",
       "geography": "United States and Canada",
       "metric": "domestic opening-weekend box-office revenue",
       "missing_evidence": "pending until deadline then void",
       "mode": "historical",
-      "observation_time": 1790873084,
+      "observation_time": 1790986877,
       "ranges": [
         {
           "lower": 0,
@@ -58,13 +61,13 @@
           "upper": null
         }
       ],
-      "resolution_deadline": 1790876589,
+      "resolution_deadline": 1790989572,
       "rounding": "exact published integer; no rounding",
       "scale": 1,
       "source_url": "https://www.the-numbers.com/movie/Barbie-(2023)",
       "unit": "dollars"
     },
-    "specification_hash": "39d2442cf3c2cb38bcea13a8c3d70852803beb0400dbfd1a99d4f05696a31d92",
+    "specification_hash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96",
     "status": "resolved",
     "winner": 2
   }

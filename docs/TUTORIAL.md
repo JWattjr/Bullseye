@@ -1,6 +1,6 @@
 # Tutorial draft: forecasting a film weekend with Bullseye
 
-Bullseye asks one question: where will a film's published domestic opening-weekend revenue land? Participants select a fixed range rather than betting money. Correct calls earn 100 free league points. The result includes the number, source passage and technical proof.
+Bullseye asks one question: where will a film's published domestic opening-weekend revenue land? Participants select a fixed range rather than betting money. Correct calls earn 100 free league points, and an optional exact number earns up to 100 more for closeness. The result includes the number, source passage and technical proof.
 
 Clone the prepared repository, install the pinned npm dependencies, copy `.env.example` to `.env.local`, and run `npm run dev`. The feed is readable without a wallet. Start with Barbie's historical practice round, choose a range, and confirm. Picking $150m–under $200m matches its published $162,022,044. That awards 100 practice points and leaves the competitive leaderboard untouched. Reload: your receipt and prediction remain saved.
 

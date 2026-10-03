@@ -10,14 +10,15 @@ export function refreshRehearsal(round:Round,time:number) {
     round.winner=winningRange(round.spec.ranges,42_500_000);round.status='resolved';
   }else if(time>=round.spec.entry_deadline)round.status='closed';
 }
-export function submitPractice(db:Database,participant:string,roundId:string,range:number,time:number):Prediction {
+export function submitPractice(db:Database,participant:string,roundId:string,range:number,time:number,guess=0):Prediction {
   const round=db.rounds.find(r=>r.id===roundId);if(!round)throw new Error('Round not found.');
   if(round.spec.mode==='competitive'||round.protocol)throw new Error('Use a wallet for protocol participation.');
   if(!Number.isInteger(range)||range<0||range>=round.spec.ranges.length)throw new Error('Choose one of the listed ranges.');
+  if(guess&&(!Number.isSafeInteger(guess)||guess<0||winningRange(round.spec.ranges,guess)!==range))throw new Error('Your exact number must sit inside the range you picked.');
   if(round.spec.mode==='synthetic'&&(time>=round.spec.entry_deadline||round.status!=='open'))throw new Error('This rehearsal has closed. Start a new rehearsal.');
   const prior=db.predictions.find(p=>p.participant===participant&&p.roundId===roundId);
   if(prior){if(prior.range===range)return prior;throw new Error('This prediction is already confirmed.');}
-  const prediction:Prediction={id:crypto.randomUUID(),participant,roundId,range,submittedAt:time,kind:'practice',state:'practice_confirmed'};
+  const prediction:Prediction={id:crypto.randomUUID(),participant,roundId,range,submittedAt:time,kind:'practice',state:'practice_confirmed',...(guess?{guess}:{})};
   db.predictions.push(prediction);round.histogram[range]+=1;
   return prediction;
 }

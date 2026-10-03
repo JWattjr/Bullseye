@@ -28,7 +28,7 @@ export async function POST(request:Request){
     const body=JSON.parse(text) as Record<string,unknown>;
     const result=await transaction(db=>{
       db.profiles[token]??={name:'Guest forecaster'};const time=Math.floor(Date.now()/1000);
-      if(body.action==='predict')return submitPractice(db,token,String(body.roundId),Number(body.range),time);
+      if(body.action==='predict')return submitPractice(db,token,String(body.roundId),Number(body.range),time,Number(body.guess??0));
       if(body.action==='rehearse')return startRehearsal(db,token,time);
       if(body.action==='draft'){if(typeof body.draft!=='string'||body.draft.length>8000)throw new Error('Draft too large.');db.drafts[token]=body.draft;return {saved:true};}
       throw new Error('Unknown action.');

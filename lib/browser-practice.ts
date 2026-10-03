@@ -16,7 +16,7 @@ export function browserLeague(){
   return {rounds:db.rounds,predictions,receipts:Object.values(db.receipts??{}),profile:db.profiles[guest],leaderboard:[...standings.values()].sort((a,b)=>b.points-a.points),draft:db.drafts[guest]??'',serverTime:time};
 }
 export function browserPost(body:Record<string,unknown>){const db=read();const time=Math.floor(Date.now()/1000);let result:unknown;
-  if(body.action==='predict')result=submitPractice(db,guest,String(body.roundId),Number(body.range),time);
+  if(body.action==='predict')result=submitPractice(db,guest,String(body.roundId),Number(body.range),time,Number(body.guess??0));
   else if(body.action==='rehearse')result=startRehearsal(db,guest,time);
   else if(body.action==='draft'){db.drafts[guest]=String(body.draft);result={saved:true};}
   else throw new Error('Unknown practice action.');save(db);return result;

@@ -12,7 +12,7 @@ export type Evidence = { original_source: string; approved_capture_url: string; 
 export type Round = { id: string; title: string; year: string; description: string; artwork: string;
   spec: Specification; status: string; specification_hash: string; evidence: Evidence | null;
   winner: number | null; histogram: number[]; protocol?: { contract: string; specificationTx: string; adjudicationTx: string | null; status: string } };
-export type Prediction = { id: string; participant: string; roundId: string; range: number; submittedAt: number; kind: 'practice' | 'protocol'; hash?: string; state: string };
+export type Prediction = { id: string; participant: string; roundId: string; range: number; submittedAt: number; kind: 'practice' | 'protocol'; hash?: string; state: string; guess?: number };
 export const SOURCE = 'https://www.the-numbers.com/movie/Barbie-(2023)';
 export const POLICY = 'first successful consensus observation; ignore later corrections';
 export const defaultRanges: Range[] = [{lower:0,upper:100_000_000},{lower:100_000_000,upper:150_000_000},{lower:150_000_000,upper:200_000_000},{lower:200_000_000,upper:null}];
@@ -48,11 +48,18 @@ export function winningRange(ranges: Range[], value: number): number {
   if (index<0) throw new Error('Value outside ranges.');
   return index;
 }
+// Mirrors the contract: 100 at the exact figure, falling linearly to 0 at 25% away.
+export function closeness(guess: number | undefined, value: number): number {
+  if (!guess || guess <= 0 || value <= 0) return 0;
+  return Math.max(0, 100 - Math.floor((400 * Math.abs(guess - value)) / value));
+}
 export function score(prediction: Prediction, round: Round) {
   const settled = round.status === 'resolved' && round.winner !== null;
   const correct = settled && prediction.range === round.winner;
   const competitive = settled && prediction.kind === 'protocol' && prediction.state === 'finalized' && round.spec.mode === 'competitive';
-  return { practicePoints: settled && prediction.kind==='practice' && correct ? 100 : 0, points: competitive && correct ? 100 : 0, counted: competitive, correct };
+  const bonus = settled && round.evidence ? closeness(prediction.guess, round.evidence.normalized_value) : 0;
+  const total = (correct ? 100 : 0) + bonus;
+  return { practicePoints: settled && prediction.kind==='practice' ? total : 0, points: competitive ? total : 0, closenessPoints: bonus, counted: competitive, correct };
 }
 export function rangeLabel(range: Range): string {
   const millions = (value: number)=>'$'+new Intl.NumberFormat('en-US',{maximumFractionDigits:3}).format(value/1e6)+'m';

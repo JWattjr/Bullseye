@@ -102,7 +102,7 @@ def test_finalization_duplicate_scoring_and_historical_exclusion(market,direct_v
     with direct_vm.expect_revert('finalization callback only'):market.finalize_result('barbie')
     direct_vm.sender=direct_vm._contract_address;market.finalize_result('barbie');market.finalize_result('barbie')
     assert json.loads(market.get_round('barbie'))['status']=='resolved'
-    assert market.score('barbie',direct_alice.as_hex)=={'points':0,'counted':False,'correct':False}
+    assert market.score('barbie',direct_alice.as_hex)=={'points':0,'range_points':0,'closeness_points':0,'counted':False,'correct':False}
     with direct_vm.expect_revert('already adjudicated'):market.adjudicate('barbie')
 
 @pytest.mark.parametrize('value,expected',[(0,0),(99999999,0),(100000000,1),(149999999,1),(150000000,2),(199999999,2),(200000000,3),(10**15,3)])
@@ -138,6 +138,41 @@ def test_competitive_scores_derive_once_from_finalized_outcome(market,direct_vm,
     warp(direct_vm,configuration['observation_time']);mock_result(direct_vm);market.adjudicate('barbie')
     assert market.score('barbie',direct_alice.as_hex)['points']==0
     direct_vm.sender=direct_vm._contract_address;market.finalize_result('barbie');market.finalize_result('barbie')
-    assert market.score('barbie',direct_alice.as_hex)=={'points':100,'counted':True,'correct':True}
-    assert market.score('barbie',direct_bob.as_hex)=={'points':0,'counted':True,'correct':False}
+    assert market.score('barbie',direct_alice.as_hex)=={'points':100,'range_points':100,'closeness_points':0,'counted':True,'correct':True}
+    assert market.score('barbie',direct_bob.as_hex)=={'points':0,'range_points':0,'closeness_points':0,'counted':True,'correct':False}
     assert len(json.loads(market.get_entry_table('barbie')))==2
+
+
+def competitive_round(market,vm):
+    configuration=spec('competitive');configuration['event']='Review Film (2033), 2033-05-20 to 2033-05-22';configuration['entry_deadline']=2000000000;configuration['observation_time']=2000000000+4*86400;configuration['resolution_deadline']=2000000000+10*86400
+    propose(market,vm,configuration);record=json.loads(market.get_round('barbie'));vm.sender=vm._contract_address;market.open_round('barbie',record['specification_hash'])
+    return configuration
+
+def test_exact_guess_scores_by_closeness(market,direct_vm,direct_alice,direct_bob,direct_charlie):
+    configuration=competitive_round(market,direct_vm)
+    direct_vm.sender=direct_alice;market.predict_exact('barbie',2,162022044)
+    direct_vm.sender=direct_bob;market.predict_exact('barbie',2,180000000)
+    with direct_vm.expect_revert('inside the chosen range'):market.predict_exact('barbie',1,180000000)
+    direct_vm.sender=direct_charlie;market.predict_exact('barbie',1,120000000)
+    warp(direct_vm,configuration['observation_time']);mock_result(direct_vm);market.adjudicate('barbie')
+    direct_vm.sender=direct_vm._contract_address;market.finalize_result('barbie')
+    assert market.score('barbie',direct_alice.as_hex)['points']==200
+    # 17,977,956 off on 162,022,044 is ~11%: 100 - 44 = 56 closeness points.
+    assert market.score('barbie',direct_bob.as_hex)=={'points':156,'range_points':100,'closeness_points':56,'counted':True,'correct':True}
+    # Wrong range and ~26% away: nothing.
+    assert market.score('barbie',direct_charlie.as_hex)['points']==0
+
+def test_validator_rejects_a_passage_that_is_not_on_its_page(market,direct_vm):
+    open_market(market,direct_vm);warp(direct_vm,2000000010);mock_result(direct_vm);market.adjudicate('barbie')
+    assert direct_vm.run_validator() is True
+    # Same number, but the page this validator reads does not contain the leader's stored passage.
+    direct_vm.clear_mocks();direct_vm.mock_web('.*the-numbers.*',{'status':200,'body':'Barbie (2023) USD Opening Weekend total $162,022,044 domestic'})
+    direct_vm.mock_llm('Extract the exact published USD integer.*',json.dumps({'status':'resolved','amount':'$162,022,044','passage':'Opening Weekend total $162,022,044'}))
+    assert direct_vm.run_validator() is False
+
+def test_html_entities_are_decoded_before_extraction(market,direct_vm):
+    open_market(market,direct_vm);warp(direct_vm,2000000010)
+    direct_vm.mock_web('.*the-numbers.*',{'status':200,'body':'<h1>Barbie (2023)</h1><b>Opening&nbsp;Weekend:</b> $162,022,044'})
+    direct_vm.mock_llm('Extract the exact published USD integer.*',json.dumps({'status':'resolved','amount':'$162,022,044','passage':'Opening Weekend: $162,022,044'}))
+    market.adjudicate('barbie')
+    assert json.loads(market.get_round('barbie'))['evidence']['extracted_passage']=='Opening Weekend: $162,022,044'

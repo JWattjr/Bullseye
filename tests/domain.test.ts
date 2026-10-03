@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {baseSpec,defaultRanges,score,validateSpec,winningRange,type Prediction} from '../lib/domain';
+import {baseSpec,closeness,defaultRanges,score,validateSpec,winningRange,type Prediction} from '../lib/domain';
 import {makeEvidence,verifyEvidence,specificationHash} from '../lib/evidence';
 import {historicalRound} from '../lib/seed';
 import {refreshRehearsal,startRehearsal,submitPractice,type Database} from '../lib/store';
@@ -13,3 +13,10 @@ test('competitive points require finalized entry and resolved round',()=>{const 
 test('protocol acceptance and finalized failure are never success',()=>{assert.equal(successfulFinalized({statusName:'ACCEPTED',txExecutionResultName:'FINISHED_WITH_RETURN'}),false);assert.equal(successfulFinalized({statusName:'FINALIZED',txExecutionResultName:'FINISHED_WITH_ERROR'}),false);assert.equal(successfulFinalized({statusName:'FINALIZED',txExecutionResultName:'FINISHED_WITH_RETURN'}),true);});
 test('duplicate practice calls idempotent; changes and late entries rejected',()=>{const db:Database={rounds:[historicalRound()],predictions:[],profiles:{},drafts:{}};const a=submitPractice(db,'guest','barbie-practice',2,100);assert.equal(submitPractice(db,'guest','barbie-practice',2,101).id,a.id);assert.equal(db.rounds[0].histogram[2],1);assert.throws(()=>submitPractice(db,'guest','barbie-practice',1,101));const r=startRehearsal(db,'guest',100);assert.throws(()=>submitPractice(db,'guest',r.id,1,108));});
 test('accelerated timings isolated; result and timeout cannot score twice',()=>{const db:Database={rounds:[],predictions:[],profiles:{},drafts:{}};const r=startRehearsal(db,'u',100);submitPractice(db,'u',r.id,1,101);refreshRehearsal(r,110);assert.equal(r.status,'resolved');assert.equal(r.winner,1);refreshRehearsal(r,500);assert.equal(r.status,'resolved');const late=startRehearsal(db,'u',100);refreshRehearsal(late,221);assert.equal(late.status,'void');});
+
+test('closeness bonus matches the contract: full at exact, zero at 25% away', () => {
+  assert.equal(closeness(162_022_044, 162_022_044), 100);
+  assert.equal(closeness(180_000_000, 162_022_044), 56);
+  assert.equal(closeness(120_000_000, 162_022_044), 0);
+  assert.equal(closeness(undefined, 162_022_044), 0);
+});

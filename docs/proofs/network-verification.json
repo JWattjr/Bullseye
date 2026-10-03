@@ -1,36 +1,69 @@
 {
-  "verifiedAt": "2026-10-01T16:59:23.039Z",
+  "verifiedAt": "2026-10-03T00:25:40.401Z",
   "network": "studionet",
-  "contract": "0x72bAb093224a81823f2Cc83A6d374B5C72df2A09",
+  "contract": "0x756ddF8D588DA4D598F9F90947DB92Bced10D68E",
   "receipts": [
     {
       "name": "deploy",
-      "hash": "0x3819c5b0b5cb91d8514d511c16a19f838d90ad1e9bea8fe5d8be41fd9fc3d29d",
+      "hash": "0x0a81ee8624884a8072d063268c20e4ce1bc6b403eccb18eb66fd8d3d95aea648",
       "verified": true
     },
     {
       "name": "specification",
-      "hash": "0x3e37eda6e035b119fff3487a496edb5172f26929ef1870862125a743ad7950fc",
+      "hash": "0x85c2400a7fbf251866a5d0e56554e02a576849a923ca4d6cce182f4de8c0ee5d",
       "verified": true
     },
     {
       "name": "specification-callback-0",
-      "hash": "0x0498658c96e6213be18cf6c9cfc06a7cf71c9b23bf96dc9c0d169336b04c9a68",
+      "hash": "0x354f469cd60f7f5975ded3075336d7577c08158abd38cf03575a46d978fa815d",
+      "verified": true
+    },
+    {
+      "name": "prediction",
+      "hash": "0xa44a0a1265250ec4078bb89c9e3477fbfffb15a1decf096c206bc170cefcd601",
       "verified": true
     },
     {
       "name": "adjudication",
-      "hash": "0xd709d0b950f017d0394be3b8402bc03b69dfc261787f22b753d3eb18aa3d5f1f",
+      "hash": "0x33827e917db45f627de3ed37a8690b0b1d7569fb089c3903edf4a03e420be24b",
       "verified": true
     },
     {
       "name": "adjudication-callback-0",
-      "hash": "0x41446f889e68835683c0e8c928edce0b18bcdda2431f702f98d1df461bac2133",
+      "hash": "0xebbc72a099b3a33012b04458b15122dcbccf91b1c235c5b8e461d7acf5228f44",
+      "verified": true
+    },
+    {
+      "name": "pool-deploy",
+      "hash": "0x2d1b120795abb6d32c097f94f1161a055450ef2f9e616213123147403e428580",
+      "verified": true
+    },
+    {
+      "name": "pool-stake",
+      "hash": "0x103925e1ab5f39c26317e95ba274d752b3a6ec7f45aeaa35408120870fd6bdd4",
+      "verified": true
+    },
+    {
+      "name": "pool-settle",
+      "hash": "0xb94dfadc76d333b7d6bbe643fb3d7276982a204f91a0c13656e64ede5ef68aa6",
+      "verified": true
+    },
+    {
+      "name": "pool-claim",
+      "hash": "0xcbdc9c0878efc1f7516490b955952a67ad1480ef26f14ff32e456dd99f31f893",
       "verified": true
     }
   ],
   "finalizedRound": "resolved",
   "value": 162022044,
-  "specificationHash": "39d2442cf3c2cb38bcea13a8c3d70852803beb0400dbfd1a99d4f05696a31d92",
-  "indexing": true
+  "specificationHash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96",
+  "indexing": true,
+  "pool": {
+    "contract": "0x54fdb94340Ce8B9cE37EBb3d6C3179130c95c1b9",
+    "winner": 2,
+    "value": 162022044,
+    "claims": {
+      "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": "2000000000000000000"
+    }
+  }
 }

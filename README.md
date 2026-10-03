@@ -1,6 +1,6 @@
 # Bullseye
 
-A free film forecasting league: choose a revenue range, save your call, and inspect how the published result was interpreted. Correct competitive forecasts earn 100 free points; misses earn zero. Points have no monetary value.
+A free film forecasting league: choose a revenue range, save your call, and inspect how the published result was interpreted. Correct competitive forecasts earn 100 free points; misses earn zero. An optional exact number inside your range adds up to 100 more, scored by closeness: full marks for the exact figure, nothing once you're 25% away. Points have no monetary value.
 
 ## Run
 
@@ -40,13 +40,16 @@ The browser suite launches an isolated test browser. Set `BULLSEYE_CHROME` to a 
 
 ## Real GenLayer demonstration
 
-Network: StudioNet, the hosted development simulator, not production-chain settlement. Final contract: `0x72bAb093224a81823f2Cc83A6d374B5C72df2A09`.
+Network: StudioNet, the hosted development simulator, not production-chain settlement. Contract: `0x756ddF8D588DA4D598F9F90947DB92Bced10D68E` (v2).
 
-- Finalized specification: `0x3e37eda6e035b119fff3487a496edb5172f26929ef1870862125a743ad7950fc`
-- Finalized adjudication: `0xd709d0b950f017d0394be3b8402bc03b69dfc261787f22b753d3eb18aa3d5f1f`
+- Finalized specification: `0x85c2400a7fbf251866a5d0e56554e02a576849a923ca4d6cce182f4de8c0ee5d`
+- Finalized exact-number prediction (`predict_exact`): `0xa44a0a1265250ec4078bb89c9e3477fbfffb15a1decf096c206bc170cefcd601`
+- Finalized adjudication: `0x33827e917db45f627de3ed37a8690b0b1d7569fb089c3903edf4a03e420be24b`. Every validator re-read The Numbers and confirmed the stored passage, with the agreed $162,022,044, is on the page it read.
 - Both finalization callbacks also finalized successfully. See [proof manifest](public/protocol-proof.json) and [independent network verification](docs/proofs/network-verification.json).
 
-The final deployed source includes indexed rounds and entries. Run `npm run test:network` to re-fetch every receipt and finalized state. It asserts successful execution as well as FINALIZED status, specification and passage hashes, exact number and winning range. Failed adjudication evidence is retained in `docs/proofs/adjudication-rejected-passage.json`; that transaction applied no result or points.
+**A GEN pool settled on that result.** Pool contract `0x54fdb94340Ce8B9cE37EBb3d6C3179130c95c1b9` holds no outcome of its own: it reads the finalized round from the Bullseye contract. Stake `0x103925e1ab5f39c26317e95ba274d752b3a6ec7f45aeaa35408120870fd6bdd4`, settle `0xb94dfadc76d333b7d6bbe643fb3d7276982a204f91a0c13656e64ede5ef68aa6`, claim `0xcbdc9c0878efc1f7516490b955952a67ad1480ef26f14ff32e456dd99f31f893`, native transfer `0xf3d905f437bb2a3b99c6f5fffd4de5295223ed767fb3cada76ae15c8d4e37093`. Details in [round-pool proof](public/round-pool-proof.json).
+
+Run `npm run test:network` to re-fetch every receipt and finalized state. It asserts successful execution as well as FINALIZED status, specification and passage hashes, exact number and winning range, and that the pool's winner and value equal the Bullseye round's. The first deployment (`0x72bAb093224a81823f2Cc83A6d374B5C72df2A09`), whose validators checked only the number and not the passage, is archived in `docs/proofs/v1/`.
 
 To create a fresh deployment using your configured CLI account:
 
@@ -79,7 +82,7 @@ The creator form saves a draft and performs deterministic previews. GenLayer the
 
 The working preview demonstrates historical practice, a repeatable local synthetic rehearsal, and genuine finalized development-network consensus. Live competitive contract methods and wallet flows are implemented; no future competitive film round or browser-wallet signing session is claimed as tested. A future round requires its creator wallet, a precise event and The Numbers URL, and validator-accessible evidence at the frozen observation time. It does not require the historical demo to wait for a film release.
 
-The Numbers retrieval and numeric extraction succeeded on StudioNet. Box Office Mojo retrieval consensus was undetermined and is excluded. Archive.org's July 25, 2023 capture index and exact selected capture were accessible from validators, but that old capture is not an eligible capture for this demo's 2026 observation window. The shipped rule uses the live approved publisher and retains the exact consensus passage on-chain. No full-page archival persistence, source truth guarantee or silent source fallback is claimed. See [evidence policy](docs/EVIDENCE.md).
+The Numbers retrieval and numeric extraction succeeded on StudioNet. Box Office Mojo retrieval consensus was undetermined and is excluded. Archive.org's July 25, 2023 capture index and exact selected capture were accessible from validators, but that old capture is not an eligible capture for this demo's 2026 observation window. The shipped rule uses the live approved publisher. The stored passage is checked by every validator: each re-reads the page and rejects the result unless the leader's exact passage, carrying the agreed number, appears on it. No full-page archival persistence, source truth guarantee or silent source fallback is claimed. See [evidence policy](docs/EVIDENCE.md).
 
 The source repository is hosted at JWattjr/Bullseye. No Portal submission was posted, and no eligibility or reward points are promised. Tutorial and submission drafts are included. Real-money wagering, exchange liquidity, Arc settlement and a general marketplace are outside the MVP.
 

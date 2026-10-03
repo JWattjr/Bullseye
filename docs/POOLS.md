@@ -16,6 +16,12 @@ Direct tests cover stake bounds, duplicates, closing deadlines, unauthorized cal
 
 The network proof has one entrant. Multi-entrant allocation and void/empty-winner refunds are directly tested, not yet demonstrated with multiple signed accounts on StudioNet. Failed emitted transfers do not have a retry mechanism; a claim record means transfer requested. The UI exposes follow-up receipt state rather than treating requested claims as delivered funds. This contract is a development rehearsal, not production escrow.
 
+## Pools that settle on a real Bullseye round
+
+`contracts/movie_pools.py` (`BullseyeRoundPools`) replaces hardcoded outcomes. A pool is tied to one Bullseye round: stakes close at that round's entry deadline, and `settle` reads the round from the Bullseye contract. It settles only once the round is `resolved` or `void`, which Bullseye reaches solely through its finality callbacks. It refuses to settle if the round's specification hash changed.
+
+StudioNet proof: pool `0x54fdb94340Ce8B9cE37EBb3d6C3179130c95c1b9` on Bullseye `0x756ddF8D588DA4D598F9F90947DB92Bced10D68E`, round `barbie-network-demo`. One 2 GEN stake on the $150m–under $200m range, settled on the validator-read $162,022,044 and claimed back (single entrant). Receipts are in `docs/proofs/round-pool/`. Run it again with `deploy.ps1 spec` (set `BULLSEYE_ENTRY_SECONDS=900`), `round-pool-deploy`, `round-pool-stake`, `adjudicate`, then `round-pool-settle`.
+
 ## Running another proof
 
 Use the configured unlocked development CLI account without exporting its key. `scripts/deploy.ps1` accepts `pool-deploy`, `pool-start`, `pool-resolve` and `pool-proof`. `pool-start` creates a new demo and signs a 2 GEN winning entry. Run `pool-resolve` after its observation time and before its resolution deadline. Read balances before and after the claim independently; `pool-proof` checks the saved native transfer and refreshes finalized state. Proof writes replace the current rehearsal manifest; retain prior receipts before running another deployment.
