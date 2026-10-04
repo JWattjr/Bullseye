@@ -1,19 +1,18 @@
 'use client';
-import {useEffect,useState} from 'react';
-import {Wallet} from 'lucide-react';
+import {useState} from 'react';
+import Link from 'next/link';
+import {Wallet, ChevronDown, X} from 'lucide-react';
+import {displayGen} from '@/lib/film-market';
+import {useWallet} from '@/lib/use-wallet';
 
-type Provider={request:(args:{method:string})=>Promise<unknown>;on?:(event:string,listener:(accounts:unknown)=>void)=>void;removeListener?:(event:string,listener:(accounts:unknown)=>void)=>void};
-export default function WalletControl({connect}:{connect:()=>Promise<void>}){
-  const [address,setAddress]=useState('');const [connecting,setConnecting]=useState(false);const [error,setError]=useState('');
-  useEffect(()=>{
-    const provider=(window as unknown as {ethereum?:Provider}).ethereum;let active=true;
-    const update=(accounts:unknown)=>{const first=Array.isArray(accounts)?accounts[0]:null;if(active)setAddress(typeof first==='string'&&/^0x[a-fA-F0-9]{40}$/.test(first)?first:'');};
-    const connected=(event:Event)=>update([(event as CustomEvent<string>).detail]);
-    // Read existing permissions only. Never request a connection on page load.
-    provider?.request({method:'eth_accounts'}).then(update).catch(()=>{});
-    provider?.on?.('accountsChanged',update);window.addEventListener('bullseye:wallet-connected',connected);
-    return()=>{active=false;provider?.removeListener?.('accountsChanged',update);window.removeEventListener('bullseye:wallet-connected',connected);};
-  },[]);
-  async function request(){setConnecting(true);setError('');try{await connect();}catch(reason){const e=reason as {code?:number;message?:string};setError(e.code===4001?'Connection declined. Try again when you’re ready.':e.message??'Wallet connection failed. Try again.');}finally{setConnecting(false);}}
-  return <div className="wallet-control"><button className="wallet-button" onClick={request} disabled={connecting} aria-label={address?'Wallet connected: '+address:undefined} title={address||'Connect to StudioNet for live participation'}><Wallet size={17}/>{connecting?'Connecting…':address?address.slice(0,6)+'…'+address.slice(-4):'Connect wallet'}</button>{error&&<div className="wallet-message" role="alert">{error}<p>Guest practice is still available.</p></div>}</div>;
+export default function WalletControl({connect}: {connect: () => Promise<void>}) {
+  const {account, balance} = useWallet(), [connecting, setConnecting] = useState(false), [error, setError] = useState(''), [open, setOpen] = useState(false);
+  async function request() {
+    if (account) {setOpen(value => !value); return;}
+    setConnecting(true); setError('');
+    try {await connect();} catch (e) {const reason = e as {code?: number; message?: string}; setError(reason.code === 4001 ? 'Connection cancelled. Try again when you’re ready.' : reason.message ?? 'Could not connect your wallet. Please try again.'); setOpen(true);} finally {setConnecting(false);}
+  }
+  return <div className="wallet-control"><button className="wallet-button" onClick={request} disabled={connecting} aria-expanded={open} aria-label={account ? 'Wallet connected: ' + account : undefined} title={account || 'Connect to StudioNet'}><Wallet size={16}/>{connecting ? 'Connecting…' : account ? <><span className="wallet-balance">{balance === null ? '—' : displayGen(balance)} GEN</span><span className="wallet-address-short">{account.slice(0, 6)}…{account.slice(-4)}</span><ChevronDown size={14}/></> : 'Connect wallet'}</button>
+    {open && <div className="wallet-message" role="dialog" aria-label="Wallet details"><button className="wallet-close" aria-label="Close wallet details" onClick={() => setOpen(false)}><X size={16}/></button><strong>{account ? 'Your StudioNet wallet' : 'Connect your wallet'}</strong>{account && <><p className="wallet-full-address">{account}</p><div className="wallet-popover-balance">{balance === null ? 'Loading balance…' : displayGen(balance) + ' GEN'}</div><Link href="/predictions" onClick={() => setOpen(false)}>My predictions</Link><a href="https://studio.genlayer.com" target="_blank" rel="noreferrer">Get StudioNet GEN</a><p>Practice balance · simulated GEN</p></>}{error && <p role="alert">{error}</p>}</div>}
+  </div>;
 }

@@ -1,59 +1,86 @@
 'use client';
-import {useCallback,useEffect,useState} from 'react';
-import type {GenLayerClient} from 'genlayer-js/types';
-import {studionet} from 'genlayer-js/chains';
-import {rangeLabel,type Round,type Specification} from '@/lib/domain';
-import {claimable,gen,parseStake,type Pool} from '@/lib/pools';
-type FilmPool=Pool&{source_round_id:string;reference_winner:number;reference_value:number};
-type Snapshot={contract:`0x${string}`;sourceRoundId:string;source:{status:string;spec:Specification;winner:number;evidence:{normalized_value:number}|null};pools:FilmPool[];olderBefore:number|null;ready:boolean};
-type Receipt={hash:string;action:string;state:string;transfers?:{hash:string;state:string;recipient:string}[]};
-export default function MovieStakes({round,connect}:{round:Round;connect:()=>Promise<GenLayerClient<typeof studionet>>}){
-  const [data,setData]=useState<Snapshot|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[account,setAccount]=useState(''),[choice,setChoice]=useState<number|null>(null),[amount,setAmount]=useState('2'),[now,setNow]=useState(0),[receipt,setReceipt]=useState<Receipt|null>(null);
-  const key='bullseye.film.receipt.'+round.id;
-  const refresh=useCallback(async(before?:number)=>{
-    const response=await fetch('/api/film-pools?movie='+round.id+(before===undefined?'':'&before='+before),{cache:'no-store'}),result=await response.json();
-    if(!response.ok)throw Error(result.error);
-    setData(previous=>before===undefined?result:{...result,pools:[...(previous?.pools??[]),...result.pools]});setNow(Math.floor(Date.now()/1000));
-  },[round.id]);
-  useEffect(()=>{
-    let active=true;
-    Promise.resolve().then(async()=>{try{const saved=localStorage.getItem(key);if(saved&&active)setReceipt(JSON.parse(saved));await refresh();}catch(e){if(active)setError((e as Error).message);}});
-    const provider=(window as unknown as {ethereum?:{request:(args:{method:string})=>Promise<string[]>;on?:(event:string,fn:(accounts:string[])=>void)=>void;removeListener?:(event:string,fn:(accounts:string[])=>void)=>void}}).ethereum;
-    const changed=(accounts:string[])=>{if(active)setAccount(accounts[0]?.toLowerCase()??'');};
-    provider?.request({method:'eth_accounts'}).then(changed).catch(()=>{});provider?.on?.('accountsChanged',changed);
-    const connected=(event:Event)=>{if(active)setAccount(String((event as CustomEvent).detail).toLowerCase());};window.addEventListener('bullseye:wallet-connected',connected);
-    const timer=setInterval(()=>setNow(Math.floor(Date.now()/1000)),1000);
-    return()=>{active=false;clearInterval(timer);provider?.removeListener?.('accountsChanged',changed);window.removeEventListener('bullseye:wallet-connected',connected);};
-  },[key,refresh]);
-  async function check(){if(!receipt)return;setBusy(true);setError('');try{const response=await fetch('/api/film-pools?movie='+round.id+'&receipt='+receipt.hash,{cache:'no-store'}),result=await response.json();if(!response.ok)throw Error(result.error);const next={...receipt,...result};setReceipt(next);localStorage.setItem(key,JSON.stringify(next));await refresh();}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
-  async function submit(action:'stake'|'settle'|'claim',pool?:FilmPool){if(!data)return;setBusy(true);setError('');try{
-    if(action==='stake'&&choice===null)throw Error('Choose a range before staking.');
-    const value=action==='stake'?parseStake(amount):0n,client=await connect();
-    const hash=await client.writeContract({address:data.contract,functionName:action,args:action==='stake'?[data.sourceRoundId,choice!]:[pool!.id],value});
-    const next={hash,action,state:'submitted'};setReceipt(next);localStorage.setItem(key,JSON.stringify(next));
-  }catch(e){setError((e as Error).message);}finally{setBusy(false);}}
-  const latest=data?.pools[0],open=latest?.status==='open'&&now<latest.entry_deadline;
-  const entered=!!(open&&latest?.entries[account]);
-  const ranges=data?.source.spec.ranges??round.spec.ranges;
-  return <section className="movie-stakes" aria-label={round.title+' GEN staking'}>
-    <div className="section-heading"><h2>Stake GEN on {round.title}</h2><span className="tag historical">StudioNet GEN</span></div>
-    <p>Minimum 2 GEN. Each range is a pool. Winners share all stakes in proportion to their entry.</p>
-    <p className="small">Historical result: ${new Intl.NumberFormat('en-US').format(data?.source.evidence?.normalized_value??round.evidence!.normalized_value)}. The outcome is already known. StudioNet GEN is simulated development currency.</p>
-    {error&&<div className="error" role="alert">{error}</div>}
-    {!data&&!error&&<p role="status">Loading this movie’s GEN pools…</p>}
-    <div className="pool-options movie-options">{ranges.map((range,index)=><button key={index} disabled={busy||!data?.ready||entered} aria-pressed={choice===index} onClick={()=>setChoice(index)}><strong>{rangeLabel(range)}</strong><span>{gen(open?latest!.pools[index]:'0')} GEN pooled</span></button>)}</div>
-    {entered?<p className="confirmed">Your GEN stake is in this pool. Entries close in {Math.max(0,latest!.entry_deadline-now)} seconds.</p>:<div className="pool-entry"><label>GEN stake<input type="text" inputMode="decimal" value={amount} onChange={e=>setAmount(e.target.value)} aria-describedby={'stake-help-'+round.id}/></label><button className="button primary" disabled={busy||!data?.ready||choice===null} onClick={()=>submit('stake')}>{busy?'Waiting for wallet…':'Stake GEN on '+round.title}</button></div>}
-    <p id={'stake-help-'+round.id} className="small">2–100 GEN per entry. {open?'This pool closes in '+Math.max(0,latest!.entry_deadline-now)+' seconds.':'Your first stake starts a shared two-minute pool for this movie.'} One entry per wallet per pool.</p>
-    <button className="text-action" disabled={busy} onClick={()=>{setError('');refresh().catch(e=>setError(e.message));}}>Refresh GEN pools</button>
-    {data&&!data.ready&&<p className="notice">This movie’s validator result or GEN payout verification is pending. Refresh to check again.</p>}
-    {receipt&&<div className="notice" role="status"><strong>{receipt.action}: {receipt.state}</strong><p>Submitted transactions await successful finalization. After a claim, the separate transfer must be credited.</p><code>{receipt.hash}</code>{receipt.transfers?.map(transfer=><p key={transfer.hash}>Follow-up: {transfer.state} to <code>{transfer.recipient}</code>.</p>)}<button className="button secondary" disabled={busy} onClick={check}>Check GEN receipt & pools</button></div>}
-    {data?.pools.map(pool=>{const entry=pool.entries[account],payout=claimable(pool,account);return <div className="film-pool-history" key={pool.id}><div className="section-heading"><h3>{pool.id}</h3><span>{pool.status.replaceAll('_',' ')}</span></div><p>Total staked: {gen(pool.total)} GEN.</p>{entry&&<p>Your stake: {gen(entry.stake)} GEN on {rangeLabel(ranges[entry.range])}. {pool.claims[account]?'Transfer requested: '+gen(pool.claims[account])+' GEN.':''}</p>}
-      {pool.status==='open'&&now>=pool.entry_deadline&&<button className="button secondary" disabled={busy} onClick={()=>submit('settle',pool)}>Settle {round.title} pool</button>}
-      {BigInt(payout)>0n&&<button className="button primary" disabled={busy} onClick={()=>submit('claim',pool)}>Claim {gen(payout)} GEN</button>}
-      {pool.status==='resolved'&&entry&&payout==='0'&&!pool.claims[account]&&<p>Your range did not win. No GEN payout is due.</p>}
-      {pool.status==='resolved'&&<p>Winning range: {rangeLabel(ranges[pool.winner!])}.</p>}
-    </div>;})}
-    {data?.olderBefore!==null&&data?.olderBefore!==undefined&&<button className="button secondary" disabled={busy} onClick={()=>refresh(data.olderBefore!).catch(e=>setError(e.message))}>Load older movie pools</button>}
-    <details className="disclosure"><summary>GEN settlement rules</summary><p>The first stake starts a shared two-minute pool. After entries close, anyone may settle from the finalized Bullseye validator result. Claims open after the pool’s finality callback. The winning range receives the entire pot, with no pool fee; an empty winning range refunds all entrants. Later pools preserve earlier claims. Points and GEN stakes are separate records.</p><p>Claim receipts record a transfer request. Check the credited follow-up receipt and your wallet balance to confirm arrival.</p><a href="/film-pool-proof.json" target="_blank" rel="noreferrer">Inspect validator and GEN proof</a></details>
+import Link from 'next/link';
+import {useEffect, useRef, useState} from 'react';
+import {ArrowRight, Check, Clock, Wallet, ChevronDown} from 'lucide-react';
+import {rangeLabel, type Round} from '@/lib/domain';
+import {claimable, gen, parseStake} from '@/lib/pools';
+import {displayGen, poolShare, projectedReturn, positionState, receiptComplete, receiptCopy, receiptFailed, type MovieId} from '@/lib/film-market';
+import {useFilmMarket, type FilmConnect} from '@/lib/use-film-market';
+
+type Market = ReturnType<typeof useFilmMarket>;
+export function TransactionStatus({market}: {market: Market}) {
+  const receipt = market.receipt;
+  if (!receipt) return null;
+  return <div className={'transaction-status ' + (receiptFailed(receipt) ? 'transaction-failed' : receiptComplete(receipt) ? 'transaction-complete' : '')} role="status" aria-live="polite">
+    {receiptComplete(receipt) && !receiptFailed(receipt) ? <Check size={18}/> : <Clock size={18}/>}
+    <div><strong>{receiptCopy(receipt)}</strong><p>{receiptFailed(receipt) ? 'Your transfer or prediction needs review. The network record is available in transaction details.' : receiptComplete(receipt) ? receipt.action === 'claim' ? 'Your balance updates automatically.' : 'We’ll update your result here and in My predictions.' : 'You can leave this page. Track it in My predictions.'}</p></div>
+  </div>;
+}
+
+export function MoviePositions({round, market}: {round: Round; market: Market}) {
+  const {data, account, now, busy, pending, submit, receipt, credits} = market;
+  const owned = data?.pools.filter(pool => pool.entries[account]) ?? [];
+  if (!owned.length) return null;
+  return <section className="movie-positions" aria-label={round.title + ' predictions'}><div className="section-heading"><h2>Your {round.title} predictions</h2><span>{owned.length} {owned.length === 1 ? 'entry' : 'entries'}</span></div>
+    {owned.map(pool => {
+      const entry = pool.entries[account], payout = claimable(pool, account), paid = credits[pool.id] ?? (receipt?.poolId === pool.id ? receipt : null), credited = !!(paid && paid.action === 'claim' && receiptComplete(paid) && !receiptFailed(paid));
+      const status = credited ? 'Collected' : positionState(pool, account, now);
+      return <div className="position-row" id={pool.id} key={pool.id}>
+        <div><span className={'position-state ' + (status === 'Won' || status === 'Collected' ? 'position-positive' : '')}>{status === 'Open' && now ? 'Closes in ' + Math.max(0, pool.entry_deadline - now) + 's' : status}</span><h3>{rangeLabel((data!.source.spec.ranges)[entry.range])}</h3><p>{displayGen(entry.stake)} GEN staked · {new Date((pool.entry_deadline - 120) * 1000).toLocaleDateString('en-GB', {day: 'numeric', month: 'short'})}</p></div>
+        <div className="position-return">{BigInt(payout) > 0n ? <button className="button primary" disabled={busy || pending} onClick={() => submit('claim', undefined, undefined, pool)}>{busy ? 'Confirm in wallet…' : 'Collect ' + displayGen(payout) + ' GEN'}<ArrowRight size={16}/></button> : <><strong>{displayGen(pool.claims[account] ?? '0')} GEN</strong><span>{credited ? 'Received' : pool.claims[account] ? 'Transfer requested' : status === 'Lost' ? 'Return' : 'Result pending'}</span></>}</div>
+      </div>;
+    })}
+  </section>;
+}
+
+export default function MovieStakes({round, connect}: {round: Round; connect: FilmConnect}) {
+  const market = useFilmMarket(round.id as MovieId, connect), {data, error, syncError, busy, receipt, now, account, balance, pending, submit, refresh} = market;
+  const [choice, setChoice] = useState<number | null>(null), [amount, setAmount] = useState('2');
+  const jumped = useRef(false);
+  const showTicket = () => {if (window.matchMedia('(max-width: 760px)').matches) document.getElementById('ticket-' + round.id)?.scrollIntoView({block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});};
+  useEffect(() => {
+    const initial = new URL(window.location.href).searchParams.get('range');
+    if (initial !== null && /^\d$/.test(initial) && Number(initial) < round.spec.ranges.length) Promise.resolve().then(() => setChoice(Number(initial)));
+  }, [round.id, round.spec.ranges.length]);
+  useEffect(() => {
+    if (data?.ready && choice !== null && !jumped.current && window.location.hash === '#prediction') {jumped.current = true; document.getElementById(window.matchMedia('(max-width: 760px)').matches ? 'ticket-' + round.id : 'prediction')?.scrollIntoView({block: 'start'});}
+  }, [data?.ready, choice, round.id]);
+  const latest = data?.pools[0], open = latest?.status === 'open' && now < latest.entry_deadline, current = open ? latest : undefined;
+  const entered = !!(open && latest?.entries[account]), ranges = data?.source.spec.ranges ?? round.spec.ranges;
+  let amountError = '', stake = 0n;
+  try {stake = parseStake(amount);} catch (e) {amountError = (e as Error).message;}
+  const insufficient = balance !== null && stake > BigInt(balance);
+  const minutes = open ? Math.floor((latest!.entry_deadline - now) / 60) + ':' + String((latest!.entry_deadline - now) % 60).padStart(2, '0') : null;
+  return <section className="consumer-market" id="prediction" aria-label={round.title + ' GEN staking'}>
+    <div className="market-stats"><div><span>Session pool</span><strong>{data ? displayGen(current?.total ?? '0') : '—'} <small>GEN</small></strong></div><div><span>Predictions</span><strong>{data ? current?.participants.length ?? 0 : '—'}</strong></div><div><span>{open ? 'Entries close in' : 'Session length'}</span><strong>{minutes ?? '2 minutes'}</strong></div></div>
+    <div className="market-trade-layout"><div className="outcome-list"><div className="section-heading"><h2>Choose your range</h2><span>GEN pooled</span></div>
+      <div className="market-options">{ranges.map((range, index) => <button key={index} className={choice === index ? 'outcome-selected' : ''} disabled={busy || pending || !data?.ready || entered} aria-pressed={choice === index} onClick={() => {setChoice(index); showTicket();}}>
+        <span className="outcome-fill" style={{width: poolShare(current, index) + '%'}} aria-hidden="true"/>
+        <span className="outcome-name"><span className="selection-circle" aria-hidden="true">{choice === index && <Check size={13}/>}</span><strong>{rangeLabel(range)}</strong></span>
+        <span className="outcome-amount"><strong>{data ? displayGen(current?.pools[index] ?? '0') : '—'}</strong><small>{poolShare(current, index)}% of pool</small></span>
+      </button>)}</div><p className="market-caption">Winners share the whole pool. Your return depends on how much you stake.</p>
+      <details className="market-rules"><summary>Market rules & result <ChevronDown size={16}/></summary><p>This is a two-minute practice session for a past opening weekend. The published result is <strong>${new Intl.NumberFormat('en-US').format(data?.source.evidence?.normalized_value ?? round.evidence!.normalized_value)}</strong>. Every range is a separate pool; winners share all GEN proportionally. If nobody picks the winning range, all entries are refunded. One 2–100 GEN entry per wallet, per session.</p><p>Results come from the finalized GenLayer record and update automatically while a market or My predictions is open. Stakes use simulated StudioNet GEN.</p><a href={round.spec.source_url} target="_blank" rel="noreferrer">View box-office source</a></details>
+    </div><div className="prediction-ticket" id={'ticket-' + round.id}>
+      <h2>{entered ? 'Prediction placed' : 'Your prediction'}</h2>
+      {entered ? <><div className="ticket-confirmation"><Check size={20}/><strong>{rangeLabel(ranges[latest!.entries[account].range])}</strong></div><div className="ticket-line"><span>Your stake</span><strong>{displayGen(latest!.entries[account].stake)} GEN</strong></div><p className="ticket-help">Your result appears here automatically after entries close.</p><Link className="button secondary full" href="/predictions">My predictions <ArrowRight size={16}/></Link></> : <>
+        <p className={'ticket-selection ' + (choice !== null ? 'has-selection' : '')}>{choice === null ? 'Pick a range to get started.' : rangeLabel(ranges[choice])}</p>
+        <label className="stake-label" htmlFor={'stake-' + round.id}>Your stake</label><div className="stake-field"><input id={'stake-' + round.id} type="text" inputMode="decimal" value={amount} onChange={e => setAmount(e.target.value)} disabled={busy || pending} aria-label="GEN stake" aria-invalid={!!amountError || insufficient} aria-describedby={'stake-help-' + round.id}/><span>GEN</span></div>
+        <div className="stake-presets">{['2', '5', '10', '25'].map(value => <button key={value} aria-label={'Set stake to ' + value + ' GEN'} aria-pressed={amount === value} onClick={() => setAmount(value)} disabled={busy || pending}>{value}</button>)}</div>
+        <p id={'stake-help-' + round.id} className={'ticket-help ' + (amountError || insufficient ? 'field-error' : '')}>{amountError || (insufficient ? 'Not enough GEN in your wallet.' : 'Minimum 2 GEN · Maximum 100 GEN')}</p>
+        <div className="ticket-line"><span>Wallet balance</span><strong>{account ? balance === null ? 'Loading…' : displayGen(balance) + ' GEN' : 'Connect to view'}</strong></div>
+        <div className="ticket-estimate"><span>Estimated return if you win</span><strong>{choice !== null && stake > 0n ? displayGen(projectedReturn(current, choice, stake)) + ' GEN' : '—'}</strong><small>Based on the current pool. Changes as others enter.</small></div>
+        <button className="button primary full predict-button" disabled={busy || pending || !data?.ready || choice === null || !!amountError || insufficient} onClick={() => submit('stake', choice!, amount)}>{busy ? 'Confirm in wallet…' : pending ? 'Confirming prediction…' : choice === null ? 'Choose a range' : account ? 'Predict with ' + amount + ' GEN' : 'Connect & predict'}{!busy && !pending && <ArrowRight size={18}/>}</button>
+        <p className="ticket-help">{open ? 'Join this session before the countdown ends.' : 'Your prediction starts a new two-minute session.'}</p>
+      </>}
+      {error && <div className="trade-error" role="alert">{error}</div>}
+      <TransactionStatus market={market}/>
+      {!data && !syncError && <p className="ticket-help" role="status">Loading market…</p>}
+      {syncError && <p className="sync-notice" role="status">{syncError}</p>}
+      {data && !data.ready && <p className="sync-notice" role="status">This market is being verified. We’ll update it automatically.</p>}
+    </div></div>
+    <MoviePositions round={round} market={market}/>
+    {data?.olderBefore !== null && data?.olderBefore !== undefined && <button className="text-action older-predictions" disabled={busy || pending} onClick={() => refresh(data.olderBefore!).catch(() => {})}>Find earlier predictions <ArrowRight size={15}/></button>}
+    {receipt && <details className="transaction-details"><summary>Transaction details <ChevronDown size={15}/></summary><p>{receipt.action === 'stake' ? 'Prediction' : 'Collection'}: {receipt.state}</p><code>{receipt.hash}</code>{receipt.transfers?.map(transfer => <p key={transfer.hash}>{transfer.state}: {gen(transfer.value)} GEN to <code>{transfer.recipient}</code></p>)}<a href="/film-pool-proof.json" target="_blank" rel="noreferrer">View verified contract records</a></details>}
+    <p className="market-bottom-note"><Wallet size={14}/> StudioNet practice · Simulated GEN · Historical result</p>
   </section>;
 }

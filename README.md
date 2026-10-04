@@ -1,6 +1,6 @@
 # Bullseye
 
-A free film forecasting league: choose a revenue range, save your call, and inspect how the published result was interpreted. Correct competitive forecasts earn 100 free points; misses earn zero. An optional exact number inside your range adds up to 100 more, scored by closeness: full marks for the exact figure, nothing once you're 25% away. Points have no monetary value.
+A film prediction platform powered by GenLayer. Browse movie markets, choose an opening-weekend range, stake GEN and collect your share of the winning pool. The current Barbie, Oppenheimer and Dune markets replay historical results with simulated StudioNet GEN. Free points practice and the forecasting league remain available.
 
 ## Run
 
@@ -18,7 +18,7 @@ Copy-Item .env.example .env.local
 npm run dev
 ```
 
-Open http://localhost:3100. Select **Make your first call**, choose the $150m–under $200m range, and confirm. Barbie's observed historical opening weekend was $162,022,044: 100 practice points. Reload and open My predictions to see the same saved call. The historical result is excluded from rankings.
+Open http://localhost:3100. Choose a movie and revenue range, enter at least 2 GEN and confirm in your wallet. The app follows confirmation and settlement automatically. Open My predictions to track entries and collect available GEN with one wallet confirmation. Free points practice is available from the footer and each movie’s **Play for free points** disclosure; it needs no wallet and is excluded from competitive rankings.
 
 **Run a rehearsal** creates an invented film with an eight-second entry window and a synthetic observation at ten seconds. Pick $30m–under $50m to match its $42,500,000 fixture. These timings never apply to competitive rounds. This is local application behavior, not a synthetic GenLayer receipt.
 
@@ -74,7 +74,7 @@ Public browsing and guest practice need no wallet. With `NEXT_PUBLIC_PRACTICE_ST
 
 Without that setting, a single local Node process uses an opaque HttpOnly guest cookie and an atomic, serialized JSON database under `.data/`. Set `BULLSEYE_DATA_DIR` to a durable directory. This file mode is not a multi-process production database and must not be deployed to an ephemeral filesystem.
 
-Persisted competitive identity is the participant's wallet address. The wallet signs directly against StudioNet using the documented SDK. There is no backend relay or custody. The server only reads public protocol data. Connecting an address selects a public watch view, not a private identity claim. Browser storage caches finalized state; **Refresh protocol rounds** re-fetches authoritative finalized contract state. Leaderboard points derive from those entries and outcomes, not editable practice counters. All public entries are capped at 200 per round; indexing fetches the latest 20 rounds.
+Persisted competitive identity is the participant's wallet address. The wallet signs directly against StudioNet using the documented SDK. Stakes and claims have no signing relay or operator custody. The server reads public protocol data and can submit a zero-value, permissionless settlement call from a disposable StudioNet account after entries close; it cannot choose a result or transfer a user’s funds. Connecting an address selects a public watch view, not a private identity claim. Browser storage caches finalized state; **Refresh protocol rounds** re-fetches authoritative finalized contract state. Leaderboard points derive from those entries and outcomes, not editable practice counters. All public entries are capped at 200 per round; indexing fetches the latest 20 rounds.
 
 The creator form saves a draft and performs deterministic previews. GenLayer then interprets the question against the complete canonical specification. Only the deployed owner may submit creator proposals. Entries open through a self-message emitted after successful specification finality; participants cannot call that callback. Accepted outcomes are provisional. Result callbacks also wait for adjudication finality. Receipt refresh distinguishes provisional, finalized success and failed execution.
 
@@ -94,3 +94,9 @@ Read [architecture](docs/ARCHITECTURE.md), [tutorial draft](docs/TUTORIAL.md), [
 
 
 GEN stakes now live directly on the Barbie, Oppenheimer and Dune: Part Two market pages, above free points practice. Minimum 2 GEN on StudioNet. Historical pool sessions use the actual finalized Bullseye validator result and preserve old claims when a new session starts. Closeness scoring remains available for free points predictions. See [staking and proof instructions](docs/POOLS.md).
+
+## Consumer platform update
+
+Markets is now the homepage, with search, film ranges and live pool totals. Each film has one prediction ticket, preset GEN amounts and a pool-based return estimate. Receipts and results refresh automatically; settlement is requested in the background from an open interface. My predictions shows wallet-specific stakes, outcomes and a single Collect action, with received status gated on an exact credited native transfer. Wallet balances update automatically. Free points, evidence, the creator and previous pools remain available through secondary entry points.
+
+Run `npx tsx scripts/consumer-check.ts` for the isolated two-wallet SDK/browser flow. Run `BULLSEYE_VERIFY_FILMS=yes` with `scripts/movie-stakes-check.ts` for live read-only market checks. See [GEN pools](docs/POOLS.md) for the permissionless settlement boundary and offline-keeper limitation.

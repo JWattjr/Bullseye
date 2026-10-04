@@ -266,3 +266,9 @@ Motion is limited to 160ms button colour transitions, a 3-second loading-target 
 - **Don't** use condensed display type for extended rules or evidence copy.
 - **Don't** invent participants, scores, monetary rewards, production-chain settlement, permanent source archives, or prize eligibility.
 - **Don't** style a submitted wallet receipt as a successful finalized prediction before execution and finality are verified.
+
+## Consumer prediction surfaces
+
+Markets and My predictions form the main navigation. Market discovery uses compact film programmes with four range links, actual pool totals and search. Film titles retain Bebas Neue and original typographic art; consumer headings, numeric stakes, balances and transaction controls use DM Sans. A restrained StudioNet status band identifies simulated practice currency.
+
+The movie detail pairs the outcome list with one prediction ticket on desktop, stacking them on mobile. A mobile range selection brings its ticket into view. The ticket contains the selected range, a default 2 GEN stake, presets, wallet balance and an explicitly conditional estimate. Open entries, resolving results, claimable GEN, transfer requests and verified native credit have distinct states. Technical records and free points live in secondary disclosures; creator, league and old pool access remain in the footer. Pool shares are labelled as stakes, never probabilities.

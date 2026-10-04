@@ -10,7 +10,7 @@ Next.js App Router, React, strict TypeScript and Python GenLayer contracts, spec
 Film fans forecast domestic opening-weekend revenue in three to five fixed ranges, compare a visible record with friends, and inspect settlement evidence.
 
 ## Constraints
-Free points with no monetary value. A correct entry earns 100; incorrect earns zero. Pending and void rounds are excluded from accuracy. Historical practice and synthetic rehearsals are excluded from competitive rankings. Public browsing needs no wallet. Frozen source and market rules, verified protocol finality and successful execution are required for competition.
+Movie markets accept 2–100 simulated StudioNet GEN per entry, with proportional whole-pool payouts. GEN stakes are the primary consumer flow; free points practice remains available and points have no monetary value. A correct entry earns 100; incorrect earns zero. Pending and void rounds are excluded from accuracy. Historical practice and synthetic rehearsals are excluded from competitive rankings. Public browsing needs no wallet. Frozen source and market rules, verified protocol finality and successful execution are required for competition.
 
 ## Voice and brand commitments
 Normal language, bold typography, warm neutrals, vivid accent, restrained bullseye geometry. Original artwork only. The explicit brief delegates reversible implementation and design decisions; no additional preference interview is required.
