@@ -1,23 +1,43 @@
-# Authority boundaries
+# Authority and settlement
 
-User drafts a rule -> deterministic canonical checks -> GenLayer interpretation and independent validator comparison -> validated but provisional specification -> finalized self-message opens entries -> wallet signs one range -> validators retrieve the frozen publisher after observation -> bounded interpretation -> code validates exact dollar amount and containing range -> finalized self-message exposes the resolved outcome -> finalized-state index derives 100/0 points.
+The film oracle interprets rules and evidence; GEN pool contracts use that finalized result. The frontend owns the consumer flow and observes public state. It cannot set winners or authorize payouts.
 
-The application owns browsing, original typography/art, local guest practice, public indexing, draft previews and receipt display. Public browsing does not sign anything. Creator drafts remain previews until the contract's interpretation succeeds and finalizes.
+```mermaid
+flowchart TD
+  A[Owner proposes film and canonical rules] --> B[Validators independently check meaning]
+  B --> C[Successful finality and protected opening callback]
+  C --> D[Wallet stakes in a fixed range before cutoff]
+  D --> E[Observation time: validators independently fetch publisher]
+  E --> F[Validate exact integer and retained passage]
+  F --> G[Successful oracle result finality and callback]
+  G --> H[Pool checks source hash and finalized outcome]
+  H --> I[Pool settlement finality and callback]
+  I --> J[Participant signs claim]
+  J --> K[Exact native credit verified before received status]
+```
 
-The contract owns immutable specifications, owner authorization, exact interval partitions, deadlines, one entry per wallet per round, approved URLs, numeric validation, interpreted decisions and finalized outcome callbacks. There is no mutable balance or award counter: points are a pure function of a confirmed entry and resolved competitive result. Repeated callbacks and reads cannot duplicate points.
+Missing/unsuitable evidence remains pending until the frozen deadline, then permits void. A finalized void source or empty winning range refunds original entries. Source corrections after the first verified result are ignored. No administrator-entered result or source substitution exists.
 
-Both nondeterministic paths rerun substantive interpretation independently. Specification decisions must match exactly. Evidence decisions must match on resolved/insufficient/invalid status and exact normalized value. Different passage wording may be tolerated only when each execution independently proves its exact passage is present in its fetched source. Errors never receive automatic validator agreement.
+## Contracts
 
-The publisher owns the facts, not application rules. It can change its page. The shipped correction policy is first successful consensus observation; later changes do not revise an existing result. The exact passage retained by consensus is inspectable with its hash. The approved source is not interchangeable with an administrator value or participant-selected archive.
+**Bullseye v2 oracle** (`contracts/bullseye.py`) owns canonical specification checks, creator authorization, interpreted validity and extraction, exact amount normalization, interval arithmetic, evidence hashes and protected finality callbacks. Free league points derive from confirmed competitive oracle entries and resolved results; no mutable award counter can be duplicated by retries.
 
-The app uses `genlayer-js` 1.1.8's actual APIs and `TransactionHashVariant.LATEST_FINAL`. It does not call newer preview SDK APIs absent from this installed version. CLI deployment uses its configured StudioNet chain/account. The Python runner is concretely pinned and was successfully deployed; the linter also reports a newer available runner, without requiring migration for this validated deployment.
+Both non-deterministic paths rerun substantive interpretation. Specification decisions must match. Evidence decisions match on bounded status and normalized value, and each validator verifies the leader's retained passage on the page it fetched. Execution errors never receive automatic validator agreement.
 
-Live indexing and leaderboard reads require finalized state. Contract finalization callbacks become separate protocol transactions and are independently finalized before a result snapshot is published. The saved JSON proof is explicitly a saved projection; refreshing protocol state performs real reads. A receipt reaching ACCEPTED or FINALIZED is insufficient without successful execution.
+**Forecast pools** (`contracts/forecast_pools.py`) run only on StudioNet 61999. Each upcoming film has one shared pool bound to a competitive finalized open source and its specification hash. One immutable 2–100 GEN entry per wallet; fixed pre-release cutoff; no rollover. Claims await source and pool finality. Proportional cumulative integer allocation conserves the entire pot including wei dust.
 
-Persistence modes: local single-process serialized file database with HttpOnly guest cookie, or hosted browser storage for practice/drafts/receipt projections. Browser practice and wall-clock timers are not trusted competitively. Wallet identity and protocol state are public; selecting a watch address is not authentication to a private account. No operator signing key or custodial relay exists in Next.js.
+**Historical sessions** (`contracts/film_pools.py`) consume already resolved sources. The first payable entry creates a shared two-minute pool atomically; later sessions preserve old claims. Known historical results are visible before entry and excluded from competitive forecasting claims.
 
-Limits: latest 20 rounds indexed per refresh, 200 players per round, only The Numbers film URLs, one MVP metric, owner-only creators, no production-network claim. A future multi-process service should replace file storage with a durable database and indexer; browser practice can remain local.
+## Client and server
 
-## Historical film GEN sessions
+Public RPC reads use pinned genlayer-js 1.1.8 and `TransactionHashVariant.LATEST_FINAL`. Successful execution and separate callback receipts matter in addition to lifecycle status. Stakes/claims are signed directly by the browser wallet. No operator key or custodial signing relay exists in Next.js.
 
-`MovieStakes` on the existing film pages reads `/api/film-pools`. Source-round IDs and the new pool contract come from `film-pool-proof.json`. Source and pool state are read at `LATEST_FINAL`. The permissionless payable first entry opens a shared two-minute historical pool; the winner is read from the immutable, previously resolved Bullseye v2 source, never from the practice seed. Settlement is gated by its own finalized self-callback. Later sessions preserve earlier claims. Free points, including closeness bonuses, remain independent of GEN stakes. Older synthetic and round-pool deployments remain available for outstanding claims.
+The server can submit permissionless zero-value adjudication, void and settlement from disposable unfunded StudioNet accounts. It accepts only listed movies and bound pool IDs; it cannot supply a result, stake or claim. Open-page polling drives this today. The daily keeper is implemented with a fixed market list, callback waits, per-film failure isolation, earlier-session pagination and a time budget. Production authentication is pending CRON_SECRET; an unset or wrong bearer token returns 401.
+
+Claim display separately checks finalized native value credit with the pool sender, wallet recipient and exact amount. A claim record alone remains transfer requested. Failed native transfers have no automatic retry path.
+
+## Persistence and limitations
+
+Hosted browser storage contains guest practice, drafts and public receipt projections, keyed appropriately by wallet. It cannot authorize contract entries or payouts. Wallet-selected watch views are public projections, not authentication to private data. Alternatively, a local single-process serialized file database uses an HttpOnly guest cookie; this is unsuitable for an ephemeral or multi-process deployment.
+
+The publisher controls source facts and availability. Retained passage hashes prove integrity of an excerpt, not permanent whole-page retention or factual truth. Only The Numbers and domestic opening-weekend revenue are supported. Creator authorization remains owner-only; pools cap 200 entrants and 2000 pool records. StudioNet is a development simulator; broader shared-testnet deployment, durable indexing and production monitoring remain later work.

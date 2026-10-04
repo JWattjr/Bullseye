@@ -1,41 +1,59 @@
-# Verification, October 1, 2026
+# Release verification
 
-The implementation was checked against the actual deployed contract, not invented receipts. StudioNet is a development simulator; this is not production-chain settlement.
+Current product: five upcoming GEN markets and three historical GEN practice markets, deployed at [bullseye-genlayer.vercel.app](https://bullseye-genlayer.vercel.app). Network: StudioNet 61999, a hosted development simulator. Code release: `de1f896`; Vercel deployment: `dpl_FRS6bRBw9fqpMiQXa72fahA6c5SH`. The submission-document update does not replace contracts or their proofs.
 
-| Check | Result |
-|---|---|
-| Python direct contract tests | 34 passed |
-| TypeScript domain and persistence tests | 9 passed |
-| Contract lint | Passed with a newer-runner advisory; the tested runner remains pinned |
-| ESLint and strict TypeScript | Passed |
-| Next.js production build | Passed locally and on Vercel |
-| Desktop 1440×960 and mobile 390×844 | Historical selection, 100/0 scores, reload, evidence, predictions, honest empty league, creator draft, synthetic rehearsal passed |
-| Keyboard and recovery | Native radio selection with Space; test-injected HTTP 500 and Retry loading passed |
-| Independent visual review | All 14 views reviewed; one transition frame recaptured; final disposition ship |
-| Network integration | Finalized successful deployment, specification, adjudication, both callbacks, exact hashes/value/range and round index re-fetched |
+## Verification matrix
 
-The original local browser record is [browser-verification.json](browser-verification.json); the final production build also passed the same full desktop/mobile/recovery suite, recorded in [browser-final-verification.json](browser-final-verification.json). The public hosted historical round was independently confirmed for 100 practice points and checked after navigation. The corrected protected preview's protocol endpoint matches the real manifest, saved in [hosted-protocol-verification.json](hosted-protocol-verification.json). Network verification and raw receipts are under [proofs](proofs/). The failed ungrounded-passage adjudication is preserved there: FINALIZED alone was not treated as successful execution. A later successful transaction used the same frozen rules. No result or points were awarded for the failure.
+| Layer | Result | What it establishes |
+| --- | --- | --- |
+| Direct Python contracts | 77 passing, rerun October 4 | Rules, evidence validation, authorization, finality, deadlines, allocation, void/refund and preservation of claims in the harness. |
+| Application/domain tests | 23 passing, rerun October 4 | BigInt accounting, exact credited-transfer gates, cutoff/spec migration, persistence and keeper failure isolation. |
+| ESLint and strict TypeScript | Passing, rerun October 4 | Static application checks. |
+| Next.js production build | Passing locally and on published Vercel release | Build succeeds with pinned dependencies. |
+| Published consumer UI | Passing at 320/1440 pixels | Filters, search, range links, single GEN ticket, presets/bounds, recovery, reload and account separation with isolated RPC/wallet fixtures. |
+| Published live tickets | Eight passing at 390 pixels | Actual finalized StudioNet reads, working ranges, default 2 GEN, ready state and no horizontal overflow; no wallet transaction. |
+| Practice regression | Passing | Keyboard selection, 100/0 scores, exact bonus, reload, evidence, drafts, synthetic rehearsal and injected error recovery. |
+| Actual oracle result | Finalized successful execution plus callbacks | Validators retrieved The Numbers and agreed on Barbie's $162,022,044; its retained passage is bound to the frozen specification. |
+| Actual historical film stakes/claims | Signed 2 GEN deposits and credited 2 GEN payouts for three films | One real development-account entrant per historical proof session, successful source/pool finality and native credit. |
+| Actual upcoming setup | Five finalized open sources and pools | Exact specification hashes and cutoffs match; no winner/evidence exists yet; setup had no native value credit. |
+| Two-wallet SDK consumer flow | Passing, isolated fixture | A winner collects a 4 GEN mock pot, exact-credit verification, balance updates, reload and wallet switching without broadcasts. |
+| Daily background keeper | Implemented and directly tested; production inactive | Route rejects unauthorized calls; activation needs server-only CRON_SECRET. Open pages currently drive settlement. |
 
-The Numbers and an exact Archive.org capture were fetched by validators. Box Office Mojo did not achieve retrieval consensus. The archival capture is outside the demo observation window and is not used as settlement evidence. See [EVIDENCE.md](EVIDENCE.md).
+Detailed records:
 
-The local `/api/live` sync returned one resolved protocol round with the actual value 162022044. Practice remains excluded from competitive standings. No completed future competitive round, browser-wallet signing session, multi-process production database, or full HTML archive is claimed as verified.
+- [Consumer fixtures](consumer-ui-verification.json) and [actual market reads](consumer-live-market-verification.json).
+- [Practice regression](upcoming-practice-regression.json) and [prior hosted practice checks](consumer-practice-verification.json).
+- [Oracle network verification](proofs/network-verification.json), [five-market verification](proofs/upcoming/network-verification.json), [historical raw receipts](proofs/films).
+- [Oracle proof](../public/protocol-proof.json), [upcoming proof](../public/upcoming-pool-proof.json), [film proof](../public/film-pool-proof.json).
+- [Published market capture](../.impeccable/review/consumer/upcoming-live.jpg) and [published mobile ticket](../.impeccable/review/consumer/upcoming-ticket-live.jpg).
 
-After user-approved production publication, the complete desktop/mobile/recovery suite also passed on https://bullseye-genlayer.vercel.app, recorded in [browser-hosted-verification.json](browser-hosted-verification.json). Anonymous API checks returned HTTP 200 and matched the finalized manifest; a fresh-browser check confirmed the corrected synthetic source link. A missing production storage setting found during promotion was fixed before recording these successful checks; see [DEPLOYMENT.md](DEPLOYMENT.md).
+## Failure evidence and limits
 
-Wallet discoverability fix: the header exposes Connect wallet on all routes at 320, 390 and 1440 pixels. The production build, lint, strict typecheck and 9 application tests passed. Full practice regression passed separately. [wallet-ui-verification.json](wallet-ui-verification.json) records missing-provider recovery and a simulated EIP-1193 provider exercising permission rejection/retry, SDK connection, public watch address, connected label and account removal. These simulated checks do not establish real wallet signing or a transaction. Reproduce with `npx tsx scripts/wallet-check.ts` and `BULLSEYE_URL` set to the running app.
+Protocol ACCEPTED is provisional. FINALIZED alone is also insufficient: execution must succeed. Oracle, opening and settlement callbacks are distinct transactions. A recorded claim is a transfer request; native payment needs explicit final credit with the exact sender, recipient and wei amount. Studio EOA NO_MAJORITY is not treated as successful consensus execution.
 
-Reproduce application checks with `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build`. Contract checks: install the pinned `requirements.txt`, run `genvm-lint check contracts/bullseye.py`, then `python -m pytest tests/direct -q`. Run `npm run test:network` for live read-only receipt/state verification. Start the production app before `npm run test:browser`. `npm run rehearse` runs an isolated, invented ten-second rehearsal without a protocol transaction.
+Retained failures include an ungrounded Barbie passage rejected during adjudication, Dune's initial insufficient-evidence attempt, and the first ambiguous Hunger Games proposal. Later successful attempts keep the frozen rules; old receipts are preserved. [Evidence policy](EVIDENCE.md).
 
-Catalog and GEN pool update: lint, strict typecheck, production build, 13 application tests and 41 direct contract tests passed. The full browser regression and simulated-wallet suite passed again. Catalog checks at 320 and 1440 pixels preserved an existing Barbie loss, added the two films, saved independent scores across reload, and loaded the real finalized pool from StudioNet. The claim endpoint returned finalized with an explicitly credited native transfer. See [catalog verification](catalog-ui-verification.json) and [pool proof and limits](POOLS.md).
+No completed upcoming-film adjudication or payout, production-chain deployment, live multi-wallet proportional payout, or agent-performed MetaMask signing session is claimed. The optional additional funded two-wallet test was not run because its exact funding/staking flow lacked authorization. The existing signed CLI proofs and isolated consumer fixture establish different things.
 
-The catalog, pool loading, native-credit receipt, wallet visibility and full practice regression checks also passed on the public production alias after deployment. The new pool-specific direct tests passed again with explicit finalized refund checks for voided and empty-winning-pool cases.
+The Numbers access succeeded from validators. Box Office Mojo retrieval consensus was undetermined and is excluded. One Archive.org capture was accessible, but it is outside the shipped observation window and is not settlement evidence. No permanent full-page archive or source-truth guarantee is claimed.
 
-Movie staking continuation (2026-10-03): reviewed Claude's v2 source and retained the validator passage verification, finalized-round settlement and closeness bonus. Lint, strict typecheck, production build, 15 application tests and 59 direct contract tests passed. New tests cover historical pool sessions, first-entry atomic creation, shared pools, rollover preserving claims, unfinalized source rejection, hash checks and settlement callback finality. The same-page staking browser suite passed at 320/1440 widths, including GEN staking after an existing Barbie points prediction. The full practice/recovery regression passed. Actual RPC reads confirmed all three movie sources resolved and all three stake forms enabled. See [movie UI checks](movie-stakes-ui-verification.json), [practice regression](movie-practice-regression.json) and [GEN pool details](POOLS.md).
+## Reproduce
 
-Production verification: all three movie stake forms loaded actual finalized RPC state and allowed range selection; all three claim endpoints returned finalized with a credited native transfer. The full desktop/mobile practice and recovery regression passed on the production alias after the movie staking deployment. Single-entrant signed proofs completed for each film, returning the configured account to 4,999,999,999,999,999,997 wei; the pool contract balance was zero. Raw receipts and balance checks are retained in `docs/proofs/films/`.
+```powershell
+npm test
+npm run lint
+npm run typecheck
+npm run build
+python -m pip install -r requirements.txt
+python -m pytest tests/direct -q
+genvm-lint check contracts/bullseye.py
+genvm-lint check contracts/forecast_pools.py
+npm run test:network
+npx tsx scripts/verify-upcoming.ts
+```
 
-Consumer platform update (2026-10-04): the market directory, single-ticket movie flow, automatic receipt/pool updates, permissionless background settlement, wallet balances and wallet-specific prediction portfolio replace the manual checking flow. [Consumer UI verification](consumer-ui-verification.json) records desktop/mobile search, preselected ranges, stake bounds/presets, wallet recovery, secondary free practice and a complete isolated two-wallet SDK flow. A 2 GEN winning entry receives the full 4 GEN mock pool after one collection action; credited status requires the exact native value and recipient. Reload and account switching preserve the correct records. No user wallet or live stake is exercised by this fixture. The extra live two-wallet CLI test was rejected by automatic approval review because that exact funding/staking flow lacked explicit authorization; the existing signed proofs remain untouched.
+The network commands above only read receipts and state. The upcoming verifier intentionally requires sources/pools to remain open with unknown outcomes; after an actual resolution its checks must be updated to the new finalized lifecycle stage.
 
-The consumer release passes 18 application tests, ESLint, strict TypeScript and the production build locally and on Vercel. The published alias passes the consumer SDK fixture at 320/1440 widths and read-only real movie market checks at 390 width. [Live market verification](consumer-live-market-verification.json) records actual finalized StudioNet reads without wallet transactions. Contract source and the existing signed proofs are unchanged.
+Start the app before running `npm run test:browser`, `npx tsx scripts/consumer-check.ts`, or the live-read `scripts/movie-stakes-check.ts` with `BULLSEYE_VERIFY_FILMS=yes`. `BULLSEYE_URL` selects the origin. Playwright needs an installed Chromium executable; see [TUTORIAL.md](TUTORIAL.md).
 
-The full free-practice regression also passed on the production alias, preserving keyboard selection, 100/0 scores, reload and evidence, honest empty league, creator drafts, accelerated rehearsal and injected-error recovery. [Consumer practice verification](consumer-practice-verification.json) records those checks. Final native browser review confirmed the published desktop directory and ticket and the mobile range-to-ticket interaction; no overflow or blocked primary action was observed.
+Older incremental reports are retained in [VERIFICATION-HISTORY.md](VERIFICATION-HISTORY.md). Those entries describe earlier releases and do not supersede this matrix.

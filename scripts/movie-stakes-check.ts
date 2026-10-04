@@ -1,10 +1,13 @@
 import {chromium, expect} from '@playwright/test';
 import {writeFile} from 'node:fs/promises';
+import {existsSync} from 'node:fs';
+import {join} from 'node:path';
 import {historicalRounds} from '../lib/seed';
 import {upcomingRounds} from '../lib/upcoming';
 const base = process.env.BULLSEYE_URL ?? 'http://localhost:3109', live = process.env.BULLSEYE_VERIFY_FILMS === 'yes';
 const movies = [...historicalRounds(), ...upcomingRounds()];
-const browser = await chromium.launch({headless: true, executablePath: 'C:/Users/User/AppData/Local/ms-playwright/chromium-1243/chrome-win64/chrome.exe'}), checks: string[] = [];
+const cached = join(process.env.LOCALAPPDATA ?? '', 'ms-playwright', 'chromium-1243', 'chrome-win64', 'chrome.exe');
+const browser = await chromium.launch({headless: true, ...(process.env.BULLSEYE_CHROME ? {executablePath: process.env.BULLSEYE_CHROME} : existsSync(cached) ? {executablePath: cached} : {})}), checks: string[] = [];
 try {
   for (const width of live ? [390] : [320, 1440]) {
     const context = await browser.newContext({viewport: {width, height: 900}}), page = await context.newPage(), errors: string[] = [];

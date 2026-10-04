@@ -1,5 +1,7 @@
 import {chromium, expect} from '@playwright/test';
 import {mkdir, writeFile} from 'node:fs/promises';
+import {existsSync} from 'node:fs';
+import {join} from 'node:path';
 import assert from 'node:assert/strict';
 import {studionet} from 'genlayer-js/chains';
 import {historicalRounds} from '../lib/seed';
@@ -7,7 +9,8 @@ import {upcomingRounds} from '../lib/upcoming';
 import type {FilmPool} from '../lib/film-market';
 
 const base = process.env.BULLSEYE_URL ?? 'http://localhost:3109';
-const browser = await chromium.launch({headless: true, executablePath: 'C:/Users/User/AppData/Local/ms-playwright/chromium-1243/chrome-win64/chrome.exe'});
+const cached = join(process.env.LOCALAPPDATA ?? '', 'ms-playwright', 'chromium-1243', 'chrome-win64', 'chrome.exe');
+const browser = await chromium.launch({headless: true, ...(process.env.BULLSEYE_CHROME ? {executablePath: process.env.BULLSEYE_CHROME} : existsSync(cached) ? {executablePath: cached} : {})});
 const checks: string[] = [], movies = [...historicalRounds(), ...upcomingRounds()], a = '0x1111111111111111111111111111111111111111', b = '0x2222222222222222222222222222222222222222', contract = '0x3333333333333333333333333333333333333333';
 const folder = '.impeccable/review/consumer'; await mkdir(folder, {recursive: true});
 try {

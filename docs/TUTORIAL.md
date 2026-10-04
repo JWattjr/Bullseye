@@ -1,23 +1,116 @@
-# Tutorial draft: forecasting a film weekend with Bullseye
+# Build a film prediction platform with GenLayer
 
-Bullseye asks one question: where will a film's published domestic opening-weekend revenue land? Participants select a fixed range rather than betting money. Correct calls earn 100 free league points, and an optional exact number earns up to 100 more for closeness. The result includes the number, source passage and technical proof.
+Bullseye divides responsibility between validators, who interpret the real-world event and evidence, and deterministic code, which controls time, ranges and GEN allocation. This walkthrough follows the deployed StudioNet implementation. Five upcoming films have frozen rules and unknown outcomes; historical sessions provide a repeatable demonstration.
 
-Clone the prepared repository, install the pinned npm dependencies, copy `.env.example` to `.env.local`, and run `npm run dev`. The feed is readable without a wallet. Start with Barbie's historical practice round, choose a range, and confirm. Picking $150m–under $200m matches its published $162,022,044. That awards 100 practice points and leaves the competitive leaderboard untouched. Reload: your receipt and prediction remain saved.
+Live: [Bullseye](https://bullseye-genlayer.vercel.app). Source: [JWattjr/Bullseye](https://github.com/JWattjr/Bullseye). Quick review: [DEMO.md](DEMO.md).
 
-Use **Run a rehearsal** to exercise closing and pending states without waiting for a future release. The invented film closes in eight seconds and receives its synthetic $42,500,000 observation at ten seconds. This is expressly a local rehearsal. It has no GenLayer transaction and no competitive ranking effect.
+## 1. Run the frontend
 
-Now inspect the separate development-network proof. `public/protocol-proof.json` contains the deployed contract, actual specification/adjudication hashes and finalized record. Run `npm run test:network` to independently fetch receipts and finalized state. The script rejects finalized execution errors, verifies both callback receipts, and confirms the exact number, range and hashes. StudioNet is a development simulator, not a production-chain award or settlement.
+Use Node 22 or later; this release was verified with Node 24.12. The lockfile pins Next.js 16.3.8, React 19.2.0 and genlayer-js 1.1.8. Python 3.14 was used for direct contract tests.
 
-Why does the contract need interpretation? A film page contains domestic, international, worldwide, cumulative and individual-weekend figures. The creator's ordinary-language rule must identify one exact metric and event, not merely ask an AI to pick a winner. Bullseye freezes that interpretation before entries open. It includes source, scope, USD unit/scale, rounding, every interval boundary, closing/observation/resolution times, corrections and missing-evidence behavior.
+```powershell
+git clone https://github.com/JWattjr/Bullseye.git
+cd Bullseye
+npm ci
+Copy-Item .env.example .env.local
+npm run dev
+```
 
-To draft a competitive round, open **Create a round**, enter its film/year, opening Friday and The Numbers URL, and save/check the rule. This first step is a deterministic preview. The deployed owner can then submit with their wallet. Validators independently judge the natural-language proposal against the canonical specification. Ambiguous proposals revert. Successful specification finality triggers a protected self-message that opens entries; merely submitting or receiving ACCEPTED does not open a confirmed round.
+Open http://localhost:3100. The template selects browser persistence for practice, drafts and receipt caches. No private signing key belongs in the web environment. Optional `CRON_SECRET` authenticates a server scheduler; it is not a signing key and must never have a `NEXT_PUBLIC_` prefix.
 
-Participants connect their own browser wallet for live predictions. The wallet signs directly; Bullseye has no custody or backend relay. After signing, receipts appear under My predictions. Refresh protocol rounds to fetch finalized entries and outcomes. Competitive points and accuracy derive from those confirmed records. Pending and void rounds never affect accuracy.
+Upcoming contains five pre-release GEN markets; Practice contains Barbie, Oppenheimer and Dune: Part Two. Every ticket defaults to 2 GEN. Expand the rules: historical results are known; upcoming stakes remain held until a verified result or void.
 
-After observation begins, anyone may request resolution. Validators independently fetch the sole frozen publisher and extract a bounded answer. Code requires a literal integer dollar amount and an exact source passage, then determines the winning half-open interval. A finalized result callback publishes the result. Repeated callbacks cannot award duplicate points because scoring is derived, not incremented.
+For a wallet-free trial, open Barbie, expand **Play for free points**, pick **$150m – under $200m**, and confirm without an exact guess. Its $162,022,044 result yields 100 practice points and has no effect on competitive standings or GEN pools. Reload to inspect persistence. **Run a rehearsal** on `/practice` uses an invented film and synthetic $42,500,000 evidence; no protocol receipt is created.
 
-If evidence is missing or invalid, the round remains pending. After its fixed deadline, anyone may request void. A network/model execution failure applies no result. The repository includes a real failed adjudication receipt where the contract rejected a rephrased quotation; a subsequent retry succeeded without changing the rule.
+## 2. Understand the interpretive work
 
-Read `docs/EVIDENCE.md` before extending sources. Publisher truth, permanent full-page retention and archive eligibility are separate questions. Validator access to the selected 2023 Archive.org capture was verified, but it was not used for the 2026 observation. The retained exact passage and hash are provenance and integrity records, not a guarantee that every publisher fact is true.
+A film page contains domestic, international, lifetime, estimated and individual-weekend numbers. A plausible number must still answer the precise event and metric promised to entrants.
 
-Run the contract tests, application tests, browser suite, lint, strict typecheck and production build before changing the deployment. The available proof demonstrates historical finalized consensus; no untested future competitive round, production result or Portal award is claimed.
+[Optimistic Democracy](https://docs.genlayer.com/understand-genlayer-protocol/core-concepts/optimistic-democracy) starts with a leader's execution and independent validator assessment. Non-deterministic answers use a contract-defined [Equivalence Principle](https://docs.genlayer.com/understand-genlayer-protocol/core-concepts/optimistic-democracy/equivalence-principle). Bullseye compares bounded semantic fields instead of identical model prose. Hosted StudioNet does not establish production-validator performance or decentralization.
+
+The oracle uses two interpretive paths: checking a proposal against its canonical specification, then independently retrieving and extracting the publisher's result. See `propose` and `adjudicate` in [bullseye.py](../contracts/bullseye.py). The source pins `py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6`. Its custom `gl.vm.run_nondet_unsafe` verifier performs substantive independent checking. Merely accepting a leader because it returned successfully would erase that safeguard.
+
+## 3. Freeze rules before entries
+
+[upcoming.ts](../lib/upcoming.ts) constructs the five specifications and proposals. [domain.ts](../lib/domain.ts) and the oracle enforce the film and Friday–Sunday event; domestic US/Canada revenue; The Numbers URL; integer USD, scale 1 and no rounding; exhaustive ranges; entry, observation and resolution deadlines; correction policy; and pending-then-void behavior.
+
+Each lower range boundary is included; each upper boundary is excluded. The last range has no upper bound. Exactly $50m belongs to the range starting at $50m.
+
+The proposal prompt returns `valid` or `ambiguous`. Validators rerun interpretation and compare the decision. Ambiguity reverts, as demonstrated by the retained first Hunger Games proposal receipt. A successful proposal stores `validated_pending_finality`. A protected self-message opens entries after proposal finality. Participants cannot invoke that callback or change the opened specification.
+
+The creator form saves drafts and runs deterministic previews. Only the deployed oracle owner may propose new rounds. A saved preview is not validator approval.
+
+## 4. Read finalized state and sign directly
+
+The frontend uses an account-free client for public reads. With this installed SDK:
+
+```typescript
+import {createClient} from 'genlayer-js';
+import {studionet} from 'genlayer-js/chains';
+import {TransactionHashVariant} from 'genlayer-js/types';
+
+const client = createClient({chain: studionet});
+const round = JSON.parse(String(await client.readContract({
+  address: '0x756ddF8D588DA4D598F9F90947DB92Bced10D68E',
+  functionName: 'get_round',
+  args: ['street-fighter-2026'],
+  transactionHashVariant: TransactionHashVariant.LATEST_FINAL,
+})));
+```
+
+Wallet writes use `createClient({chain: studionet, account: address, provider})` followed by `client.connect('studionet')`. The app requires MetaMask and the GenLayer wallet plugin. Connect through the header; the wallet authorizes connection and signs each stake or claim. The server has no user signing key. The [SDK documentation](https://docs.genlayer.com/developers/decentralized-applications/genlayer-js) evolves; reproduce with this repository's pinned version rather than mixing in preview methods.
+
+StudioNet is chain 61999 at `https://studio.genlayer.com/api`. The [network guide](https://docs.genlayer.com/developers/networks) lists Studio's built-in faucet. Fund the exact wallet connected to Bullseye. Asimov, Bradbury and Studio preview are different environments; balances and addresses are not interchangeable.
+
+[use-film-market.ts](../lib/use-film-market.ts) submits `stake(sourceRoundId, rangeIndex)` with integer wei. The contract enforces 2–100 GEN, one immutable entry per wallet per upcoming market, and the cutoff. A hash means submitted, not confirmed. Receipts require finalized successful execution. Wallet-keyed caches preserve the correct view across reload and account switching.
+
+## 5. Retrieve and publish evidence
+
+After observation, `adjudicate` calls `gl.nondet.web.get(spec['source_url'])` and `gl.nondet.exec_prompt(..., response_format='json')`. Source commands cannot change stored rules. Bounded output is resolved, insufficient evidence or invalid evidence.
+
+Code accepts only a literal integer USD amount with valid comma grouping, rejecting decimals, shorthand millions, signs and exponents. The exact passage must appear in fetched text and contain the amount. Validators independently fetch and extract, agree on status/value, and verify the retained leader passage on their own page. Independently extracted wording may differ; invented retained quotes are rejected.
+
+The contract computes the winning interval and retains publisher URL, exact passage, UTF-8 passage hash, normalized value, observation timestamp and specification hash. A finalized callback publishes the resolved state. Missing evidence remains pending until the deadline permits void. No alternate publisher, administrator amount or participant-selected archive is substituted. See [EVIDENCE.md](EVIDENCE.md) for actual access probes and trust assumptions.
+
+## 6. Allocate the GEN pot
+
+[forecast_pools.py](../contracts/forecast_pools.py) binds each pool to its oracle specification hash. It cannot write a result. After entries close it accepts only a resolved or void source and waits for its own settlement-finality callback before claims.
+
+With a 10 GEN pot and winning stakes of 2 and 3 GEN, those winners receive 4 and 6 GEN. Cumulative integer division preserves every wei. Void or an empty winning range refunds original stakes.
+
+The participant signs one `claim(poolId)`. A claim record means transfer requested. The app separately verifies the native transfer's finality, explicit credit, pool sender, wallet recipient and exact amount before reporting GEN received. Acceptance or an EOA result label alone is insufficient. Failed native transfers currently have no automatic retry mechanism.
+
+Historical [film_pools.py](../contracts/film_pools.py) sessions consume already resolved sources and close two minutes after the first stake. New sessions preserve earlier claims. Upcoming pools never roll into replacement sessions.
+
+Open app pages request permissionless, zero-value adjudication and settlement using disposable unfunded StudioNet accounts, without staking or claiming for participants. The daily keeper is implemented but inactive until its server-only secret is configured. Until activation, someone must return to an app page; no manual consumer settlement button is required.
+
+## 7. Reproduce tests and proofs
+
+Existing deployment verification needs no transactions:
+
+```powershell
+npm run test:network
+npx tsx scripts/verify-upcoming.ts
+npm test
+npm run lint
+npm run typecheck
+npm run build
+python -m pip install -r requirements.txt
+python -m pytest tests/direct -q
+genvm-lint check contracts/bullseye.py
+genvm-lint check contracts/forecast_pools.py
+```
+
+Direct Python tests use the harness without network broadcasts. Start the app and set `BULLSEYE_URL` for browser tests. `npm run test:browser` verifies practice/recovery; `npx tsx scripts/consumer-check.ts` uses isolated wallet/RPC fixtures; `BULLSEYE_VERIFY_FILMS=yes` with `npx tsx scripts/movie-stakes-check.ts` uses actual finalized reads for all eight tickets. Run `npx playwright install chromium` if Chromium is not installed, or set `BULLSEYE_CHROME` to its executable. All three suites respect that override, use the known Windows cache when present, and otherwise use Playwright's installed browser.
+
+[VERIFICATION.md](VERIFICATION.md) separates direct tests, mocked browser signatures, real reads and retained signed network receipts. Future results and payouts cannot be verified before release.
+
+## 8. Deploy your own instance
+
+Use a separate clone and your own Studio or CLI account. Preserve published manifests as reference and store your new addresses separately.
+
+In [GenLayer Studio](https://studio.genlayer.com), select stable StudioNet, paste the pinned [oracle](../contracts/bullseye.py), and deploy with your account as owner. Deploy [forecast_pools.py](../contracts/forecast_pools.py) using your oracle's address as constructor argument. Propose a new ID with a precise proposal and valid future specification. Wait for successful finalization and the opening callback, then call `create_pool` for that ID. Inspect matching hashes and finalized open state before enabling a ticket. The [Studio guide](https://docs.genlayer.com/developers/intelligent-contracts/tools/genlayer-studio) explains account, transaction and state inspection.
+
+The PowerShell wrapper and [upcoming-deploy.ts](../scripts/upcoming-deploy.ts) demonstrate resumable setup. Hashes are persisted before waiting; rejected attempts are archived. Those scripts target the shipped IDs: use your own IDs and separate manifests for a new deployment. Setup transfers zero GEN; funded participation is a separate participant signature.
+
+A shared-testnet release needs separate deployment verification, durable indexing and operational monitoring. This StudioNet prototype does not claim those steps are complete.
