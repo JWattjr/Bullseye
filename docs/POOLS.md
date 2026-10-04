@@ -1,5 +1,7 @@
 # GEN staking on the movie markets
 
+Five upcoming releases now use separate shared pools with pre-release cutoffs and unknown outcomes. See [upcoming-market specifications and verification](UPCOMING.md). The historical session behavior below remains available.
+
 Barbie, Oppenheimer and Dune: Part Two accept native StudioNet GEN on their existing `/rounds/...-practice` pages. One prediction ticket is the main flow; free points practice is a secondary disclosure. A saved points prediction does not block a GEN entry. `/` and `/pools` open the searchable movie-market directory; `/pools/rehearsal` retains access to earlier synthetic-pool claims.
 
 StudioNet GEN is simulated development currency. These are historical films whose published results are already known and available under Market rules & result before staking. They are funded historical practice, excluded from competitive rankings. This release does not advertise them as future film wagers.

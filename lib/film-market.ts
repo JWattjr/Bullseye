@@ -1,14 +1,15 @@
 import type {Round, Specification} from './domain';
 import {claimable, gen, type Pool} from './pools';
+import {upcomingFilms} from './upcoming';
 
-export const movieIds = ['barbie-practice', 'oppenheimer-practice', 'dune-two-practice'] as const;
+export const movieIds = ['barbie-practice', 'oppenheimer-practice', 'dune-two-practice', ...upcomingFilms.map(film => film.id)] as const;
 export type MovieId = typeof movieIds[number];
 export const isMovie = (id: string): id is MovieId => movieIds.some(movie => movie === id);
-export type FilmPool = Pool & {source_round_id: string; reference_winner: number; reference_value: number};
+export type FilmPool = Pool & {source_round_id: string; specification_hash?: string; mode?: string; created_at?: number; reference_winner: number | null; reference_value: number | null};
 export type FilmSnapshot = {
   contract: `0x${string}`;
   sourceRoundId: string;
-  source: {status: string; spec: Specification; winner: number; evidence: {normalized_value: number} | null};
+  source: {status: string; spec: Specification; specification_hash?: string; winner: number | null; evidence: {normalized_value: number} | null};
   pools: FilmPool[];
   olderBefore: number | null;
   ready: boolean;
@@ -44,7 +45,7 @@ export function positionState(pool: FilmPool, account: string, now: number) {
   if (pool.claims[account]) return 'Transfer requested';
   if (pool.status === 'void' || pool.status === 'resolved' && pool.winner !== null && BigInt(pool.pools[pool.winner]) === 0n) return 'Refund available';
   if (pool.status === 'resolved') return BigInt(claimable(pool, account)) > 0n ? 'Won' : 'Lost';
-  return now < pool.entry_deadline ? 'Open' : 'Resolving';
+  return now < pool.entry_deadline ? 'Open' : pool.mode === 'competitive' && pool.status === 'open' ? 'Awaiting result' : 'Resolving';
 }
 
 export function receiptFailed(receipt: FilmReceipt) {
@@ -64,4 +65,5 @@ export function receiptCopy(receipt: FilmReceipt) {
   return receiptComplete(receipt) ? 'GEN received in your wallet' : 'Sending GEN to your wallet…';
 }
 
-export const movieQuestion = (round: Round) => `How much did ${round.title} make on opening weekend?`;
+export const movieQuestion = (round: Round) => round.spec.mode === 'competitive' ? `How much will ${round.title} make on opening weekend?` : `How much did ${round.title} make on opening weekend?`;
+export const marketDate = (time: number) => new Intl.DateTimeFormat('en-GB', {day: 'numeric', month: 'short', timeZone: 'UTC'}).format(time * 1000);

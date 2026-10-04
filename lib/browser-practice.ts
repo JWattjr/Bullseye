@@ -1,12 +1,13 @@
 'use client';
 import {historicalRounds,addHistoricalRounds} from './seed';
+import {addUpcomingRounds} from './upcoming';
 import {score,type Round,type Prediction} from './domain';
 import {refreshRehearsal,startRehearsal,submitPractice,type Database} from './practice';
 // This module uses pure domain helpers only; no filesystem calls reach the client.
 export const browserPractice=process.env.NEXT_PUBLIC_PRACTICE_STORAGE==='browser';
 const key='bullseye.practice.v1';
 const guest='browser-guest';
-function read():Database {const saved=localStorage.getItem(key);const db:Database=saved?JSON.parse(saved):{rounds:historicalRounds(),predictions:[],profiles:{[guest]:{name:'Guest forecaster'}},drafts:{},receipts:{}};addHistoricalRounds(db.rounds);return db;}
+function read():Database {const saved=localStorage.getItem(key);const db:Database=saved?JSON.parse(saved):{rounds:historicalRounds(),predictions:[],profiles:{[guest]:{name:'Guest forecaster'}},drafts:{},receipts:{}};addHistoricalRounds(db.rounds);addUpcomingRounds(db.rounds);return db;}
 function save(db:Database){localStorage.setItem(key,JSON.stringify(db));}
 export function browserLeague(){
   const db=read();const time=Math.floor(Date.now()/1000);db.rounds.forEach(r=>refreshRehearsal(r,time));save(db);

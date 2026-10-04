@@ -11,7 +11,7 @@ import {MoviePositions, TransactionStatus} from './movie-stakes';
 
 type Summary = {account: string; entries: number; staked: string; available: string; loaded: boolean};
 function PortfolioMovie({round, connect, report}: {round: Round; connect: FilmConnect; report: (id: string, summary: Summary) => void}) {
-  const market = useFilmMarket(round.id as 'barbie-practice' | 'oppenheimer-practice' | 'dune-two-practice', connect);
+  const market = useFilmMarket(round.id as import('@/lib/film-market').MovieId, connect);
   const {data, account, refresh, busy, pending} = market;
   const entries = data?.pools.filter(pool => pool.entries[account]) ?? [];
   useEffect(() => {
@@ -31,7 +31,7 @@ function PortfolioMovie({round, connect, report}: {round: Round; connect: FilmCo
 export default function MoviePortfolio({rounds, connect}: {rounds: Round[]; connect: FilmConnect}) {
   const {account} = useWallet(), [summaries, setSummaries] = useState<Record<string, Summary>>({}), [connecting, setConnecting] = useState(false), [error, setError] = useState('');
   const report = useCallback((id: string, summary: Summary) => setSummaries(previous => JSON.stringify(previous[id]) === JSON.stringify(summary) ? previous : {...previous, [id]: summary}), []);
-  const current = Object.values(summaries).filter(summary => summary.account === account), loaded = current.filter(summary => summary.loaded).length === 3;
+  const current = Object.values(summaries).filter(summary => summary.account === account), loaded = current.filter(summary => summary.loaded).length === rounds.filter(round => isMovie(round.id)).length;
   const count = current.reduce((total, summary) => total + summary.entries, 0), staked = current.reduce((total, summary) => total + BigInt(summary.staked), 0n), available = current.reduce((total, summary) => total + BigInt(summary.available), 0n);
   async function request() {setConnecting(true); setError(''); try {await connect();} catch (e) {setError((e as Error).message);} finally {setConnecting(false);}}
   return <section className="consumer-portfolio"><div className="market-browser-heading"><div><h1>Your predictions.</h1><p>Track your stakes, follow results and collect your GEN.</p></div><Link className="text-action" href="/">Browse markets <ArrowRight size={17}/></Link></div>
@@ -42,6 +42,6 @@ export default function MoviePortfolio({rounds, connect}: {rounds: Round[]; conn
       {rounds.filter(round => isMovie(round.id)).map(round => <PortfolioMovie key={round.id + account} round={round} connect={connect} report={report}/>)}
       {loaded && count === 0 && <div className="portfolio-empty"><h2>Make your first prediction.</h2><p>Choose a movie and back an opening-weekend range with at least 2 GEN.</p><Link className="button primary" href="/">Explore markets <ArrowRight size={17}/></Link></div>}
     </>}
-    <p className="market-bottom-note">Latest sessions shown first · StudioNet practice GEN</p>
+    <p className="market-bottom-note">Upcoming & historical markets · StudioNet simulated GEN</p>
   </section>;
 }

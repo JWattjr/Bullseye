@@ -1,6 +1,6 @@
 # Bullseye
 
-A film prediction platform powered by GenLayer. Browse movie markets, choose an opening-weekend range, stake GEN and collect your share of the winning pool. The current Barbie, Oppenheimer and Dune markets replay historical results with simulated StudioNet GEN. Free points practice and the forecasting league remain available.
+A film prediction platform powered by GenLayer. Browse five upcoming movie markets, choose an opening-weekend range, stake GEN and collect your share of the winning pool. Street Fighter, Clayface, The Cat in the Hat, The Hunger Games: Sunrise on the Reaping and Dune: Part Three close before release and use independently verified published results. Barbie, Oppenheimer and Dune: Part Two remain historical practice markets. All stakes use simulated StudioNet GEN. Free points practice and the forecasting league remain available.
 
 ## Run
 
@@ -18,7 +18,7 @@ Copy-Item .env.example .env.local
 npm run dev
 ```
 
-Open http://localhost:3100. Choose a movie and revenue range, enter at least 2 GEN and confirm in your wallet. The app follows confirmation and settlement automatically. Open My predictions to track entries and collect available GEN with one wallet confirmation. Free points practice is available from the footer and each movie’s **Play for free points** disclosure; it needs no wallet and is excluded from competitive rankings.
+Open http://localhost:3100. Choose a movie and revenue range, enter at least 2 GEN and confirm in your wallet. The app follows confirmation and settlement automatically. Open My predictions to track entries and collect available GEN with one wallet confirmation. Upcoming stakes stay in their shared pool until the opening-weekend result is verified; historical sessions run for two minutes. Free points practice is available from the footer and historical movie pages; it needs no wallet and is excluded from competitive rankings.
 
 **Run a rehearsal** creates an invented film with an eight-second entry window and a synthetic observation at ten seconds. Pick $30m–under $50m to match its $42,500,000 fixture. These timings never apply to competitive rounds. This is local application behavior, not a synthetic GenLayer receipt.
 
