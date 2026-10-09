@@ -1,0 +1,337 @@
+{
+  "network": "StudioNet",
+  "simulated": true,
+  "payoutVersion": 2,
+  "bullseye": "0x756ddF8D588DA4D598F9F90947DB92Bced10D68E",
+  "transactions": {
+    "films-deploy": "0xd4ccc8e81006a3d508490ab42715c91c141007434c8e95ea77777dcd0e96545c",
+    "upcoming-deploy": "0x51e10ea3088624d1796d7a6d8b1030a1f356ad72a856926e73672b8306d9b7be",
+    "historical-stake": "0x701f7ce786072b971489f90ff58c3bc147dc908064ddd59035462ec4ab362fc9",
+    "forecastFixtureOracle-deploy": "0xa6be64704ae9b9dbbef9166a7db3025450c321e22d64022481781a311063511d",
+    "forecastFixturePools-deploy": "0x80deecdae314a55b010dd563b77fd9b1b60056333c799a6a158a11526c5b8b8a",
+    "forecast-stake": "0xe5ab3a79cb9cab497c773f136946c0e99e1e0bae6153866f58b2475cf2ebd311",
+    "historical-settle": "0x1c9efc5625aa9e1eedc786851690920f2a48ae724e092c855caf774aa43e03a7",
+    "historical-settle-child-0": "0x77615aac175b54edbcc26c68701ece0830cb8a0658763cf0a9652122b45f6039",
+    "historical-claim": "0x16b691bb18eaa7e8a0928bc194a2209d2a5094a36d8f7668e03595f2393e5eb5",
+    "historical-claim-child-0": "0x021f92d84e649770c0b61044aad180111ca7424daa057497032042e1d1967c51",
+    "historical-verify": "0xce25e45fed35d7d7d37afdc41c808c4f9dbe6057d47144163dd919816436cea5",
+    "historical-verify-child-0": "0x395f2806a716495ae1f5f636b462f7cc55902f512075b76e510b561b70935e9c",
+    "forecast-resolve-fixture": "0x80c46882047fd38730c2a37cacb579b4d3f4c2621f4944ab9695c266abc6e0e1",
+    "forecast-settle": "0x33495cec05737dcf08d5c82e2a923660d2f7bf0f02201d2378eb98843da5a84b",
+    "forecast-settle-child-0": "0x5b130335565d5a6a2ab9996faf4bcc21f58be239b2ca8b41b8eeaba37078cc02",
+    "forecast-claim": "0x45567313f3c6db6830a24c8d86b527f5fad4e2930270d70f0357915503c02ac1",
+    "forecast-claim-child-0": "0x886637fbbe80715145ffcd84600f7c9fb91db4ef19709444da811dea61a5208f",
+    "forecast-verify": "0x5859f92c20b5922683007b349035eeaeb42f8a138f9b7a4b74a1e40309a39cf9",
+    "forecast-verify-child-0": "0x783812dda64edf68a9f8a54c60c13344b0382286dc58d2f8290f62de8209fed5",
+    "street-fighter-2026-create-v2": "0x490c6f898298dd34b8a7d4432db7909be7905926ce76b06712c5614ce54a5036",
+    "clayface-2026-create-v2": "0xb08343a26b5ac74507be31166cf7f488e528e31a48d593d30340730d25294ec4",
+    "cat-in-the-hat-2026-create-v2": "0x3bea3ce71d007e3569f88c5344a1714f08b92383f42a79d165b73d270bd61715",
+    "hunger-games-sunrise-2026-create-v2": "0x69ebd09ce2e44e0d29b92ed097a9f71c407398946d78be1f7676626d34b82824",
+    "dune-three-2026-create-v2": "0xec82ae707a280e2124b8643545dfea006d5a1dca6d8dddec9ae20ff8c4918273"
+  },
+  "contracts": {
+    "films": "0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403",
+    "upcoming": "0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25",
+    "forecastFixtureOracle": "0xaBCafbC3EA0fB3286f0cD8761ee82a59773AC17f",
+    "forecastFixturePools": "0x4680745D2fB09f9A68B2Cb22cfF1Eab41D684b8C"
+  },
+  "fundedStakeWei": "4000000000000000000",
+  "live": {
+    "historical": {
+      "source": "barbie-network-demo",
+      "contract": "0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403",
+      "pool": "barbie-network-demo-pool-v2-1",
+      "wallet": "0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92",
+      "walletBefore": "8000999999999999998",
+      "walletAfterStake": "6000999999999999998",
+      "stakeWei": "2000000000000000000",
+      "oracleIsFixture": false,
+      "walletBeforeClaim": "4000999999999999998",
+      "beforeVerification": {
+        "claim_attempts": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+            "amount": "2000000000000000000",
+            "attempt": 1,
+            "claim_hash": null,
+            "status": "pending",
+            "transfer_hash": null
+          }
+        },
+        "claims": {},
+        "entries": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+            "range": 2,
+            "stake": "2000000000000000000"
+          }
+        },
+        "entry_deadline": 1791554753,
+        "id": "barbie-network-demo-pool-v2-1",
+        "mode": "historical",
+        "network": "StudioNet",
+        "participants": [
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+        ],
+        "payout_version": 2,
+        "pools": [
+          "0",
+          "0",
+          "2000000000000000000",
+          "0"
+        ],
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": 150000000
+          },
+          {
+            "lower": 150000000,
+            "upper": 200000000
+          },
+          {
+            "lower": 200000000,
+            "upper": null
+          }
+        ],
+        "reference_value": 162022044,
+        "reference_winner": 2,
+        "source_round_id": "barbie-network-demo",
+        "specification_hash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96",
+        "status": "resolved",
+        "title": "Barbie (2023), 2023-07-21 to 2023-07-23",
+        "total": "2000000000000000000",
+        "value": 162022044,
+        "winner": 2
+      },
+      "claim": {
+        "amount": "2000000000000000000",
+        "attempt": 1,
+        "claim_hash": "0x16b691bb18eaa7e8a0928bc194a2209d2a5094a36d8f7668e03595f2393e5eb5",
+        "status": "paid",
+        "transfer_hash": "0x021f92d84e649770c0b61044aad180111ca7424daa057497032042e1d1967c51"
+      },
+      "poolState": {
+        "claim_attempts": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+            "amount": "2000000000000000000",
+            "attempt": 1,
+            "claim_hash": "0x16b691bb18eaa7e8a0928bc194a2209d2a5094a36d8f7668e03595f2393e5eb5",
+            "status": "paid",
+            "transfer_hash": "0x021f92d84e649770c0b61044aad180111ca7424daa057497032042e1d1967c51"
+          }
+        },
+        "claims": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": "2000000000000000000"
+        },
+        "entries": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+            "range": 2,
+            "stake": "2000000000000000000"
+          }
+        },
+        "entry_deadline": 1791554753,
+        "id": "barbie-network-demo-pool-v2-1",
+        "mode": "historical",
+        "network": "StudioNet",
+        "participants": [
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+        ],
+        "payout_version": 2,
+        "pools": [
+          "0",
+          "0",
+          "2000000000000000000",
+          "0"
+        ],
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": 150000000
+          },
+          {
+            "lower": 150000000,
+            "upper": 200000000
+          },
+          {
+            "lower": 200000000,
+            "upper": null
+          }
+        ],
+        "reference_value": 162022044,
+        "reference_winner": 2,
+        "source_round_id": "barbie-network-demo",
+        "specification_hash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96",
+        "status": "resolved",
+        "title": "Barbie (2023), 2023-07-21 to 2023-07-23",
+        "total": "2000000000000000000",
+        "value": 162022044,
+        "winner": 2
+      },
+      "walletAfterPayout": "6000999999999999998",
+      "poolBalanceAfter": "0",
+      "parentHash": "0x16b691bb18eaa7e8a0928bc194a2209d2a5094a36d8f7668e03595f2393e5eb5",
+      "transferHash": "0x021f92d84e649770c0b61044aad180111ca7424daa057497032042e1d1967c51",
+      "successVerified": true
+    },
+    "forecast": {
+      "source": "forecast-recovery-fixture",
+      "contract": "0x4680745D2fB09f9A68B2Cb22cfF1Eab41D684b8C",
+      "pool": "forecast-recovery-fixture-pool-v2-1",
+      "wallet": "0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92",
+      "walletBefore": "6000999999999999998",
+      "walletAfterStake": "4000999999999999998",
+      "stakeWei": "2000000000000000000",
+      "oracleIsFixture": true,
+      "walletBeforeClaim": "6000999999999999998",
+      "beforeVerification": {
+        "claim_attempts": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+            "amount": "2000000000000000000",
+            "attempt": 1,
+            "claim_hash": null,
+            "status": "pending",
+            "transfer_hash": null
+          }
+        },
+        "claims": {},
+        "created_at": 1791554864,
+        "entries": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+            "range": 2,
+            "stake": "2000000000000000000"
+          }
+        },
+        "entry_deadline": 1791554971,
+        "id": "forecast-recovery-fixture-pool-v2-1",
+        "mode": "competitive",
+        "network": "StudioNet",
+        "participants": [
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+        ],
+        "payout_version": 2,
+        "pools": [
+          "0",
+          "0",
+          "2000000000000000000",
+          "0"
+        ],
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": 150000000
+          },
+          {
+            "lower": 150000000,
+            "upper": 200000000
+          },
+          {
+            "lower": 200000000,
+            "upper": null
+          }
+        ],
+        "reference_value": null,
+        "reference_winner": null,
+        "source_round_id": "forecast-recovery-fixture",
+        "specification_hash": "test-only-recovery-fixture-v1",
+        "status": "resolved",
+        "title": "TEST ONLY: forecast payout recovery",
+        "total": "2000000000000000000",
+        "value": 162022044,
+        "winner": 2
+      },
+      "claim": {
+        "amount": "2000000000000000000",
+        "attempt": 1,
+        "claim_hash": "0x45567313f3c6db6830a24c8d86b527f5fad4e2930270d70f0357915503c02ac1",
+        "status": "paid",
+        "transfer_hash": "0x886637fbbe80715145ffcd84600f7c9fb91db4ef19709444da811dea61a5208f"
+      },
+      "poolState": {
+        "claim_attempts": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+            "amount": "2000000000000000000",
+            "attempt": 1,
+            "claim_hash": "0x45567313f3c6db6830a24c8d86b527f5fad4e2930270d70f0357915503c02ac1",
+            "status": "paid",
+            "transfer_hash": "0x886637fbbe80715145ffcd84600f7c9fb91db4ef19709444da811dea61a5208f"
+          }
+        },
+        "claims": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": "2000000000000000000"
+        },
+        "created_at": 1791554864,
+        "entries": {
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92": {
+            "range": 2,
+            "stake": "2000000000000000000"
+          }
+        },
+        "entry_deadline": 1791554971,
+        "id": "forecast-recovery-fixture-pool-v2-1",
+        "mode": "competitive",
+        "network": "StudioNet",
+        "participants": [
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+        ],
+        "payout_version": 2,
+        "pools": [
+          "0",
+          "0",
+          "2000000000000000000",
+          "0"
+        ],
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": 150000000
+          },
+          {
+            "lower": 150000000,
+            "upper": 200000000
+          },
+          {
+            "lower": 200000000,
+            "upper": null
+          }
+        ],
+        "reference_value": null,
+        "reference_winner": null,
+        "source_round_id": "forecast-recovery-fixture",
+        "specification_hash": "test-only-recovery-fixture-v1",
+        "status": "resolved",
+        "title": "TEST ONLY: forecast payout recovery",
+        "total": "2000000000000000000",
+        "value": 162022044,
+        "winner": 2
+      },
+      "walletAfterPayout": "8000999999999999998",
+      "poolBalanceAfter": "0",
+      "parentHash": "0x45567313f3c6db6830a24c8d86b527f5fad4e2930270d70f0357915503c02ac1",
+      "transferHash": "0x886637fbbe80715145ffcd84600f7c9fb91db4ef19709444da811dea61a5208f",
+      "successVerified": true
+    }
+  },
+  "deploymentVerified": true,
+  "upcomingPools": {
+    "street-fighter-2026": "street-fighter-2026-pool-v2-1",
+    "clayface-2026": "clayface-2026-pool-v2-2",
+    "cat-in-the-hat-2026": "cat-in-the-hat-2026-pool-v2-3",
+    "hunger-games-sunrise-2026": "hunger-games-sunrise-2026-pool-v2-4",
+    "dune-three-2026": "dune-three-2026-pool-v2-5"
+  }
+}

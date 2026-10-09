@@ -1,0 +1,290 @@
+{
+  "network": "StudioNet",
+  "simulated": true,
+  "bullseye": "0x756ddF8D588DA4D598F9F90947DB92Bced10D68E",
+  "sourceRounds": {
+    "street-fighter-2026": "street-fighter-2026",
+    "clayface-2026": "clayface-2026",
+    "cat-in-the-hat-2026": "cat-in-the-hat-2026",
+    "hunger-games-sunrise-2026": "hunger-games-sunrise-2026",
+    "dune-three-2026": "dune-three-2026"
+  },
+  "specificationHashes": {
+    "street-fighter-2026": "815cbf7c0bd7b9fd84241a725594bef9ada8bed74c5d1db47eba6e0338c62b2d",
+    "clayface-2026": "7f6a41d9deceff9665b52e8037611b126381684424c6458e4b435b90731f187c",
+    "cat-in-the-hat-2026": "8763a3326812ece8044155be77f54af7c453d49287661d1761a33e1f3df236cc",
+    "hunger-games-sunrise-2026": "77411f9bea392767c926fbb6d90dc60bfae6fdfb13ddbf457339ea08dedbe9fa",
+    "dune-three-2026": "7a07eef86e5ca27e6c12ab24408e9ba77ecf449c7f30e2f33e234c4bce3d1e6e"
+  },
+  "transactions": {
+    "deploy": "0x318f52833233dd1d679df99c37bca37e3997e58bdd4b09e2c176651040682e73",
+    "street-fighter-2026-spec": "0xd0d7c25410769b9d879f11825990dc6ab714cec5efbb697d582f0d14c397ccc1",
+    "street-fighter-2026-spec-callback-0": "0x7b73d5e52d0e3cb50c8878c86eeca74164076a9d08cbcf30f38284f6c0016a83",
+    "clayface-2026-spec": "0xd70e4bea977aabfe13928b916973b8991269d4acf09714f0d525e6b25ff7cadc",
+    "clayface-2026-spec-callback-0": "0x691ba7cdb5da4e6588a006417efb2a6c3a4235772df9f2b8ef5ed56d0cf514ec",
+    "cat-in-the-hat-2026-spec": "0x4225148e569e81b97a5c8de776fdc32c6e44d85ae54bf91ad9edf394ac4a94fe",
+    "cat-in-the-hat-2026-spec-callback-0": "0xfc505962f0bb3c191089e61df4f8929961d9c706e49440245c54c18203cc9b65",
+    "hunger-games-sunrise-2026-spec-rejected-1": "0x04bb983f31cc72f4b3010bbdb5d01c0c0b7fee1f43bf82b5774e401791943c45",
+    "hunger-games-sunrise-2026-spec": "0xc0bdbc160a0c9262f74a6eebe7054c75ac292130479c5e7f9898a6286055bc30",
+    "hunger-games-sunrise-2026-spec-callback-0": "0xbff6b6b16f33970779f69ba0c770d66aeb8ba9deb0e56069acd6cf2ba28d793c",
+    "dune-three-2026-spec": "0xc448a994b917d953531f03f3dce11d636a809220865935a6a6ba56e2d4b28294",
+    "dune-three-2026-spec-callback-0": "0x7f79f0003cad3b85c64b63c5a83393eca9eb0d4f8d819fc1227e33d8a4892e0f",
+    "street-fighter-2026-pool": "0x6c14fdbeca8e5f4e1a1ba3243c6115511f1f4402d6a5a58ee002d89bbee1123b",
+    "clayface-2026-pool": "0xcd505f7c2bb0afdbbb94380d8f38884d76641c3379cdd521ba82b84004783554",
+    "cat-in-the-hat-2026-pool": "0x72d557c36e054fe20bee4b6f041acd07cb509da494044ba61a389c11cf15cd64",
+    "hunger-games-sunrise-2026-pool": "0x2f11971c22c701739bac37ecfc8044291f87c7f6aacf0f877b4b928c3249d1ba",
+    "dune-three-2026-pool": "0xe08c0c551356129fab704e1b968e0de9e7bfec41e3da41f1c370421d7e8890bb"
+  },
+  "sources": {
+    "street-fighter-2026": {
+      "evidence": null,
+      "histogram": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "participants": [],
+      "proposal": "Forecast Street Fighter (2026), 2026-10-16 to 2026-10-18. The metric is domestic opening-weekend box-office revenue for United States and Canada, in exact integer USD dollars, scale 1, with no rounding. The only source is https://www.the-numbers.com/movie/Street-Fighter-(2026). This is an upcoming competitive forecast. Use exactly the attached ranges, entry cutoff, observation time, resolution deadline, first successful consensus observation policy and pending-then-void missing-evidence policy.",
+      "spec": {
+        "correction_policy": "first successful consensus observation; ignore later corrections",
+        "currency": "USD",
+        "entry_deadline": 1792022400,
+        "event": "Street Fighter (2026), 2026-10-16 to 2026-10-18",
+        "geography": "United States and Canada",
+        "metric": "domestic opening-weekend box-office revenue",
+        "missing_evidence": "pending until deadline then void",
+        "mode": "competitive",
+        "observation_time": 1792497600,
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 25000000
+          },
+          {
+            "lower": 25000000,
+            "upper": 50000000
+          },
+          {
+            "lower": 50000000,
+            "upper": 75000000
+          },
+          {
+            "lower": 75000000,
+            "upper": null
+          }
+        ],
+        "resolution_deadline": 1793059200,
+        "rounding": "exact published integer; no rounding",
+        "scale": 1,
+        "source_url": "https://www.the-numbers.com/movie/Street-Fighter-(2026)",
+        "unit": "dollars"
+      },
+      "specification_hash": "815cbf7c0bd7b9fd84241a725594bef9ada8bed74c5d1db47eba6e0338c62b2d",
+      "status": "open",
+      "winner": null
+    },
+    "clayface-2026": {
+      "evidence": null,
+      "histogram": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "participants": [],
+      "proposal": "Forecast Clayface (2026), 2026-10-23 to 2026-10-25. The metric is domestic opening-weekend box-office revenue for United States and Canada, in exact integer USD dollars, scale 1, with no rounding. The only source is https://www.the-numbers.com/movie/Clayface-(2026). This is an upcoming competitive forecast. Use exactly the attached ranges, entry cutoff, observation time, resolution deadline, first successful consensus observation policy and pending-then-void missing-evidence policy.",
+      "spec": {
+        "correction_policy": "first successful consensus observation; ignore later corrections",
+        "currency": "USD",
+        "entry_deadline": 1792627200,
+        "event": "Clayface (2026), 2026-10-23 to 2026-10-25",
+        "geography": "United States and Canada",
+        "metric": "domestic opening-weekend box-office revenue",
+        "missing_evidence": "pending until deadline then void",
+        "mode": "competitive",
+        "observation_time": 1793102400,
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 20000000
+          },
+          {
+            "lower": 20000000,
+            "upper": 40000000
+          },
+          {
+            "lower": 40000000,
+            "upper": 60000000
+          },
+          {
+            "lower": 60000000,
+            "upper": null
+          }
+        ],
+        "resolution_deadline": 1793664000,
+        "rounding": "exact published integer; no rounding",
+        "scale": 1,
+        "source_url": "https://www.the-numbers.com/movie/Clayface-(2026)",
+        "unit": "dollars"
+      },
+      "specification_hash": "7f6a41d9deceff9665b52e8037611b126381684424c6458e4b435b90731f187c",
+      "status": "open",
+      "winner": null
+    },
+    "cat-in-the-hat-2026": {
+      "evidence": null,
+      "histogram": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "participants": [],
+      "proposal": "Forecast The Cat in the Hat (2026), 2026-11-06 to 2026-11-08. The metric is domestic opening-weekend box-office revenue for United States and Canada, in exact integer USD dollars, scale 1, with no rounding. The only source is https://www.the-numbers.com/movie/Dr-Seuss-The-Cat-in-the-Hat-(2026). This is an upcoming competitive forecast. Use exactly the attached ranges, entry cutoff, observation time, resolution deadline, first successful consensus observation policy and pending-then-void missing-evidence policy.",
+      "spec": {
+        "correction_policy": "first successful consensus observation; ignore later corrections",
+        "currency": "USD",
+        "entry_deadline": 1793836800,
+        "event": "The Cat in the Hat (2026), 2026-11-06 to 2026-11-08",
+        "geography": "United States and Canada",
+        "metric": "domestic opening-weekend box-office revenue",
+        "missing_evidence": "pending until deadline then void",
+        "mode": "competitive",
+        "observation_time": 1794312000,
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 25000000
+          },
+          {
+            "lower": 25000000,
+            "upper": 50000000
+          },
+          {
+            "lower": 50000000,
+            "upper": 75000000
+          },
+          {
+            "lower": 75000000,
+            "upper": null
+          }
+        ],
+        "resolution_deadline": 1794873600,
+        "rounding": "exact published integer; no rounding",
+        "scale": 1,
+        "source_url": "https://www.the-numbers.com/movie/Dr-Seuss-The-Cat-in-the-Hat-(2026)",
+        "unit": "dollars"
+      },
+      "specification_hash": "8763a3326812ece8044155be77f54af7c453d49287661d1761a33e1f3df236cc",
+      "status": "open",
+      "winner": null
+    },
+    "hunger-games-sunrise-2026": {
+      "evidence": null,
+      "histogram": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "participants": [],
+      "proposal": "The event is The Hunger Games: Sunrise on the Reaping (2026), 2026-11-20 to 2026-11-22. The forecast metric is domestic opening-weekend box-office revenue. Geography: United States and Canada. Currency: USD. Unit: dollars. Scale: 1. Rounding: exact published integer; no rounding. The publisher is The Numbers; the only source URL is https://www.the-numbers.com/movie/Hunger-Games-The-Sunrise-on-the-Reaping-(2026). The entry ranges in integer USD are [{\"lower\":0,\"upper\":50000000},{\"lower\":50000000,\"upper\":75000000},{\"lower\":75000000,\"upper\":100000000},{\"lower\":100000000,\"upper\":null}]. Entry deadline: 1795046400 UNIX seconds. Observation time: 1795521600 UNIX seconds. Resolution deadline: 1796083200 UNIX seconds. Mode: competitive. Correction policy: first successful consensus observation; ignore later corrections. Missing evidence: pending until deadline then void.",
+      "spec": {
+        "correction_policy": "first successful consensus observation; ignore later corrections",
+        "currency": "USD",
+        "entry_deadline": 1795046400,
+        "event": "The Hunger Games: Sunrise on the Reaping (2026), 2026-11-20 to 2026-11-22",
+        "geography": "United States and Canada",
+        "metric": "domestic opening-weekend box-office revenue",
+        "missing_evidence": "pending until deadline then void",
+        "mode": "competitive",
+        "observation_time": 1795521600,
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 50000000
+          },
+          {
+            "lower": 50000000,
+            "upper": 75000000
+          },
+          {
+            "lower": 75000000,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": null
+          }
+        ],
+        "resolution_deadline": 1796083200,
+        "rounding": "exact published integer; no rounding",
+        "scale": 1,
+        "source_url": "https://www.the-numbers.com/movie/Hunger-Games-The-Sunrise-on-the-Reaping-(2026)",
+        "unit": "dollars"
+      },
+      "specification_hash": "77411f9bea392767c926fbb6d90dc60bfae6fdfb13ddbf457339ea08dedbe9fa",
+      "status": "open",
+      "winner": null
+    },
+    "dune-three-2026": {
+      "evidence": null,
+      "histogram": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "participants": [],
+      "proposal": "The event is Dune: Part Three (2026), 2026-12-18 to 2026-12-20. The forecast metric is domestic opening-weekend box-office revenue. Geography: United States and Canada. Currency: USD. Unit: dollars. Scale: 1. Rounding: exact published integer; no rounding. The publisher is The Numbers; the only source URL is https://www.the-numbers.com/movie/Dune-Part-Three-(2026). The entry ranges in integer USD are [{\"lower\":0,\"upper\":75000000},{\"lower\":75000000,\"upper\":100000000},{\"lower\":100000000,\"upper\":150000000},{\"lower\":150000000,\"upper\":null}]. Entry deadline: 1797465600 UNIX seconds. Observation time: 1797940800 UNIX seconds. Resolution deadline: 1798502400 UNIX seconds. Mode: competitive. Correction policy: first successful consensus observation; ignore later corrections. Missing evidence: pending until deadline then void.",
+      "spec": {
+        "correction_policy": "first successful consensus observation; ignore later corrections",
+        "currency": "USD",
+        "entry_deadline": 1797465600,
+        "event": "Dune: Part Three (2026), 2026-12-18 to 2026-12-20",
+        "geography": "United States and Canada",
+        "metric": "domestic opening-weekend box-office revenue",
+        "missing_evidence": "pending until deadline then void",
+        "mode": "competitive",
+        "observation_time": 1797940800,
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 75000000
+          },
+          {
+            "lower": 75000000,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": 150000000
+          },
+          {
+            "lower": 150000000,
+            "upper": null
+          }
+        ],
+        "resolution_deadline": 1798502400,
+        "rounding": "exact published integer; no rounding",
+        "scale": 1,
+        "source_url": "https://www.the-numbers.com/movie/Dune-Part-Three-(2026)",
+        "unit": "dollars"
+      },
+      "specification_hash": "7a07eef86e5ca27e6c12ab24408e9ba77ecf449c7f30e2f33e234c4bce3d1e6e",
+      "status": "open",
+      "winner": null
+    }
+  },
+  "pools": {
+    "street-fighter-2026": "street-fighter-2026-pool-1",
+    "clayface-2026": "clayface-2026-pool-2",
+    "cat-in-the-hat-2026": "cat-in-the-hat-2026-pool-3",
+    "hunger-games-sunrise-2026": "hunger-games-sunrise-2026-pool-4",
+    "dune-three-2026": "dune-three-2026-pool-5"
+  },
+  "deploymentVerified": true,
+  "contract": "0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5",
+  "verifiedAt": "2026-10-04T10:37:18.709Z"
+}

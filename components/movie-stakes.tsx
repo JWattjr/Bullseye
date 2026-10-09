@@ -13,7 +13,7 @@ export function TransactionStatus({market}: {market: Market}) {
   if (!receipt) return null;
   return <div className={'transaction-status ' + (receiptFailed(receipt) ? 'transaction-failed' : receiptComplete(receipt) ? 'transaction-complete' : '')} role="status" aria-live="polite">
     {receiptComplete(receipt) && !receiptFailed(receipt) ? <Check size={18}/> : <Clock size={18}/>}
-    <div><strong>{receiptCopy(receipt)}</strong><p>{receiptFailed(receipt) ? 'Your transfer or prediction needs review. The network record is available in transaction details.' : receiptComplete(receipt) ? receipt.action === 'claim' ? 'Your balance updates automatically.' : 'We’ll update your result here and in My predictions.' : 'You can leave this page. Track it in My predictions.'}</p></div>
+    <div><strong>{receiptCopy(receipt)}</strong><p>{receipt.recovery === 'failed' ? 'The first transfer failed. Retry collection below with one wallet confirmation.' : receiptFailed(receipt) ? receipt.payoutVersion === 2 ? 'We’re verifying that no GEN arrived before opening a safe retry.' : 'Your transfer or prediction needs review. The network record is available in transaction details.' : receiptComplete(receipt) ? receipt.action === 'claim' ? 'Your balance updates automatically.' : 'We’ll update your result here and in My predictions.' : 'You can leave this page. Track it in My predictions.'}</p></div>
   </div>;
 }
 
@@ -24,10 +24,10 @@ export function MoviePositions({round, market}: {round: Round; market: Market}) 
   return <section className="movie-positions" aria-label={round.title + ' predictions'}><div className="section-heading"><h2>Your {round.title} predictions</h2><span>{owned.length} {owned.length === 1 ? 'entry' : 'entries'}</span></div>
     {owned.map(pool => {
       const entry = pool.entries[account], payout = claimable(pool, account), paid = credits[pool.id] ?? (receipt?.poolId === pool.id ? receipt : null), credited = !!(paid && paid.action === 'claim' && receiptComplete(paid) && !receiptFailed(paid));
-      const status = credited ? 'Collected' : positionState(pool, account, now);
+      const status = credited ? 'Collected' : positionState(pool, account, now), retry = pool.claim_attempts?.[account]?.status === 'failed';
       return <div className="position-row" id={pool.id} key={pool.id}>
         <div><span className={'position-state ' + (status === 'Won' || status === 'Collected' ? 'position-positive' : '')}>{status === 'Open' && now ? pool.mode === 'competitive' ? 'Closes ' + marketDate(pool.entry_deadline) : 'Closes in ' + Math.max(0, pool.entry_deadline - now) + 's' : status}</span><h3>{rangeLabel((data!.source.spec.ranges)[entry.range])}</h3><p>{displayGen(entry.stake)} GEN staked · {marketDate(pool.created_at ?? pool.entry_deadline - 120)}</p></div>
-        <div className="position-return">{BigInt(payout) > 0n ? <button className="button primary" disabled={busy || pending} onClick={() => submit('claim', undefined, undefined, pool)}>{busy ? 'Confirm in wallet…' : 'Collect ' + displayGen(payout) + ' GEN'}<ArrowRight size={16}/></button> : <><strong>{displayGen(pool.claims[account] ?? '0')} GEN</strong><span>{credited ? 'Received' : pool.claims[account] ? 'Transfer requested' : status === 'Lost' ? 'Return' : 'Result pending'}</span></>}</div>
+        <div className="position-return">{BigInt(payout) > 0n ? <button className="button primary" disabled={busy || pending} onClick={() => submit('claim', undefined, undefined, pool)}>{busy ? 'Confirm in wallet…' : (retry ? 'Retry collection · ' : 'Collect ') + displayGen(payout) + ' GEN'}<ArrowRight size={16}/></button> : <><strong>{displayGen(pool.claims[account] ?? pool.claim_attempts?.[account]?.amount ?? '0')} GEN</strong><span>{credited || status === 'Collected' ? 'Received' : pool.claims[account] || pool.claim_attempts?.[account] ? 'Transfer requested' : status === 'Lost' ? 'Return' : 'Result pending'}</span></>}</div>
       </div>;
     })}
   </section>;

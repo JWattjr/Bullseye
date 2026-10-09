@@ -1,6 +1,6 @@
 import type {TransactionHash} from 'genlayer-js/types';
 import {isMovie} from '@/lib/film-market';
-import {filmPool, filmReceipt, filmSnapshot, settleFilm} from '@/lib/film-market-server';
+import {filmPool, filmReceipt, filmSnapshot, settleFilm, verifyFilmClaim} from '@/lib/film-market-server';
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
@@ -20,8 +20,12 @@ export async function POST(request: Request) {
   const origin = request.headers.get('origin');
   if (origin && origin !== new URL(request.url).origin) return Response.json({error: 'Invalid request origin.'}, {status: 403});
   try {
-    const {movie, poolId} = await request.json();
+    const {movie, poolId, action, participant, hash} = await request.json();
     if (typeof movie !== 'string' || !isMovie(movie) || typeof poolId !== 'string' || poolId.length > 100) return Response.json({error: 'Choose a listed movie session.'}, {status: 400});
+    if (action === 'verify_claim') {
+      if (typeof participant !== 'string' || !/^0x[a-fA-F0-9]{40}$/.test(participant) || typeof hash !== 'string' || !/^0x[a-fA-F0-9]{64}$/.test(hash)) return Response.json({error: 'Invalid collection receipt.'}, {status: 400});
+      return Response.json(await verifyFilmClaim(movie, poolId, participant.toLowerCase(), hash as TransactionHash));
+    }
     return Response.json(await settleFilm(movie, poolId));
   } catch {
     return Response.json({error: 'The result is taking longer than usual. We’ll retry automatically.'}, {status: 502});

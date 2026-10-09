@@ -12,7 +12,7 @@ The default directory has five upcoming films: Street Fighter, Clayface, The Cat
 
 Practice contains Barbie, Oppenheimer and Dune: Part Two. Their published results are known; the first stake opens a shared two-minute GEN session. Earlier claims remain available when a new session starts. Free points practice is a separate, wallet-free action on historical pages and `/practice`; it is excluded from competitive rankings.
 
-Browse without a wallet. Connect MetaMask with the GenLayer wallet plugin through the header, select a range, enter at least 2 GEN and sign. The ticket and My predictions follow confirmation and settlement automatically. Collect available GEN with one signature; received status requires an exact credited native transfer. Open pages drive settlement while the daily scheduler awaits its server authentication setting.
+Browse without a wallet. Connect MetaMask with the GenLayer wallet plugin through the header, select a range, enter at least 2 GEN and sign. The ticket and My predictions follow confirmation and settlement automatically. Collect available GEN with one signature. The contract reserves the attempt, independently verifies exact native credit, then marks it paid after finality. A confirmed failed transfer opens a Retry collection button; pending or uncertain receipts stay locked. Open pages drive settlement while the daily scheduler awaits its server authentication setting.
 
 **Network: StudioNet, chain 61999. All GEN is simulated development currency.** There is no mainnet or Bradbury deployment, real-money wagering or completed upcoming-film payout claim.
 
@@ -27,10 +27,10 @@ Deterministic code controls deadlines, units, ranges, immutable entries, specifi
 | Contract | StudioNet address | Public proof |
 | --- | --- | --- |
 | Rule/evidence oracle | `0x756ddF8D588DA4D598F9F90947DB92Bced10D68E` | [Oracle manifest](public/protocol-proof.json) |
-| Upcoming GEN pools | `0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5` | [Five-market manifest](public/upcoming-pool-proof.json) |
-| Historical GEN sessions | `0x6Ff023F19cE3e661A9F5Cf3e7782fec17f067Ed2` | [Film manifest](public/film-pool-proof.json) |
+| Upcoming GEN pools | `0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25` | [Five-market manifest](public/upcoming-pool-proof.json) |
+| Historical GEN sessions | `0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403` | [Film manifest](public/film-pool-proof.json) |
 
-The historical proof retains successful specifications, validator-fetched results, finalized callbacks, and a signed 2 GEN stake plus credited 2 GEN payout for each film using one entrant. Upcoming proof retains five finalized open specifications and pools with no predetermined outcomes. Raw receipts include failed or pending attempts rather than concealing them. [Proof limits](docs/VERIFICATION.md).
+The current historical proof retains a new 2 GEN Barbie deposit, exact native payout and independently finalized paid state. Earlier three-film receipts remain in the linked legacy manifest. [Payout recovery](docs/CLAIM-RECOVERY.md) contains both contract proofs, adversarial failure/retry tests and exact balances. Upcoming proof retains five finalized open specifications and pools with no predetermined outcomes. Raw receipts include failed or pending attempts rather than concealing them. [Proof limits](docs/VERIFICATION.md).
 
 ## Run locally
 
@@ -54,7 +54,7 @@ npm run lint
 npm run typecheck
 npm run build
 python -m pip install -r requirements.txt
-python -m pytest tests/direct -q
+python -m pytest tests/direct --artifacts-dir artifacts/gltest -q
 genvm-lint check contracts/bullseye.py
 genvm-lint check contracts/forecast_pools.py
 npm run test:network
@@ -63,10 +63,10 @@ npx tsx scripts/verify-upcoming.ts
 
 Start the app before browser checks. Set `BULLSEYE_URL` to another origin. `npm run test:browser` covers keyboard interaction, practice scoring, persistence, evidence, drafts, synthetic rehearsal and error recovery. `npx tsx scripts/consumer-check.ts` covers the consumer wallet flow using isolated fixtures without broadcasts. Set `BULLSEYE_VERIFY_FILMS=yes` for `npx tsx scripts/movie-stakes-check.ts` to check all eight tickets using actual finalized network reads. Browser scripts use installed Playwright Chromium; see [tutorial setup](docs/TUTORIAL.md).
 
-Latest release verification: **77 contract tests, 23 application tests**, lint, strict TypeScript, production build, published desktop/mobile consumer checks and actual finalized reads. Mock two-wallet collection is identified separately from signed single-entrant network proof.
+Latest release verification: **121 contract tests, 24 application tests**, lint, strict TypeScript, production build, published desktop/mobile consumer checks and actual finalized reads. Mock two-wallet collection is identified separately from signed single-entrant network proof.
 
 ## Scope
 
-Owner-only oracle creators; one metric and publisher; 200 entrants per market; browser-local practice; StudioNet availability/rate limits; no permanent full-page archive; no automatic retry of failed native transfers. First verified results ignore later source corrections. Upcoming release changes never silently rewrite the frozen weekend. The background keeper is implemented but inactive pending its secret; open-page settlement works. See [deployment](docs/DEPLOYMENT.md) and [pool behavior](docs/POOLS.md).
+Owner-only oracle creators; one metric and publisher; 200 entrants per market; browser-local practice; StudioNet availability/rate limits; no permanent full-page archive; receipt-verified recovery for failed native transfers; retries wait for fully backed unpaid obligations. First verified results ignore later source corrections. Upcoming release changes never silently rewrite the frozen weekend. The background keeper is implemented but inactive pending its secret; open-page settlement works. See [deployment](docs/DEPLOYMENT.md) and [pool behavior](docs/POOLS.md).
 
-Code and original typographic art are MIT licensed; font licenses remain in their packages. Film titles identify events. No studio posters or stills are shipped. No Portal contribution has been posted and no reward or eligibility is promised.
+Code and original typographic art are MIT licensed; font licenses remain in their packages. Film titles identify events. No studio posters or stills are shipped. The existing Portal contribution is under steward review; this release addresses its payout-recovery correction. No reward or eligibility is promised.

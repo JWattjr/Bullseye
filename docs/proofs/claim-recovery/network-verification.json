@@ -1,0 +1,16 @@
+{
+  "verifiedAt": "2026-10-09T14:24:29.609Z",
+  "sourceHashes": {
+    "films": "7ebca9adcc1bde24cf04bff700b958c25270e528ef27d1f42a8e17bbca69e4d3",
+    "upcoming": "abb97d74bec2c2aaa6d9a9ce41ccc089042bba6085f464f47994f6207de2fcee",
+    "forecastFixturePools": "abb97d74bec2c2aaa6d9a9ce41ccc089042bba6085f464f47994f6207de2fcee"
+  },
+  "checks": [
+    "films: deployed code exactly matches reviewed source",
+    "upcoming: deployed code exactly matches reviewed source",
+    "forecastFixturePools: deployed code exactly matches reviewed source",
+    "historical: exact finalized credit, paid state only after verification, recorded exact balances; oracle published historical result",
+    "forecast: exact finalized credit, paid state only after verification, recorded exact balances; oracle test fixture"
+  ],
+  "limitations": "Hosted successful native transfers only; failed delivery and retry are covered by controlled adversarial contract-ledger and browser fixtures."
+}

@@ -9,32 +9,6 @@
     "hunger-games-sunrise-2026": "hunger-games-sunrise-2026",
     "dune-three-2026": "dune-three-2026"
   },
-  "specificationHashes": {
-    "street-fighter-2026": "815cbf7c0bd7b9fd84241a725594bef9ada8bed74c5d1db47eba6e0338c62b2d",
-    "clayface-2026": "7f6a41d9deceff9665b52e8037611b126381684424c6458e4b435b90731f187c",
-    "cat-in-the-hat-2026": "8763a3326812ece8044155be77f54af7c453d49287661d1761a33e1f3df236cc",
-    "hunger-games-sunrise-2026": "77411f9bea392767c926fbb6d90dc60bfae6fdfb13ddbf457339ea08dedbe9fa",
-    "dune-three-2026": "7a07eef86e5ca27e6c12ab24408e9ba77ecf449c7f30e2f33e234c4bce3d1e6e"
-  },
-  "transactions": {
-    "deploy": "0x318f52833233dd1d679df99c37bca37e3997e58bdd4b09e2c176651040682e73",
-    "street-fighter-2026-spec": "0xd0d7c25410769b9d879f11825990dc6ab714cec5efbb697d582f0d14c397ccc1",
-    "street-fighter-2026-spec-callback-0": "0x7b73d5e52d0e3cb50c8878c86eeca74164076a9d08cbcf30f38284f6c0016a83",
-    "clayface-2026-spec": "0xd70e4bea977aabfe13928b916973b8991269d4acf09714f0d525e6b25ff7cadc",
-    "clayface-2026-spec-callback-0": "0x691ba7cdb5da4e6588a006417efb2a6c3a4235772df9f2b8ef5ed56d0cf514ec",
-    "cat-in-the-hat-2026-spec": "0x4225148e569e81b97a5c8de776fdc32c6e44d85ae54bf91ad9edf394ac4a94fe",
-    "cat-in-the-hat-2026-spec-callback-0": "0xfc505962f0bb3c191089e61df4f8929961d9c706e49440245c54c18203cc9b65",
-    "hunger-games-sunrise-2026-spec-rejected-1": "0x04bb983f31cc72f4b3010bbdb5d01c0c0b7fee1f43bf82b5774e401791943c45",
-    "hunger-games-sunrise-2026-spec": "0xc0bdbc160a0c9262f74a6eebe7054c75ac292130479c5e7f9898a6286055bc30",
-    "hunger-games-sunrise-2026-spec-callback-0": "0xbff6b6b16f33970779f69ba0c770d66aeb8ba9deb0e56069acd6cf2ba28d793c",
-    "dune-three-2026-spec": "0xc448a994b917d953531f03f3dce11d636a809220865935a6a6ba56e2d4b28294",
-    "dune-three-2026-spec-callback-0": "0x7f79f0003cad3b85c64b63c5a83393eca9eb0d4f8d819fc1227e33d8a4892e0f",
-    "street-fighter-2026-pool": "0x6c14fdbeca8e5f4e1a1ba3243c6115511f1f4402d6a5a58ee002d89bbee1123b",
-    "clayface-2026-pool": "0xcd505f7c2bb0afdbbb94380d8f38884d76641c3379cdd521ba82b84004783554",
-    "cat-in-the-hat-2026-pool": "0x72d557c36e054fe20bee4b6f041acd07cb509da494044ba61a389c11cf15cd64",
-    "hunger-games-sunrise-2026-pool": "0x2f11971c22c701739bac37ecfc8044291f87c7f6aacf0f877b4b928c3249d1ba",
-    "dune-three-2026-pool": "0xe08c0c551356129fab704e1b968e0de9e7bfec41e3da41f1c370421d7e8890bb"
-  },
   "sources": {
     "street-fighter-2026": {
       "evidence": null,
@@ -277,14 +251,34 @@
       "winner": null
     }
   },
-  "pools": {
-    "street-fighter-2026": "street-fighter-2026-pool-1",
-    "clayface-2026": "clayface-2026-pool-2",
-    "cat-in-the-hat-2026": "cat-in-the-hat-2026-pool-3",
-    "hunger-games-sunrise-2026": "hunger-games-sunrise-2026-pool-4",
-    "dune-three-2026": "dune-three-2026-pool-5"
-  },
+  "payoutVersion": 2,
+  "contract": "0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25",
+  "legacyContracts": [
+    "0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5"
+  ],
+  "legacyProof": "/legacy-upcoming-pool-proof.json",
+  "recoveryProof": "/claim-recovery-proof.json",
   "deploymentVerified": true,
-  "contract": "0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5",
-  "verifiedAt": "2026-10-04T10:37:18.709Z"
+  "specificationHashes": {
+    "street-fighter-2026": "815cbf7c0bd7b9fd84241a725594bef9ada8bed74c5d1db47eba6e0338c62b2d",
+    "clayface-2026": "7f6a41d9deceff9665b52e8037611b126381684424c6458e4b435b90731f187c",
+    "cat-in-the-hat-2026": "8763a3326812ece8044155be77f54af7c453d49287661d1761a33e1f3df236cc",
+    "hunger-games-sunrise-2026": "77411f9bea392767c926fbb6d90dc60bfae6fdfb13ddbf457339ea08dedbe9fa",
+    "dune-three-2026": "7a07eef86e5ca27e6c12ab24408e9ba77ecf449c7f30e2f33e234c4bce3d1e6e"
+  },
+  "pools": {
+    "street-fighter-2026": "street-fighter-2026-pool-v2-1",
+    "clayface-2026": "clayface-2026-pool-v2-2",
+    "cat-in-the-hat-2026": "cat-in-the-hat-2026-pool-v2-3",
+    "hunger-games-sunrise-2026": "hunger-games-sunrise-2026-pool-v2-4",
+    "dune-three-2026": "dune-three-2026-pool-v2-5"
+  },
+  "transactions": {
+    "upcoming-deploy": "0x51e10ea3088624d1796d7a6d8b1030a1f356ad72a856926e73672b8306d9b7be",
+    "street-fighter-2026-create-v2": "0x490c6f898298dd34b8a7d4432db7909be7905926ce76b06712c5614ce54a5036",
+    "clayface-2026-create-v2": "0xb08343a26b5ac74507be31166cf7f488e528e31a48d593d30340730d25294ec4",
+    "cat-in-the-hat-2026-create-v2": "0x3bea3ce71d007e3569f88c5344a1714f08b92383f42a79d165b73d270bd61715",
+    "hunger-games-sunrise-2026-create-v2": "0x69ebd09ce2e44e0d29b92ed097a9f71c407398946d78be1f7676626d34b82824",
+    "dune-three-2026-create-v2": "0xec82ae707a280e2124b8643545dfea006d5a1dca6d8dddec9ae20ff8c4918273"
+  }
 }

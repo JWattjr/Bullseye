@@ -20,6 +20,18 @@ test('stake shares and estimated returns conserve bigint precision and describe 
   assert.equal(projectedReturn(undefined, 2, 2000000000000000001n), '2000000000000000001');
 });
 
+test('failed v2 delivery remains pending until independent verification permits recovery', () => {
+  const receipt: FilmReceipt = {hash: '0x1', action: 'claim', state: 'finalized', payoutVersion: 2, recovery: 'pending', sender: '0xabc', amount: '4', transfers: [{hash: '0x2', state: 'failed', recipient: '0xabc', value: '4'}]};
+  assert.equal(receiptComplete(receipt), false);
+  assert.equal(receiptCopy(receipt), 'Checking the failed transfer…');
+  assert.equal(receiptComplete({...receipt, recovery: 'failed_pending_finality'}), false);
+  assert.equal(receiptComplete({...receipt, recovery: 'failed'}), true);
+  assert.equal(receiptCopy({...receipt, recovery: 'failed'}), 'Your GEN is ready to collect again');
+  const credited = {...receipt, transfers: [{...receipt.transfers![0], state: 'credited'}]};
+  assert.equal(receiptComplete(credited), false);
+  assert.equal(receiptComplete({...credited, recovery: 'paid'}), true);
+});
+
 test('pending results, losses and empty-winning-pool refunds have distinct consumer states', () => {
   const pool = {status: 'open', entry_deadline: 100, winner: 2, total: '4', pools: ['2', '0', '2', '0'], participants: ['a', 'b'], entries: {a: {range: 0, stake: '2'}, b: {range: 2, stake: '2'}}, claims: {}} as unknown as FilmPool;
   assert.equal(positionState(pool, 'a', 50), 'Open'); assert.equal(positionState(pool, 'a', 101), 'Resolving');

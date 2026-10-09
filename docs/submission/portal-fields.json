@@ -5,7 +5,7 @@
   "tag1": "Event Forecasting",
   "tag2": "Outcome Resolution",
   "oneLiner": "Film prediction pools where GenLayer validators verify frozen rules and published box-office results. Stake StudioNet GEN and share the winning pot.",
-  "description": "Bullseye is a film prediction platform for movie fans. Choose an opening-weekend revenue range, stake 2–100 StudioNet GEN, track your prediction, and collect your share of the winning pool. Five upcoming films close before previews; Barbie, Oppenheimer and Dune: Part Two offer historical GEN practice with known results. GenLayer validators independently check the proposed rules and read The Numbers for the exact domestic US/Canada result. The pool consumes that finalized oracle outcome; no administrator enters a winner. Winners share the whole pot proportionally, with no pool fee. Missing evidence stays pending until a fixed deadline permits refunds; an empty winning range also refunds entrants. The app follows confirmation and settlement automatically while a page is open. StudioNet is a development simulator; the daily background keeper awaits its server authentication setting. The public repo includes contracts, signed historical deposit/payout proofs, tests and a tutorial.",
+  "description": "Bullseye is a film prediction platform. Choose an opening-weekend revenue range, stake 2–100 StudioNet GEN, and collect your share of the winning pool. Five upcoming films close before previews; Barbie, Oppenheimer and Dune: Part Two offer historical practice with known results. GenLayer validators independently verify frozen rules and read The Numbers for the exact US/Canada result. Pools consume the finalized oracle outcome; no administrator sets a winner. Winners share the whole pot; missing evidence or an empty winning range permits refunds. Claims are nonce-bound and marked paid only after independent exact native-credit verification and finality. Confirmed failed transfers permit a safe retry; pending or ambiguous receipts stay locked. The repo includes adversarial tests, two live payout proofs, exact balances and a tutorial. GEN is simulated StudioNet currency. Open pages drive settlement; the daily keeper awaits authentication. Legacy deployments and proof limits are disclosed.",
   "howTo": [
     {
       "heading": "Browse upcoming markets",
@@ -17,28 +17,28 @@
     },
     {
       "heading": "Verify GenLayer execution",
-      "instruction": "Open the GitHub README and docs/DEMO.md. Follow the public oracle, film-pool and upcoming-pool manifests. They retain successful finalized specifications, adjudications, callbacks and credited historical transfers. Run npm run test:network and npx tsx scripts/verify-upcoming.ts for read-only checks."
+      "instruction": "Open docs/CLAIM-RECOVERY.md and its raw receipts. Run npx tsx scripts/verify-claim-recovery.ts for read-only source, native-credit, finality and balance checks. Run the adversarial contract suite and scripts/claim-recovery-ui-check.ts for controlled failure, retry, replay and account-isolation tests. The forecast live payout uses a separate test oracle; no upcoming film is prematurely resolved."
     },
     {
       "heading": "Optional funded practice",
       "instruction": "Use your own MetaMask/GenLayer-plugin wallet on StudioNet 61999 with at least 2 GEN. Choose Barbie’s $150m – under $200m range in the main GEN ticket, stake 2 GEN and sign. Leave the app open until the shared two-minute session settles; Collect and sign once. GEN received requires an exact credited transfer. Upcoming stakes remain held until their future result or void."
     }
   ],
-  "expectedOutcome": "The live app shows five upcoming and three historical GEN markets. Barbie free practice returns $162,022,044 and 100 points without an exact guess, surviving reload. Read-only checks verify successful finalized oracle/callback receipts and five matching open pools with unknown outcomes. Retained single-entrant signed proofs show 2 GEN deposits and credited 2 GEN payouts for all three historical films. The optional wallet flow confirms a stake, settles, then verifies native credit.",
+  "expectedOutcome": "Eight GEN markets; five upcoming outcomes remain unknown. Barbie free practice returns $162,022,044 and 100 points. Recovery evidence shows 121 passing contract tests, controlled failed-transfer retries, exact final balances, and successful StudioNet native payouts for both pool implementations. The forecast payout uses an isolated test oracle. New claims become paid only after independent receipt verification; terminal failure opens one retry. No live hosted failed-transfer proof is claimed.",
   "contractLinks": [
     "https://explorer-studio.genlayer.com/address/0x756ddF8D588DA4D598F9F90947DB92Bced10D68E",
-    "https://explorer-studio.genlayer.com/address/0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5",
-    "https://explorer-studio.genlayer.com/address/0x6Ff023F19cE3e661A9F5Cf3e7782fec17f067Ed2"
+    "https://explorer-studio.genlayer.com/address/0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25",
+    "https://explorer-studio.genlayer.com/address/0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403"
   ],
   "website": "https://bullseye-genlayer.vercel.app",
   "github": "https://github.com/JWattjr/Bullseye",
-  "demoVideo": "",
+  "demoVideo": "https://youtu.be/IUI4EQOu00M",
   "evidence": [
     "https://github.com/JWattjr/Bullseye",
-    "https://github.com/JWattjr/Bullseye/blob/main/docs/DEMO.md",
+    "https://github.com/JWattjr/Bullseye/blob/main/docs/CLAIM-RECOVERY.md",
+    "https://github.com/JWattjr/Bullseye/blob/main/docs/proofs/claim-recovery/manifest.json",
     "https://github.com/JWattjr/Bullseye/blob/main/docs/VERIFICATION.md",
     "https://bullseye-genlayer.vercel.app/upcoming-pool-proof.json",
-    "https://bullseye-genlayer.vercel.app/film-pool-proof.json",
-    "https://github.com/JWattjr/Bullseye/blob/main/docs/TUTORIAL.md"
+    "https://bullseye-genlayer.vercel.app/film-pool-proof.json"
   ]
 }

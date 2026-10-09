@@ -1,42 +1,20 @@
-# GenLayer Portal handoff
+# GenLayer Portal correction handoff
 
-The authenticated [submission form](https://portal.genlayer.foundation/submit-contribution) was inspected on October 4, 2026. The prepared draft uses **Builder → Projects**, with **Prediction Markets**, **Event Forecasting** and **Outcome Resolution**. Searching the owner's submissions for Bullseye returned no matches at preparation time. No contribution has been sent.
+The existing **Bullseye · Builder → Projects** contribution was submitted October 4, 2026 and now shows **Action needed** in the owner's October 9 screenshot. The steward requests secure failed-transfer recovery in both pool contracts, duplicate-payout protection, adversarial end-to-end evidence and exact balances.
 
-## What is prepared
+Use [CLAIM-RECOVERY.md](CLAIM-RECOVERY.md) for the correction, [steward-response.md](submission/steward-response.md) for the focused response, and [portal-fields.json](submission/portal-fields.json) for updated form copy. Edit the existing contribution rather than creating a duplicate. The agent has not sent a resubmission or steward message.
 
-| Current form requirement | Prepared content |
-| --- | --- |
-| Project name | Bullseye |
-| Primary tag | Prediction Markets |
-| One-liner, maximum 180 characters | 148 characters |
-| Description, maximum 1,000 characters | 991 characters; includes StudioNet and open-page settlement limits |
-| How-to | Four steps: browse, immediate practice, verify actual execution, optional owner-signed GEN session |
-| Expected verification outcome, maximum 500 characters | 485 characters; exact $162,022,044 / 100 practice points and finalized proofs |
-| Website | Public Vercel alias |
-| Supporting repository evidence | Public GitHub repository plus walkthrough, verification, tutorial and two pool manifests |
-| Optional deployment links | Oracle, forecast pool and historical-session pool on Studio Explorer |
-| Optional video | Left blank; no recording or public social post is claimed |
-| Optional logo | Original [512px PNG](submission/bullseye-logo.png), prepared locally; not uploaded |
+The previously inspected form uses **Projects**, primary **Prediction Markets**, and topics **Event Forecasting** / **Outcome Resolution**. Prepared copy fits its inspected limits: one-liner 148/180 characters, description 1,000/1,000, and expected verification outcome 497/500. The current Portal form remains authoritative if its limits changed.
 
-Exact strings and links are in [portal-fields.json](submission/portal-fields.json). The current form reports **7/7 required application fields complete**. The GitHub evidence requirement is additional to that count. Link attachments and all deployment URLs must also remain present when sending.
+The provided demo video **https://youtu.be/IUI4EQOu00M** is in the saved video field. The later October 9 correction is evidenced by its own tests and report; the earlier recording is not described as showing them.
 
-## Why this is a Project
+## Review and resubmit the existing item
 
-The [current quality bar](https://portal.genlayer.foundation/contribution-type/41) describes complete apps whose central workflow uses actual Intelligent Contracts. Bullseye has a usable consumer interface, source-rule interpretation, publisher extraction and GEN settlement. Submit it as one project with its supporting tutorial and proof, rather than separate overlapping entries for each pool.
+1. Open Bullseye in Submission history and choose **Edit**.
+2. Keep its category and identity. Apply the prepared description, expected outcome, new deployment links and recovery evidence. Keep the supplied YouTube video.
+3. Review the focused steward response and evidence labels: hosted successful transfers, controlled failed delivery/retry and the isolated forecast test oracle. Listed future outcomes remain unknown.
+4. Complete any visible reCAPTCHA yourself and choose **Resubmit** once when ready. Retain the same contribution ID and inspect the resulting status.
 
-The form explicitly supports Studio, Studio Dev, Bradbury and Asimov explorer address URLs. StudioNet is therefore represented accurately without relabelling the deployment. Acceptance and scoring still depend on steward review. The site lists Projects separately from Milestones; milestones require an already accepted project in Project Explorer and meaningful new work.
+Acceptance and scoring remain subject to steward review. This correction answers the identified issue with checkable code and evidence while retaining StudioNet and immutable legacy-contract limits.
 
-The form's criteria are addressed by the [submission explanation](SUBMISSION.md), [architecture](ARCHITECTURE.md), [evidence policy](EVIDENCE.md), [tutorial](TUTORIAL.md) and [verification matrix](VERIFICATION.md). No guaranteed score, adoption statistic, production-chain claim or completed future payout is included.
-
-## Owner's final action
-
-1. Review the prepared Chrome tab, including the StudioNet limitation and evidence links. If it has been closed or reset, use `portal-fields.json` to restore the exact copy.
-2. Optionally choose the provided PNG as the logo. It is 512×512 and below the form's 2 MB limit. Video is optional and can remain blank.
-3. Complete the visible reCAPTCHA yourself and click **Submit Contribution** once. This final action creates the public application and sends it into steward review; it has not been performed by the agent.
-4. Save the resulting contribution ID and verify it appears in My submissions. The frontend's 7/7 count alone is not a server submission or acceptance receipt.
-
-If review requests more information, update/respond on that same submission. Do not create duplicate contributions to seek a different score. If a later category or form rule changes, use the live form's requirements.
-
-## Operational note
-
-Settlement currently runs when an app page is open. The daily background route and tests are implemented, but creation of its server-only CRON_SECRET still needs explicit permission. This setting is disclosed in the prepared description and is not a required Portal field. It should be enabled for ongoing unattended operation; the present submission does not advertise an active scheduler.
+The daily settlement route is implemented but inactive pending its server-only authentication setting. Open-page settlement works; no active unattended scheduler is advertised.

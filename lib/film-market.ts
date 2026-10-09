@@ -21,6 +21,8 @@ export type FilmReceipt = {
   sender?: string;
   poolId?: string;
   amount?: string;
+  payoutVersion?: number;
+  recovery?: string;
   transfers?: {hash: string; state: string; recipient: string; value: string}[];
 };
 
@@ -42,6 +44,11 @@ export function projectedReturn(pool: FilmPool | undefined, range: number, stake
 }
 
 export function positionState(pool: FilmPool, account: string, now: number) {
+  const attempt = pool.claim_attempts?.[account];
+  if (attempt?.status === 'paid') return 'Collected';
+  if (attempt?.status === 'failed') return 'Retry available';
+  if (attempt?.status === 'failed_pending_finality') return 'Confirming recovery';
+  if (attempt) return 'Transfer requested';
   if (pool.claims[account]) return 'Transfer requested';
   if (pool.status === 'void' || pool.status === 'resolved' && pool.winner !== null && BigInt(pool.pools[pool.winner]) === 0n) return 'Refund available';
   if (pool.status === 'resolved') return BigInt(claimable(pool, account)) > 0n ? 'Won' : 'Lost';
@@ -53,6 +60,7 @@ export function receiptFailed(receipt: FilmReceipt) {
 }
 
 export function receiptComplete(receipt: FilmReceipt) {
+  if (receipt.action === 'claim' && receipt.payoutVersion === 2 && receipt.state !== 'failed' && !['paid', 'failed'].includes(receipt.recovery ?? '')) return false;
   if (receiptFailed(receipt)) return true;
   if (receipt.action === 'stake') return receipt.state === 'finalized';
   return receipt.transfers?.some(t => t.state === 'credited' &&
@@ -60,6 +68,8 @@ export function receiptComplete(receipt: FilmReceipt) {
 }
 
 export function receiptCopy(receipt: FilmReceipt) {
+  if (receipt.action === 'claim' && receipt.recovery === 'failed') return 'Your GEN is ready to collect again';
+  if (receipt.action === 'claim' && receipt.payoutVersion === 2 && receiptFailed(receipt)) return 'Checking the failed transfer…';
   if (receiptFailed(receipt)) return receipt.action === 'stake' ? 'Prediction did not go through' : 'Transfer needs attention';
   if (receipt.action === 'stake') return receipt.state === 'finalized' ? 'Your prediction is in' : 'Confirming your prediction…';
   return receiptComplete(receipt) ? 'GEN received in your wallet' : 'Sending GEN to your wallet…';

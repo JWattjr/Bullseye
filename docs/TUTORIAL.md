@@ -78,7 +78,7 @@ The contract computes the winning interval and retains publisher URL, exact pass
 
 With a 10 GEN pot and winning stakes of 2 and 3 GEN, those winners receive 4 and 6 GEN. Cumulative integer division preserves every wei. Void or an empty winning range refunds original stakes.
 
-The participant signs one `claim(poolId)`. A claim record means transfer requested. The app separately verifies the native transfer's finality, explicit credit, pool sender, wallet recipient and exact amount before reporting GEN received. Acceptance or an EOA result label alone is insufficient. Failed native transfers currently have no automatic retry mechanism.
+The participant signs `claim(poolId, attempt)` with attempt 1 initially and the next integer on a retry. The reservation prevents duplicate emissions but is not a paid claim. The app requests permissionless, zero-value `verify_claim(poolId, participant, claimHash)` automatically. Every validator reads the fixed RPC and checks the exact finalized parent calldata and native credit. A protected callback records paid or failed. Only finalized failed attempts expose Retry collection; unknown or pending credit never unlocks it. Retry also requires fully backed unpaid obligations. [Detailed recovery and proofs](CLAIM-RECOVERY.md). Legacy contracts retain their original one-argument claim ABI.
 
 Historical [film_pools.py](../contracts/film_pools.py) sessions consume already resolved sources and close two minutes after the first stake. New sessions preserve earlier claims. Upcoming pools never roll into replacement sessions.
 
@@ -96,14 +96,14 @@ npm run lint
 npm run typecheck
 npm run build
 python -m pip install -r requirements.txt
-python -m pytest tests/direct -q
+python -m pytest tests/direct --artifacts-dir artifacts/gltest -q
 genvm-lint check contracts/bullseye.py
 genvm-lint check contracts/forecast_pools.py
 ```
 
 Direct Python tests use the harness without network broadcasts. Start the app and set `BULLSEYE_URL` for browser tests. `npm run test:browser` verifies practice/recovery; `npx tsx scripts/consumer-check.ts` uses isolated wallet/RPC fixtures; `BULLSEYE_VERIFY_FILMS=yes` with `npx tsx scripts/movie-stakes-check.ts` uses actual finalized reads for all eight tickets. Run `npx playwright install chromium` if Chromium is not installed, or set `BULLSEYE_CHROME` to its executable. All three suites respect that override, use the known Windows cache when present, and otherwise use Playwright's installed browser.
 
-[VERIFICATION.md](VERIFICATION.md) separates direct tests, mocked browser signatures, real reads and retained signed network receipts. Future results and payouts cannot be verified before release.
+[VERIFICATION.md](VERIFICATION.md) separates direct tests, mocked browser signatures, real reads and retained signed network receipts. Future film results and payouts cannot be verified before release. The recovery proof uses an explicitly isolated test oracle for the forecast-contract payout, without resolving any listed future film. Run `npx tsx scripts/verify-claim-recovery.ts` for read-only verification and `npx tsx scripts/claim-recovery-ui-check.ts` for browser failure injection.
 
 ## 8. Deploy your own instance
 

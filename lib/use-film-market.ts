@@ -66,7 +66,10 @@ export function useFilmMarket(movie: MovieId, connect: FilmConnect) {
         if (loaded.current && pending && !receiptComplete(pending)) {
           const response = await fetch('/api/film-pools?movie=' + movie + '&receipt=' + pending.hash, {cache: 'no-store'}), result = await response.json();
           if (response.ok && active && receiptRef.current?.hash === pending.hash && (!result.sender || result.sender === account)) {
-            const next = {...pending, ...result}; saveReceipt(next); receiptUpdated = receiptComplete(next);
+            const next: FilmReceipt = {...pending, ...result}; saveReceipt(next); receiptUpdated = receiptComplete(next);
+            if (next.action === 'claim' && next.payoutVersion === 2 && next.state === 'finalized' && next.poolId && next.sender && next.transfers?.some(transfer => ['credited', 'failed'].includes(transfer.state)) && !['paid', 'failed'].includes(next.recovery ?? '')) {
+              await fetch('/api/film-pools', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({action: 'verify_claim', movie, poolId: next.poolId, participant: next.sender, hash: next.hash})});
+            }
             if (next.action === 'claim' && next.state === 'finalized' && next.poolId) {
               const poolResponse = await fetch('/api/film-pools?movie=' + movie + '&poolId=' + next.poolId, {cache: 'no-store'});
               if (poolResponse.ok && active) {const pool: FilmPool = await poolResponse.json(); setData(previous => previous ? {...previous, pools: previous.pools.map(p => p.id === pool.id ? pool : p)} : previous);}
@@ -102,8 +105,9 @@ export function useFilmMarket(movie: MovieId, connect: FilmConnect) {
       if (action === 'stake' && (choice === undefined || choice < 0 || choice >= data.source.spec.ranges.length)) throw Error('Choose an opening-weekend range.');
       if (action === 'stake' && balance !== null && BigInt(balance) < value) throw Error('Your wallet needs more GEN for this stake. Add StudioNet GEN, then try again.');
       const client = await connect(), sender = typeof client.account === 'string' ? client.account : client.account?.address;
-      const hash = await client.writeContract({address: data.contract, functionName: action, args: action === 'stake' ? [data.sourceRoundId, choice!] : [pool!.id], value});
-      const next: FilmReceipt = {hash, action, state: 'submitted', sender: sender?.toLowerCase(), poolId: pool?.id, amount: action === 'claim' && pool && sender ? claimable(pool, sender.toLowerCase()) : String(value)};
+      const args = action === 'stake' ? [data.sourceRoundId, choice!] : pool?.payout_version === 2 ? [pool.id, (pool.claim_attempts?.[sender!.toLowerCase()]?.attempt ?? 0) + 1] : [pool!.id];
+      const hash = await client.writeContract({address: action === 'claim' ? pool?.contract ?? data.contract : data.contract, functionName: action, args, value});
+      const next: FilmReceipt = {hash, action, state: 'submitted', sender: sender?.toLowerCase(), poolId: pool?.id, payoutVersion: pool?.payout_version, amount: action === 'claim' && pool && sender ? claimable(pool, sender.toLowerCase()) : String(value)};
       receiptRef.current = next; setReceipt(next);
       try {localStorage.setItem('bullseye.film.receipt.' + movie + '.' + next.sender, JSON.stringify(next));} catch {}
     } catch (e) {

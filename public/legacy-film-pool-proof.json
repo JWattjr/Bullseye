@@ -1,0 +1,244 @@
+{
+  "network": "StudioNet",
+  "simulated": true,
+  "bullseye": "0x756ddF8D588DA4D598F9F90947DB92Bced10D68E",
+  "sourceRounds": {
+    "barbie-practice": "barbie-network-demo",
+    "oppenheimer-practice": "oppenheimer-film-source",
+    "dune-two-practice": "dune-film-source"
+  },
+  "transactions": {
+    "deploy": "0x9fdc7e0b16e656a6f296d3a0d5847245e9dd9d93cc73469cf25747cabe2837a6",
+    "oppenheimer-practice-spec": "0x97d3f5cb02aec5059722b21a966f766aaeb9ce25a0b4a695c502a1986f684ded",
+    "oppenheimer-practice-spec-child-0": "0x50cfb5c821f7b65e5a1a43642404261bb591cbab15f172e1b2110bc4b20540a5",
+    "dune-two-practice-spec": "0xf3d54d7d4f3b1e7587b83d796c8968982a60947ca75993507242433063482d28",
+    "dune-two-practice-spec-child-0": "0x055829e694cfd92067810500bbe855f96f827824559b3be7fb241fc122b85e3f",
+    "oppenheimer-practice-adjudicate": "0x4fa71b9ba0fd59c8973acf5af89012a37b940eb9d3dbf2c1e1b64cbe0cc6e4f1",
+    "oppenheimer-practice-adjudicate-child-0": "0xe0693ece008a89bab812c3c4379dc111bd91b174753d29d001e0a38ecc18aec4",
+    "dune-two-practice-adjudicate": "0x82523cb46e203e9d450b1b1e48df1f606525d2994c8a6334201fd2b08fcf9167",
+    "dune-two-practice-adjudicate-child-0": "0x7cf233dd9ba39cecec637327448808c1935e55fc33051f691431320c2756fca9",
+    "barbie-practice-stake": "0x8869efb0d3b7c1aecd0bfda1d90671233b481e551973a588e6bec2f1928e27e7",
+    "barbie-practice-settle": "0xa43667d1823a4e2c13e75f3f27deee11796c5d49555d8ac31c7cbadb8203a6e7",
+    "barbie-practice-settle-child-0": "0xd19416404e3adf1cb6e4e0428a8ceb4d6c6024d9aceb609692ea39d55735235d",
+    "barbie-practice-claim": "0xa3d2381b853dc27d41b6812ae18b9e697e11276f00d66b42e0ccab0ef47b20c6",
+    "barbie-practice-claim-child-0": "0xa9d1353954424f81b6d96ba04b8c1ffa12bc3bbd7fed3e992465c343bedb7f69",
+    "oppenheimer-practice-stake": "0xad67191f8cc4f9887fe7618d536d3ed24c4c4b4297333efb26bd431ae31c15f4",
+    "dune-two-practice-stake": "0x7571cf8019bd813c1d65d5242f3dd7ccbad28102dc64023b08dfa5a624f126e0",
+    "oppenheimer-practice-settle": "0x07093d130159b8d622f54a3a4ffdc4e58dee8ff42b5ffd7bb8e0c2f64aaaa0f1",
+    "oppenheimer-practice-settle-child-0": "0x776597353f388f4f4fca4f377bf547301d6766a8627978324700dd808e8b4489",
+    "oppenheimer-practice-claim": "0x341ff8f64bbab67c2a909ef2b6cf69831bc4a6302258be8ea374df1c01e7d909",
+    "oppenheimer-practice-claim-child-0": "0x5bb2d65f008db28ada4099361d9fc718725400eeb083784eb6ebbc7b30643e88",
+    "dune-two-practice-settle": "0x8d3086344ee9e859d5d0fc60112f65ca240845fee0b398051e8360458664a72c",
+    "dune-two-practice-settle-child-0": "0x58421934622d7d8ee71ac3b54022fa41bde390100c4219377b0e2d277ec3cc34",
+    "dune-two-practice-claim": "0x4501088201c22a238f29451562655613eb6e47d7bcfb4441445efd35f0ce6565",
+    "dune-two-practice-claim-child-0": "0xf343da4f7f133a1a1ce9a7e95eaf9cbb2e877574a063ebd7c0dd720b6f4f4145",
+    "dune-initial-pending-adjudication": "0x84805ca452e8f329c64b0c971baf8aae195dc7d6483cdbf607bd0f59583551dd"
+  },
+  "sources": {
+    "barbie-practice": {
+      "evidence": {
+        "approved_capture_url": "https://www.the-numbers.com/movie/Barbie-(2023)",
+        "capture_timestamp": 1790986917,
+        "content_hash": "d5ac6c16bbbfaa0737e3915599e43f231d01d7f097bd8759e588a5992c89f85f",
+        "extracted_passage": "Metrics Opening Weekend: $162,022,044 (25.4% of total gross) Legs: 3.93 (domestic box office/biggest weekend) Domestic Share: 44.0% (domestic box office/worldwide)",
+        "hash_scope": "exact extracted passage, UTF-8",
+        "normalized_value": 162022044,
+        "original_source": "https://www.the-numbers.com/movie/Barbie-(2023)",
+        "provenance": "validator-fetched live publisher page; every validator confirmed the passage is on the page it read",
+        "publication_timestamp": null,
+        "specification_hash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96"
+      },
+      "histogram": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "participants": [
+        "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+      ],
+      "proposal": "Forecast Barbie (2023) domestic opening-weekend box-office revenue for July 21\u00e2\u20ac\u201c23, 2023 in United States and Canada, in exact integer USD dollars, reported at https://www.the-numbers.com/movie/Barbie-(2023). Historical practice only. All ranges, deadlines, correction and missing-evidence rules are exactly the attached canonical specification.",
+      "spec": {
+        "correction_policy": "first successful consensus observation; ignore later corrections",
+        "currency": "USD",
+        "entry_deadline": 1790986872,
+        "event": "Barbie (2023), 2023-07-21 to 2023-07-23",
+        "geography": "United States and Canada",
+        "metric": "domestic opening-weekend box-office revenue",
+        "missing_evidence": "pending until deadline then void",
+        "mode": "historical",
+        "observation_time": 1790986877,
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": 150000000
+          },
+          {
+            "lower": 150000000,
+            "upper": 200000000
+          },
+          {
+            "lower": 200000000,
+            "upper": null
+          }
+        ],
+        "resolution_deadline": 1790989572,
+        "rounding": "exact published integer; no rounding",
+        "scale": 1,
+        "source_url": "https://www.the-numbers.com/movie/Barbie-(2023)",
+        "unit": "dollars"
+      },
+      "specification_hash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96",
+      "status": "resolved",
+      "winner": 2
+    },
+    "oppenheimer-practice": {
+      "evidence": {
+        "approved_capture_url": "https://www.the-numbers.com/movie/Oppenheimer-(2023)",
+        "capture_timestamp": 1791031104,
+        "content_hash": "1439cc55d8afeb32ceb5c7f78d4a4ec5eb845bd4e0bda5d4eb1f78b513a92429",
+        "extracted_passage": "Summary Metrics Opening Weekend: $82,455,420 (25.0% of total gross) Legs: 4.00 (domestic box office/biggest weekend) Domestic Share: 33.6% (domestic box office/worldwide)",
+        "hash_scope": "exact extracted passage, UTF-8",
+        "normalized_value": 82455420,
+        "original_source": "https://www.the-numbers.com/movie/Oppenheimer-(2023)",
+        "provenance": "validator-fetched live publisher page; every validator confirmed the passage is on the page it read",
+        "publication_timestamp": null,
+        "specification_hash": "17640bace6d76abc9778a81b3667da713f9397bbc2b5efe234e1ec17aa86ffbf"
+      },
+      "histogram": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "participants": [],
+      "proposal": "Validate historical Oppenheimer (2023) domestic opening-weekend box office for 2023-07-21 to 2023-07-23 in United States and Canada, in exact integer USD dollars, published by https://www.the-numbers.com/movie/Oppenheimer-(2023). For Dune use the March 1 wide release weekend, not an early screening. All attached canonical source, metric, ranges, deadlines and policies apply.",
+      "spec": {
+        "correction_policy": "first successful consensus observation; ignore later corrections",
+        "currency": "USD",
+        "entry_deadline": 1791030950,
+        "event": "Oppenheimer (2023), 2023-07-21 to 2023-07-23",
+        "geography": "United States and Canada",
+        "metric": "domestic opening-weekend box-office revenue",
+        "missing_evidence": "pending until deadline then void",
+        "mode": "historical",
+        "observation_time": 1791030955,
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 50000000
+          },
+          {
+            "lower": 50000000,
+            "upper": 75000000
+          },
+          {
+            "lower": 75000000,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": null
+          }
+        ],
+        "resolution_deadline": 1791038120,
+        "rounding": "exact published integer; no rounding",
+        "scale": 1,
+        "source_url": "https://www.the-numbers.com/movie/Oppenheimer-(2023)",
+        "unit": "dollars"
+      },
+      "specification_hash": "17640bace6d76abc9778a81b3667da713f9397bbc2b5efe234e1ec17aa86ffbf",
+      "status": "resolved",
+      "winner": 2
+    },
+    "dune-two-practice": {
+      "evidence": {
+        "approved_capture_url": "https://www.the-numbers.com/movie/Dune-Part-Two-(2024)",
+        "capture_timestamp": 1791031359,
+        "content_hash": "d97f23238189d6b19ee7a47967d9bfea0f3c0e6fb714a7da99213621f4c29dfe",
+        "extracted_passage": "Metrics Opening Weekend: $82,505,391 (29.2% of total gross)",
+        "hash_scope": "exact extracted passage, UTF-8",
+        "normalized_value": 82505391,
+        "original_source": "https://www.the-numbers.com/movie/Dune-Part-Two-(2024)",
+        "provenance": "validator-fetched live publisher page; every validator confirmed the passage is on the page it read",
+        "publication_timestamp": null,
+        "specification_hash": "0d386911306ac969fda4acceb00fefb4e7d4bf3ae8b1cbfbd473c3d33a6cff9c"
+      },
+      "histogram": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "last_attempt": "insufficient_evidence",
+      "participants": [],
+      "proposal": "Validate historical Dune: Part Two (2024) domestic opening-weekend box office for 2024-03-01 to 2024-03-03 in United States and Canada, in exact integer USD dollars, published by https://www.the-numbers.com/movie/Dune-Part-Two-(2024). For Dune use the March 1 wide release weekend, not an early screening. All attached canonical source, metric, ranges, deadlines and policies apply.",
+      "spec": {
+        "correction_policy": "first successful consensus observation; ignore later corrections",
+        "currency": "USD",
+        "entry_deadline": 1791031049,
+        "event": "Dune: Part Two (2024), 2024-03-01 to 2024-03-03",
+        "geography": "United States and Canada",
+        "metric": "domestic opening-weekend box-office revenue",
+        "missing_evidence": "pending until deadline then void",
+        "mode": "historical",
+        "observation_time": 1791031054,
+        "ranges": [
+          {
+            "lower": 0,
+            "upper": 50000000
+          },
+          {
+            "lower": 50000000,
+            "upper": 75000000
+          },
+          {
+            "lower": 75000000,
+            "upper": 100000000
+          },
+          {
+            "lower": 100000000,
+            "upper": null
+          }
+        ],
+        "resolution_deadline": 1791038219,
+        "rounding": "exact published integer; no rounding",
+        "scale": 1,
+        "source_url": "https://www.the-numbers.com/movie/Dune-Part-Two-(2024)",
+        "unit": "dollars"
+      },
+      "specification_hash": "0d386911306ac969fda4acceb00fefb4e7d4bf3ae8b1cbfbd473c3d33a6cff9c",
+      "status": "resolved",
+      "winner": 2
+    }
+  },
+  "pools": {
+    "barbie-practice": "barbie-network-demo-pool-1",
+    "oppenheimer-practice": "oppenheimer-film-source-pool-2",
+    "dune-two-practice": "dune-film-source-pool-3"
+  },
+  "contract": "0x6Ff023F19cE3e661A9F5Cf3e7782fec17f067Ed2",
+  "payoutVerified": true,
+  "payouts": {
+    "barbie-practice": {
+      "pool": "barbie-network-demo-pool-1",
+      "recipient": "0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92",
+      "creditedWei": "2000000000000000000"
+    },
+    "oppenheimer-practice": {
+      "pool": "oppenheimer-film-source-pool-2",
+      "recipient": "0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92",
+      "creditedWei": "2000000000000000000"
+    },
+    "dune-two-practice": {
+      "pool": "dune-film-source-pool-3",
+      "recipient": "0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92",
+      "creditedWei": "2000000000000000000"
+    }
+  },
+  "verification": "A 2 GEN stake, successful finalized settlement callback and credited 2 GEN payout verified for each movie. Historical outcomes disclosed; single entrant per movie."
+}

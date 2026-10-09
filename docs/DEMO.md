@@ -28,8 +28,8 @@ An upcoming film cannot demonstrate a quick payout: funds stay held until its fu
 ## Independently checkable proof
 
 - Oracle `0x756ddF8D588DA4D598F9F90947DB92Bced10D68E`: rule interpretation and publisher extraction.
-- Historical pools `0x6Ff023F19cE3e661A9F5Cf3e7782fec17f067Ed2`: retained 2 GEN stake and credited 2 GEN payout for all three films, one entrant per proof session.
-- Forecast pools `0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5`: five bound open pools without predetermined winners.
+- Historical pools `0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403`: new 2 GEN Barbie deposit, exact credited payout and independently finalized paid state. Prior three-film receipts remain in the linked legacy manifest.
+- Forecast pools `0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25`: five bound open pools without predetermined winners.
 - [Upcoming verification](proofs/upcoming/network-verification.json), [raw film receipts](proofs/films), [verification matrix](VERIFICATION.md).
 
 The isolated consumer fixture demonstrates two-wallet allocation and collection without broadcasts. No live two-wallet proof, production-chain deployment or completed upcoming payout is claimed.
@@ -42,4 +42,4 @@ Unedited published-app captures; these are not wallet-transaction recordings:
 
 ![Published mobile prediction ticket](../.impeccable/review/consumer/upcoming-ticket-live.jpg)
 
-If a video is requested, follow the timed walkthrough and label any optional signature as live only once it actually completes. The written walkthrough and screenshots are usable supporting artifacts without a video.
+Recorded owner demo: https://youtu.be/IUI4EQOu00M. The October 9 recovery correction is documented separately in [CLAIM-RECOVERY.md](CLAIM-RECOVERY.md); the existing video does not establish that later failure test. Run the read-only recovery verifier and the controlled browser test linked there.

@@ -1,6 +1,6 @@
 # Bullseye — GenLayer Portal submission
 
-Prepared October 4, 2026 against the authenticated Portal form. Category: **Builder → Projects**; primary tag: **Prediction Markets**; topics: **Event Forecasting** and **Outcome Resolution**. All seven required application fields have been prepared; no contribution has been posted. This is one project with a supporting tutorial, not multiple overlapping submissions. No eligibility or reward amount is asserted.
+Updated October 9, 2026 for the steward correction on the existing October 4 contribution. Category: **Builder → Projects**; primary tag: **Prediction Markets**; topics: **Event Forecasting** and **Outcome Resolution**. The existing contribution is marked Action needed; update it rather than creating a duplicate. This is one project with a supporting tutorial, not multiple overlapping submissions. No eligibility or reward amount is asserted.
 
 Use [PORTAL.md](PORTAL.md) for the exact form workflow and [portal-fields.json](submission/portal-fields.json) for copy within the current character limits. The longer description below is supporting documentation, not text to paste into the 1,000-character description field.
 
@@ -22,7 +22,7 @@ Successful finalization callbacks gate opening, published results and pool claim
 
 Street Fighter, Clayface, The Cat in the Hat, The Hunger Games: Sunrise on the Reaping and Dune: Part Three each have an independently verified finalized specification and shared pool. Entries close before previews; their outcomes remain unknown. Barbie, Oppenheimer and Dune: Part Two offer repeatable two-minute historical GEN sessions. Retained signed development-account receipts demonstrate a 2 GEN deposit and credited 2 GEN payout for each historical film. A separate isolated two-wallet browser fixture verifies proportional collection, persistence and account switching without broadcasting transactions.
 
-The public deployment, open-source contracts, walkthrough, raw proof receipts and verification records are linked below. The release passes 77 direct contract tests, 23 application tests, lint, strict type checking and a production build. Published desktop/mobile checks cover the consumer flow and actual finalized StudioNet reads for all eight markets.
+The public deployment, open-source contracts, walkthrough, raw proof receipts and verification records are linked below. The release passes 121 direct contract tests, 24 application tests, lint, strict type checking and a production build. Published desktop/mobile checks cover the consumer flow and actual finalized StudioNet reads for all eight markets.
 
 This MVP runs on StudioNet, a hosted development simulator. It demonstrates genuine successful executions within that environment, not mainnet or Bradbury deployment, real-money wagering, or a completed future film outcome. Settlement is driven by open app pages; the daily background route is implemented but awaits its server-only authentication setting. Creators are restricted to the deployed oracle owner, and The Numbers is the sole settlement publisher. Source access and correctness remain explicit trust assumptions.
 
@@ -48,8 +48,8 @@ Network: **StudioNet**, chain ID **61999**. The inspected form explicitly suppor
 | Role | Deployed address | Source |
 | --- | --- | --- |
 | Rule validation and evidence oracle | `0x756ddF8D588DA4D598F9F90947DB92Bced10D68E` | [bullseye.py](../contracts/bullseye.py) |
-| Upcoming GEN pools | `0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5` | [forecast_pools.py](../contracts/forecast_pools.py) |
-| Historical GEN sessions | `0x6Ff023F19cE3e661A9F5Cf3e7782fec17f067Ed2` | [film_pools.py](../contracts/film_pools.py) |
+| Upcoming GEN pools | `0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25` | [forecast_pools.py](../contracts/forecast_pools.py) |
+| Historical GEN sessions | `0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403` | [film_pools.py](../contracts/film_pools.py) |
 
 The oracle is the main Intelligent Contract. The pools demonstrate deterministic financial logic consuming its interpreted result. Include the forecast pool as an additional address when the form supports it.
 
@@ -61,4 +61,8 @@ The oracle is the main Intelligent Contract. The pools demonstrate deterministic
 
 The [current Projects guidance](https://portal.genlayer.foundation/contribution-type/41) requires a trust problem, live or authoritative evidence, accurate source/docs, genuine frontend contract calls and lifecycle handling, and meaningful differentiation from boilerplate. The prepared application and verification matrix address those criteria. The [builder program announcement](https://talks.genlayer.foundation/t/introducing-genlayers-incentivized-builders-program/20) describes steward review by novelty, complexity and impact; neither source guarantees this project's acceptance or points.
 
-The current form is prepared for owner review. Optional video is left blank; the written walkthrough and captures are linked. The project owner completes reCAPTCHA, reviews the draft, submits once and retains the resulting contribution ID. If a steward requests information, respond to that same contribution rather than create a duplicate.
+The correction is prepared for owner review. The supplied demo video https://youtu.be/IUI4EQOu00M is included; [the steward response](submission/steward-response.md) links the new recovery evidence. The project owner reviews the edit and completes any visible reCAPTCHA before resubmitting the existing contribution once. If a steward requests information, respond to that same contribution rather than create a duplicate.
+
+## Steward correction: payout recovery
+
+Both pool implementations now reserve nonce-bound claims and record paid only after independent exact native-credit verification and protected finality. Terminal failure permits one next attempt; ambiguous receipts stay locked. Retries require fully backed unpaid obligations. [Recovery report](CLAIM-RECOVERY.md) includes 44 adversarial contract cases, browser failure/retry checks, new live payouts for both implementations, source hashes and exact balances. The forecast payout uses an isolated test oracle; listed upcoming outcomes remain unknown. Legacy contracts are immutable and are retained for existing positions.

@@ -2,6 +2,8 @@
 """StudioNet-only GEN pools that settle on a finalized Bullseye round. No outcome is written here:
 the winning range is read from the Bullseye contract, where validators extracted the published number."""
 import json
+import base64
+from genlayer.py import calldata
 from datetime import datetime
 from genlayer import *
 
@@ -35,6 +37,55 @@ def allocation(record, participant):
         prefix += other['stake']
     return 0
 
+
+# StudioNet receipts are read from the fixed protocol RPC, never a caller URL.
+# Each validator independently reads the immutable parent and its native child.
+RECEIPT_RPC = 'https://studio.genlayer.com/api'
+
+def receipt_hash(value):
+    require(type(value) is str and len(value) == 66 and value.startswith('0x')
+            and all(c in '0123456789abcdefABCDEF' for c in value[2:]), 'invalid receipt hash')
+    return value.lower()
+
+def protocol_receipt(tx_hash):
+    response = gl.nondet.web.post(RECEIPT_RPC,
+        body=json.dumps({'jsonrpc': '2.0', 'id': 1, 'method': 'eth_getTransactionByHash',
+                         'params': [tx_hash]}).encode(),
+        headers={'Content-Type': 'application/json'})
+    require(response.status == 200, 'protocol receipt unavailable; keep claim pending')
+    payload = json.loads(response.body.decode('utf-8'))
+    require('error' not in payload and type(payload.get('result')) is dict,
+            'protocol receipt unavailable; keep claim pending')
+    tx = payload['result']
+    require(receipt_hash(tx.get('hash')) == tx_hash, 'receipt hash mismatch')
+    return tx
+
+def transfer_decision(parent, child, contract, participant, round_id, attempt, amount):
+    """Fail closed on absent credit, pending receipts, or unrelated transfers."""
+    require(parent.get('status') == 'FINALIZED', 'claim transaction is not finalized')
+    require(str(parent.get('from_address', '')).lower() == participant
+            and str(parent.get('to_address', '')).lower() == contract,
+            'claim sender or contract mismatch')
+    leader = (parent.get('consensus_data') or {}).get('leader_receipt', [])
+    require(parent.get('result') == 6 and len(leader) > 0
+            and leader[0].get('execution_result') == 'SUCCESS', 'claim execution did not succeed')
+    encoded = parent.get('data', {}).get('calldata')
+    require(type(encoded) is str, 'claim calldata unavailable')
+    call = calldata.decode(base64.b64decode(encoded, validate=True))
+    require(call == {'method': 'claim', 'args': [round_id, attempt]}, 'claim pool or attempt mismatch')
+    children = parent.get('triggered_transactions')
+    require(type(children) is list and len(children) == 1
+            and receipt_hash(children[0]) == receipt_hash(child.get('hash')), 'transfer parent mismatch')
+    require(str(child.get('from_address', '')).lower() == contract
+            and str(child.get('to_address', '')).lower() == participant
+            and str(child.get('value')) == str(amount), 'transfer recipient or amount mismatch')
+    require(child.get('type') == 0 and child.get('consensus_data') is None
+            and child.get('triggered_on') == 'finalized', 'not a finalized native transfer emission')
+    require(child.get('status') == 'FINALIZED', 'native transfer is still pending')
+    credit = child.get('value_credited')
+    require(type(credit) is bool, 'native credit is unknown; keep claim pending')
+    return 'paid' if credit else 'failed'
+
 @gl.evm.contract_interface
 class Recipient:
     class View:
@@ -49,11 +100,15 @@ class BullseyeFilmPools(gl.Contract):
     latest: TreeMap[str, str]
     source_pools: TreeMap[str, str]
     counter: u256
+    total_staked: u256
+    total_paid: u256
 
     def __init__(self, bullseye: str):
         require(int(gl.message.chain_id) == 61999, 'StudioNet-only simulated GEN pools')
         self.bullseye = Address(bullseye)
         self.counter = u256(0)
+        self.total_staked = u256(0)
+        self.total_paid = u256(0)
 
     def _source(self, round_id):
         return json.loads(gl.get_contract_at(self.bullseye).view().get_round(round_id))
@@ -78,8 +133,8 @@ class BullseyeFilmPools(gl.Contract):
         if record is None or record['status'] != 'open' or now() >= record['entry_deadline']:
             require(len(self.pool_ids) < 2000, 'pool capacity reached')
             self.counter = u256(int(self.counter) + 1)
-            round_id = source_round_id + '-pool-' + str(self.counter)
-            record = {'id': round_id, 'source_round_id': source_round_id, 'title': spec['event'], 'mode': 'historical', 'network': 'StudioNet', 'status': 'open', 'specification_hash': source['specification_hash'], 'entry_deadline': now() + 120, 'pools': [0 for _ in spec['ranges']], 'ranges': spec['ranges'], 'total': 0, 'participants': [], 'entries': {}, 'claims': {}, 'winner': None, 'value': None, 'reference_winner': source['winner'], 'reference_value': source['evidence']['normalized_value']}
+            round_id = source_round_id + '-pool-v2-' + str(self.counter)
+            record = {'id': round_id, 'source_round_id': source_round_id, 'title': spec['event'], 'mode': 'historical', 'network': 'StudioNet', 'status': 'open', 'specification_hash': source['specification_hash'], 'entry_deadline': now() + 120, 'pools': [0 for _ in spec['ranges']], 'ranges': spec['ranges'], 'total': 0, 'participants': [], 'entries': {}, 'claims': {}, 'claim_attempts': {}, 'payout_version': 2, 'winner': None, 'value': None, 'reference_winner': source['winner'], 'reference_value': source['evidence']['normalized_value']}
             self.pool_ids.append(round_id)
             self.latest[source_round_id] = round_id
             ids = json.loads(self.source_pools[source_round_id]) if source_round_id in self.source_pools else []
@@ -92,6 +147,7 @@ class BullseyeFilmPools(gl.Contract):
         record['participants'].append(participant)
         record['pools'][chosen_range] += amount
         record['total'] += amount
+        self.total_staked = u256(int(self.total_staked) + amount)
         self._save(round_id, record)
         return round_id
 
@@ -125,18 +181,85 @@ class BullseyeFilmPools(gl.Contract):
         self._save(round_id, record)
 
     @gl.public.write
-    def claim(self, round_id: str) -> None:
+    def claim(self, round_id: str, attempt: int) -> None:
         record = self._pool(round_id)
         participant = str(gl.message.sender_address).lower()
         require(record['status'] in ('resolved', 'void'), 'settle after the Bullseye round finalizes')
-        require(participant not in record['claims'], 'claim already requested')
+        previous = record['claim_attempts'].get(participant)
+        require(participant not in record['claims'], 'claim already paid')
+        require(previous is None or previous['status'] == 'failed', 'claim already pending')
+        require(type(attempt) is int and attempt == (previous['attempt'] + 1 if previous else 1),
+                'use the next claim attempt')
         amount = allocation(record, participant)
         require(amount > 0, 'no payout or refund for this wallet')
-        require(int(self.balance) >= amount, 'contract balance insufficient')
-        record['claims'][participant] = amount
+        require(int(self.balance) >= amount, 'contract balance insufficient; retry after funds return')
+        if previous is not None:
+            # A failed child may refund asynchronously. Requiring full unpaid
+            # backing prevents a retry from spending another pool's escrow.
+            require(int(self.balance) >= int(self.total_staked) - int(self.total_paid),
+                    'contract balance insufficient; wait for refunds and other claim verification')
+        record['claim_attempts'][participant] = {'attempt': attempt, 'amount': amount,
+            'status': 'pending', 'claim_hash': None, 'transfer_hash': None}
         self._save(round_id, record)
-        # Transfer executes on finalization. No administrator or backend holds keys.
+        # The reservation blocks duplicates, but is not a paid claim.
         Recipient(gl.message.sender_address).emit_transfer(value=u256(amount))
+
+    @gl.public.write
+    def verify_claim(self, round_id: str, participant: str, claim_hash: str) -> str:
+        record = self._pool(round_id)
+        participant = str(Address(participant)).lower()
+        pending = record['claim_attempts'].get(participant)
+        require(pending is not None, 'no claim attempt for this wallet')
+        if pending['status'] != 'pending':
+            return pending['status']
+        claim_hash = receipt_hash(claim_hash)
+        contract = str(gl.message.contract_address).lower()
+        attempt, amount = pending['attempt'], pending['amount']
+
+        def observe():
+            parent = protocol_receipt(claim_hash)
+            children = parent.get('triggered_transactions')
+            require(type(children) is list and len(children) == 1, 'native transfer not available yet')
+            child_hash = receipt_hash(children[0])
+            child = protocol_receipt(child_hash)
+            decision = transfer_decision(parent, child, contract, participant, round_id, attempt, amount)
+            return {'decision': decision, 'transfer_hash': child_hash}
+
+        # Finalized native receipt fields are deterministic, so strict equality
+        # makes every validator fetch and verify the same positive evidence.
+        evidence = gl.eq_principle.strict_eq(observe)
+        pending.update(status=evidence['decision'] + '_pending_finality',
+                       claim_hash=claim_hash, transfer_hash=evidence['transfer_hash'])
+        self._save(round_id, record)
+        gl.get_contract_at(gl.message.contract_address).emit(on='finalized').finalize_claim(
+            round_id, participant, attempt)
+        return pending['status']
+
+    @gl.public.write
+    def finalize_claim(self, round_id: str, participant: str, attempt: int) -> None:
+        require(gl.message.sender_address == gl.message.contract_address, 'self callback only')
+        record = self._pool(round_id)
+        pending = record['claim_attempts'].get(participant)
+        # A delayed/replayed callback cannot alter a later retry.
+        if pending is None or pending['attempt'] != attempt:
+            return
+        if pending['status'] == 'paid_pending_finality':
+            pending['status'] = 'paid'
+            record['claims'][participant] = pending['amount']
+            self.total_paid = u256(int(self.total_paid) + pending['amount'])
+        elif pending['status'] == 'failed_pending_finality':
+            pending['status'] = 'failed'
+        self._save(round_id, record)
+
+    @gl.public.view
+    def get_claim(self, round_id: str, participant: str) -> str:
+        record = self._pool(round_id)
+        pending = record['claim_attempts'].get(participant.lower())
+        if pending is None:
+            return json.dumps({'status': 'available', 'attempt': 0,
+                               'amount': str(allocation(record, participant.lower()))
+                               if record['status'] in ('resolved', 'void') else '0'})
+        return json.dumps({**pending, 'amount': str(pending['amount'])}, sort_keys=True)
 
     @gl.public.view
     def get_bullseye(self) -> str:
@@ -155,6 +278,8 @@ class BullseyeFilmPools(gl.Contract):
         for entry in record['entries'].values():
             entry['stake'] = str(entry['stake'])
         record['claims'] = {key: str(value) for key, value in record['claims'].items()}
+        record['claim_attempts'] = {key: {**value, 'amount': str(value['amount'])}
+                                    for key, value in record['claim_attempts'].items()}
         return json.dumps(record, sort_keys=True, separators=(',', ':'))
 
     @gl.public.view
@@ -164,6 +289,9 @@ class BullseyeFilmPools(gl.Contract):
         record = self._pool(round_id)
         participant = participant.lower()
         if record['status'] not in ('resolved', 'void') or participant in record['claims']:
+            return '0'
+        pending = record['claim_attempts'].get(participant)
+        if pending is not None and pending['status'] != 'failed':
             return '0'
         return str(allocation(record, participant))
 

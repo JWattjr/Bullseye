@@ -1,41 +1,37 @@
 # Release verification
 
-Current product: five upcoming GEN markets and three historical GEN practice markets, deployed at [bullseye-genlayer.vercel.app](https://bullseye-genlayer.vercel.app). Network: StudioNet 61999, a hosted development simulator. Code release: `de1f896`; Vercel deployment: `dpl_FRS6bRBw9fqpMiQXa72fahA6c5SH`. The submission-document update does not replace contracts or their proofs.
+Payout recovery correction: October 9, 2026. Product: five upcoming GEN markets and three historical practice markets at [Bullseye](https://bullseye-genlayer.vercel.app), StudioNet 61999. [CLAIM-RECOVERY.md](CLAIM-RECOVERY.md) describes the new contracts, protocol assumptions, exact balances and immutable legacy deployments.
 
 ## Verification matrix
 
 | Layer | Result | What it establishes |
 | --- | --- | --- |
-| Direct Python contracts | 77 passing, rerun October 4 | Rules, evidence validation, authorization, finality, deadlines, allocation, void/refund and preservation of claims in the harness. |
-| Application/domain tests | 23 passing, rerun October 4 | BigInt accounting, exact credited-transfer gates, cutoff/spec migration, persistence and keeper failure isolation. |
-| ESLint and strict TypeScript | Passing, rerun October 4 | Static application checks. |
-| Next.js production build | Passing locally and on published Vercel release | Build succeeds with pinned dependencies. |
-| Published consumer UI | Passing at 320/1440 pixels | Filters, search, range links, single GEN ticket, presets/bounds, recovery, reload and account separation with isolated RPC/wallet fixtures. |
-| Published live tickets | Eight passing at 390 pixels | Actual finalized StudioNet reads, working ranges, default 2 GEN, ready state and no horizontal overflow; no wallet transaction. |
-| Practice regression | Passing | Keyboard selection, 100/0 scores, exact bonus, reload, evidence, drafts, synthetic rehearsal and injected error recovery. |
-| Actual oracle result | Finalized successful execution plus callbacks | Validators retrieved The Numbers and agreed on Barbie's $162,022,044; its retained passage is bound to the frozen specification. |
-| Actual historical film stakes/claims | Signed 2 GEN deposits and credited 2 GEN payouts for three films | One real development-account entrant per historical proof session, successful source/pool finality and native credit. |
-| Actual upcoming setup | Five finalized open sources and pools | Exact specification hashes and cutoffs match; no winner/evidence exists yet; setup had no native value credit. |
-| Two-wallet SDK consumer flow | Passing, isolated fixture | A winner collects a 4 GEN mock pot, exact-credit verification, balance updates, reload and wallet switching without broadcasts. |
-| Daily background keeper | Implemented and directly tested; production inactive | Route rejects unauthorized calls; activation needs server-only CRON_SECRET. Open pages currently drive settlement. |
+| Direct contract suite | 121 passing, October 9 | Oracle rules/evidence, authorization, finality, deadlines, allocation, refunds and recovery. |
+| Recovery adversarial cases | 44 passing across both implementations | Actual contract code, controlled asynchronous delivery/receipts and three-wallet ledger; failed delivery, finality-gated retry, replay rejection, exact balances and wei conservation. |
+| Application tests | 24 passing, October 9 | BigInt accounting, exact credit gates, recovery finality, migration, persistence and keeper isolation. |
+| GenVM lint | Both pool implementations pass | Concrete pinned runner, contract declarations and method structure. |
+| Deployed source | Exact byte match, October 9 | Reviewed film and forecast source equals both current deployments and the isolated forecast fixture deployment. |
+| Hosted recovery payout proofs | Two signed 2 GEN deposits and actual credited 2 GEN payouts | Both implementations reserve before emission and mark paid only after independent native-credit verification and protected finality; recorded wallet returns exactly to its initial balance and both proof escrows end at zero. |
+| Five upcoming v2 pools | Finalized successful setup, October 9 | Original frozen specifications/cutoffs match; outcomes remain unknown; setup sends no GEN. |
+| Browser recovery | Passing, mobile historical and forecast views | Controlled wallet/RPC/API transport; actual SDK encoding; attempts 1 then 2, automatic checking, failure finality before retry, exact credit, reload and account isolation. |
+| ESLint / TypeScript / build | Release checks | Run with pinned dependencies before deployment; deployment/build records accompany the release. |
+| Existing consumer/practice checks | Retained October 4 reports | Search, filters, ranges, 2 GEN ticket, free practice, persistence, mobile layouts and isolated two-wallet flow. |
+| Daily background keeper | Implemented/tested; production inactive | Unauthorized requests rejected; server-only authentication configuration remains pending. |
 
-Detailed records:
+## Evidence
 
-- [Consumer fixtures](consumer-ui-verification.json) and [actual market reads](consumer-live-market-verification.json).
-- [Practice regression](upcoming-practice-regression.json) and [prior hosted practice checks](consumer-practice-verification.json).
-- [Oracle network verification](proofs/network-verification.json), [five-market verification](proofs/upcoming/network-verification.json), [historical raw receipts](proofs/films).
-- [Oracle proof](../public/protocol-proof.json), [upcoming proof](../public/upcoming-pool-proof.json), [film proof](../public/film-pool-proof.json).
-- [Published market capture](../.impeccable/review/consumer/upcoming-live.jpg) and [published mobile ticket](../.impeccable/review/consumer/upcoming-ticket-live.jpg).
+- [Recovery manifest and exact wei balances](proofs/claim-recovery/manifest.json), [read-only source/receipt verification](proofs/claim-recovery/network-verification.json), [browser recovery report](proofs/claim-recovery/ui-verification.json), and [raw recovery receipts](proofs/claim-recovery).
+- [Five current pools](proofs/upcoming/network-verification.json), [current historical proof](../public/film-pool-proof.json), [current upcoming proof](../public/upcoming-pool-proof.json), and [public recovery proof](../public/claim-recovery-proof.json).
+- [Legacy historical manifest](../public/legacy-film-pool-proof.json), [legacy upcoming manifest](../public/legacy-upcoming-pool-proof.json), and [original historical raw receipts](proofs/films). Earlier three-film payouts remain identified with their actual old deployment.
+- [Original oracle verification](proofs/network-verification.json), [prior consumer fixtures](consumer-ui-verification.json), [prior actual market reads](consumer-live-market-verification.json), and [practice regression](upcoming-practice-regression.json).
 
 ## Failure evidence and limits
 
-Protocol ACCEPTED is provisional. FINALIZED alone is also insufficient: execution must succeed. Oracle, opening and settlement callbacks are distinct transactions. A recorded claim is a transfer request; native payment needs explicit final credit with the exact sender, recipient and wei amount. Studio EOA NO_MAJORITY is not treated as successful consensus execution.
+FINALIZED alone does not prove successful contract execution or native credit. Current claim reservations are separate from paid `claims`. Paid requires the exact linked finalized native receipt with explicit credit, independently verified through the fixed official Studio RPC, followed by successful verification finality and self callback. Unknown or pending evidence stays locked. Terminal non-credit permits only the next nonce, with conservative backing for all unpaid obligations.
 
-Retained failures include an ungrounded Barbie passage rejected during adjudication, Dune's initial insufficient-evidence attempt, and the first ambiguous Hunger Games proposal. Later successful attempts keep the frozen rules; old receipts are preserved. [Evidence policy](EVIDENCE.md).
+Failure/retry tests use controlled transport and native ledgers. Hosted native failure and live multi-wallet proportional payout are not claimed. The forecast hosted payout uses an explicitly isolated synthetic oracle and identical forecast source; no listed future film is prematurely settled. StudioNet is a development simulator. RPC honesty/finality, native refund availability, source access and publisher truth remain assumptions. Old deployed contracts cannot be patched retroactively.
 
-No completed upcoming-film adjudication or payout, production-chain deployment, live multi-wallet proportional payout, or agent-performed MetaMask signing session is claimed. The optional additional funded two-wallet test was not run because its exact funding/staking flow lacked authorization. The existing signed CLI proofs and isolated consumer fixture establish different things.
-
-The Numbers access succeeded from validators. Box Office Mojo retrieval consensus was undetermined and is excluded. One Archive.org capture was accessible, but it is outside the shipped observation window and is not settlement evidence. No permanent full-page archive or source-truth guarantee is claimed.
+Earlier oracle failures remain retained: rejected ungrounded Barbie passage, initially insufficient Dune evidence and the first ambiguous Hunger Games proposal. Retries preserved frozen rules. See [evidence policy](EVIDENCE.md).
 
 ## Reproduce
 
@@ -45,15 +41,14 @@ npm run lint
 npm run typecheck
 npm run build
 python -m pip install -r requirements.txt
-python -m pytest tests/direct -q
-genvm-lint check contracts/bullseye.py
+python -m pytest tests/direct --artifacts-dir artifacts/gltest -q
+genvm-lint check contracts/film_pools.py
 genvm-lint check contracts/forecast_pools.py
 npm run test:network
+npx tsx scripts/verify-claim-recovery.ts
 npx tsx scripts/verify-upcoming.ts
 ```
 
-The network commands above only read receipts and state. The upcoming verifier intentionally requires sources/pools to remain open with unknown outcomes; after an actual resolution its checks must be updated to the new finalized lifecycle stage.
+Network verifiers only read. With the app running and Chromium installed, use `npx tsx scripts/claim-recovery-ui-check.ts`, `npx tsx scripts/consumer-check.ts`, and `scripts/movie-stakes-check.ts` with `BULLSEYE_VERIFY_FILMS=yes`. `BULLSEYE_URL` selects the origin and `BULLSEYE_CHROME` can select the browser executable. See [tutorial](TUTORIAL.md).
 
-Start the app before running `npm run test:browser`, `npx tsx scripts/consumer-check.ts`, or the live-read `scripts/movie-stakes-check.ts` with `BULLSEYE_VERIFY_FILMS=yes`. `BULLSEYE_URL` selects the origin. Playwright needs an installed Chromium executable; see [TUTORIAL.md](TUTORIAL.md).
-
-Older incremental reports are retained in [VERIFICATION-HISTORY.md](VERIFICATION-HISTORY.md). Those entries describe earlier releases and do not supersede this matrix.
+The upcoming verifier intentionally checks open unknown outcomes; update it for a later actual finalized lifecycle rather than treating a valid future resolution as failure. Older reports are retained in [VERIFICATION-HISTORY.md](VERIFICATION-HISTORY.md).

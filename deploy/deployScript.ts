@@ -3,6 +3,7 @@ import type {GenLayerClient, TransactionHash} from 'genlayer-js/types';
 import {studionet} from 'genlayer-js/chains';
 import {TransactionStatus,TransactionHashVariant} from 'genlayer-js/types';
 import {upcomingDeploy} from '../scripts/upcoming-deploy';
+import {claimRecoveryDeploy} from '../scripts/claim-recovery-deploy';
 // Studio's native EOA transfers have no consensus execution receipt. Verify
 // explicit value credit separately; never reinterpret NO_MAJORITY as execution success.
 function creditedTransfer(receipt:Record<string,unknown>,from:string,to?:string,amount?:string){return String(receipt.statusName??receipt.status_name)==='FINALIZED'&&receipt.value_credited===true&&receipt.consensus_data===null&&String(receipt.from_address??receipt.sender).toLowerCase()===from.toLowerCase()&&(!to||String(receipt.to_address??receipt.recipient).toLowerCase()===to.toLowerCase())&&(!amount||String(receipt.value)===amount);}
@@ -49,6 +50,7 @@ async function filmRun(client:GenLayerClient<typeof studionet>){
 type Manifest={contract:`0x${string}`;network:string;roundId:string;transactions:Record<string,`0x${string}`>;record?:unknown};
 const file='docs/proofs/manifest.json';
 export default async function main(client:GenLayerClient<typeof studionet>){
+  if(process.env.BULLSEYE_STEP?.startsWith('recovery-')){await claimRecoveryDeploy(client);return;}
   if(process.env.BULLSEYE_STEP?.startsWith('upcoming-')){await upcomingDeploy(client);return;}
   if(process.env.BULLSEYE_STEP?.startsWith('film-')){await filmRun(client);return;}
   if(process.env.BULLSEYE_STEP?.startsWith('pool-')){await poolRun(client);return;}

@@ -1,0 +1,47 @@
+{
+  "transport": "controlled browser wallet and receipt fixtures; no hosted native failure",
+  "base": "http://localhost:3109",
+  "verifiedAt": "2026-10-09T14:37:01.530Z",
+  "results": [
+    {
+      "movie": "barbie-practice",
+      "signatures": 2,
+      "attempts": [
+        1,
+        2
+      ],
+      "journal": [
+        "claim attempt 1",
+        "automatic receipt verification 1",
+        "verification callback failed",
+        "claim attempt 2",
+        "native credit exactly once",
+        "automatic receipt verification 2",
+        "verification callback paid"
+      ],
+      "finalWalletWei": "12000000000000000000",
+      "finalPoolWei": "0",
+      "reloadAndAccountIsolation": true
+    },
+    {
+      "movie": "street-fighter-2026",
+      "signatures": 2,
+      "attempts": [
+        1,
+        2
+      ],
+      "journal": [
+        "claim attempt 1",
+        "automatic receipt verification 1",
+        "verification callback failed",
+        "claim attempt 2",
+        "native credit exactly once",
+        "automatic receipt verification 2",
+        "verification callback paid"
+      ],
+      "finalWalletWei": "12000000000000000000",
+      "finalPoolWei": "0",
+      "reloadAndAccountIsolation": true
+    }
+  ]
+}

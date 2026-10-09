@@ -95,7 +95,7 @@ def test_unknown_result_waits_then_finality_gates_entire_pot(forecasts, direct_v
     pools.settle(identifier)
     assert pools.get_claimable(identifier, to_hex(direct_alice)) == '0'
     with direct_vm.expect_revert('self callback'): pools.finalize(identifier)
-    with direct_vm.expect_revert('settle after'): pools.claim(identifier)
+    with direct_vm.expect_revert('settle after'): pools.claim(identifier, 1)
     finalize(pools, direct_vm, identifier)
     amounts = [int(pools.get_claimable(identifier, to_hex(address))) for address, _, _ in participants]
     assert sum(amounts) == 7*GEN+3
