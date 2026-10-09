@@ -15,15 +15,16 @@ Payout recovery correction: October 9, 2026. Product: five upcoming GEN markets 
 | Five upcoming v2 pools | Finalized successful setup, October 9 | Original frozen specifications/cutoffs match; outcomes remain unknown; setup sends no GEN. |
 | Browser recovery | Passing, mobile historical and forecast views | Controlled wallet/RPC/API transport; actual SDK encoding; attempts 1 then 2, automatic checking, failure finality before retry, exact credit, reload and account isolation. |
 | ESLint / TypeScript / build | Release checks | Run with pinned dependencies before deployment; deployment/build records accompany the release. |
-| Existing consumer/practice checks | Retained October 4 reports | Search, filters, ranges, 2 GEN ticket, free practice, persistence, mobile layouts and isolated two-wallet flow. |
+| Published consumer/practice checks | Passing, October 9, public alias | Search, filters, ranges, 2 GEN ticket, free practice, persistence, 320/1440 layouts and controlled two-wallet SDK flow. |
+| Published eight-market reads | Passing, October 9, 390 width | All eight tickets load actual finalized StudioNet pool state, expose four ranges and a default 2 GEN ticket, with no wallet transaction. |
 | Daily background keeper | Implemented/tested; production inactive | Unauthorized requests rejected; server-only authentication configuration remains pending. |
 
 ## Evidence
 
-- [Recovery manifest and exact wei balances](proofs/claim-recovery/manifest.json), [read-only source/receipt verification](proofs/claim-recovery/network-verification.json), [browser recovery report](proofs/claim-recovery/ui-verification.json), and [raw recovery receipts](proofs/claim-recovery).
+- [Recovery manifest and exact wei balances](proofs/claim-recovery/manifest.json), [read-only source/receipt verification](proofs/claim-recovery/network-verification.json), [published release checks](proofs/claim-recovery/release-verification.json), [browser recovery report](proofs/claim-recovery/ui-verification.json), and [raw recovery receipts](proofs/claim-recovery).
 - [Five current pools](proofs/upcoming/network-verification.json), [current historical proof](../public/film-pool-proof.json), [current upcoming proof](../public/upcoming-pool-proof.json), and [public recovery proof](../public/claim-recovery-proof.json).
 - [Legacy historical manifest](../public/legacy-film-pool-proof.json), [legacy upcoming manifest](../public/legacy-upcoming-pool-proof.json), and [original historical raw receipts](proofs/films). Earlier three-film payouts remain identified with their actual old deployment.
-- [Original oracle verification](proofs/network-verification.json), [prior consumer fixtures](consumer-ui-verification.json), [prior actual market reads](consumer-live-market-verification.json), and [practice regression](upcoming-practice-regression.json).
+- [Original oracle verification](proofs/network-verification.json), [published consumer fixtures](consumer-ui-verification.json), [published actual market reads](consumer-live-market-verification.json), and [practice regression](upcoming-practice-regression.json).
 
 ## Failure evidence and limits
 

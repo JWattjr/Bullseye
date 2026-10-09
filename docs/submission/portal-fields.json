@@ -40,5 +40,6 @@
     "https://github.com/JWattjr/Bullseye/blob/main/docs/VERIFICATION.md",
     "https://bullseye-genlayer.vercel.app/upcoming-pool-proof.json",
     "https://bullseye-genlayer.vercel.app/film-pool-proof.json"
-  ]
+  ],
+  "stewardResponse": "Both pool contracts reserve nonce-bound claims and record paid only after independent exact native-credit verification and a protected finality callback. Terminal failure permits one next attempt; pending/unknown receipts stay locked. Replays and duplicate claims cannot emit again. Retry requires backing for all unpaid obligations. The app verifies automatically and offers Retry collection after failure finality. 121 contract tests (44 recovery cases), 24 app tests and mobile failure/retry checks pass. Two 2 GEN stakes and actual StudioNet payouts returned the wallet exactly to 8.000999999999999998 GEN; both escrows ended at zero. Failure tests use controlled fixtures; the forecast payout uses an isolated test oracle, leaving listed future outcomes unknown. New contracts and raw source/receipt/balance evidence: https://github.com/JWattjr/Bullseye/blob/main/docs/CLAIM-RECOVERY.md. Legacy contracts are immutable; no retroactive recovery is claimed."
 }

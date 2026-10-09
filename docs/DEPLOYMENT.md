@@ -1,6 +1,27 @@
 # Hosted demonstration
 
-Latest release (October 4, 2026): `dpl_FRS6bRBw9fqpMiQXa72fahA6c5SH`, [immutable deployment](https://bullseye-genlayer-fg61ycy9e-wattxs-projects.vercel.app), on the existing [public alias](https://bullseye-genlayer.vercel.app). Five upcoming GEN markets are finalized and open, using forecast-pool contract `0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5` and the existing Bullseye v2 oracle. Historical contracts and claims are unchanged. Hosted consumer tests passed at 320/1440 widths with an isolated SDK wallet fixture, and all eight tickets passed actual finalized StudioNet reads at 390 pixels. The background route is deployed with daily scheduling but rejects requests until its server-only authentication secret is approved and configured. No secret was created; automatic approval review requires explicit permission. See [upcoming specifications](UPCOMING.md), [finalized setup verification](proofs/upcoming/network-verification.json), [consumer checks](consumer-ui-verification.json) and [live market reads](consumer-live-market-verification.json).
+Latest release: **October 9, 2026, payout recovery correction**. Both current pool contracts reserve claims before native transfer and verify exact credit before recording payment. New historical stakes use `0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403`; upcoming stakes use `0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25`. Legacy positions remain directed to their original contracts. See [correction report](CLAIM-RECOVERY.md) and [release verification](proofs/claim-recovery/release-verification.json).
+
+## Deploy result
+
+- **URL:** [Public Bullseye](https://bullseye-genlayer.vercel.app), backed by [the immutable deployment](https://bullseye-genlayer-80dr7tcoo-wattxs-projects.vercel.app) (Vercel login required there).
+- **Target:** production, existing `wattxs-projects/bullseye-genlayer` project.
+- **Status:** READY; public alias resolves to `dpl_3DRepjZQQWP5xmwKYhkQ8b59cnJb`.
+- **Commit:** `83c04b2b37b0e30fd230830c9e2e525886f630bf`, deployed from its source-only Git archive.
+- **Framework:** Next.js 16.3.8, Node.js 24.
+- **Build duration:** Next.js production compilation approximately 12 seconds; local and remote builds passed.
+
+The production build was staged with `--skip-domain`, checked using existing Vercel CLI authentication, and promoted without rebuilding. Deployment protection was preserved. The public alias then passed [consumer checks](consumer-ui-verification.json), [all eight actual market reads](consumer-live-market-verification.json), and [mobile failed-transfer recovery checks](proofs/claim-recovery/ui-verification.json). Recovery browser transport is controlled; the successful payout receipts are actual StudioNet transfers. The public receipt endpoint independently reported the exact 2 GEN native credit and finalized paid recovery state for the new Barbie proof.
+
+### Post-deploy observability
+
+- **Error scan:** two Studio RPC capacity errors in the deployment's 30-minute error scan; all eight actual market-read checks subsequently passed.
+- **Drains:** external drains were not inspected.
+- **Monitoring:** existing Vercel request logs checked. The daily keeper remains inactive pending authentication configuration; open pages drive settlement and claim checking.
+
+## Earlier releases
+
+Previous release (October 4, 2026): `dpl_FRS6bRBw9fqpMiQXa72fahA6c5SH`, [immutable deployment](https://bullseye-genlayer-fg61ycy9e-wattxs-projects.vercel.app), on the existing [public alias](https://bullseye-genlayer.vercel.app). Five upcoming GEN markets are finalized and open, using forecast-pool contract `0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5` and the existing Bullseye v2 oracle. Historical contracts and claims are unchanged. Hosted consumer tests passed at 320/1440 widths with an isolated SDK wallet fixture, and all eight tickets passed actual finalized StudioNet reads at 390 pixels. The background route is deployed with daily scheduling but rejects requests until its server-only authentication secret is approved and configured. No secret was created; automatic approval review requires explicit permission. See [upcoming specifications](UPCOMING.md), [finalized setup verification](proofs/upcoming/network-verification.json), [consumer checks](consumer-ui-verification.json) and [live market reads](consumer-live-market-verification.json).
 
 Public app: https://bullseye-genlayer.vercel.app
 

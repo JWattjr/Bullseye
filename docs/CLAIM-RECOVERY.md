@@ -35,6 +35,8 @@ The failure scenario starts three wallets with 10 GEN each and stakes of 2 GEN +
 
 **24 application tests pass**, including keeping failed v2 delivery pending until failure verification finalizes. Both pool contracts pass GenVM lint with their concrete runner pinned.
 
+The correction is published at [Bullseye](https://bullseye-genlayer.vercel.app), deployment `dpl_3DRepjZQQWP5xmwKYhkQ8b59cnJb`, from source commit `83c04b2`. Consumer checks, all eight actual StudioNet market reads and both controlled mobile recovery scenarios passed against that public release on October 9. See [release verification](proofs/claim-recovery/release-verification.json) and [deployment record](DEPLOYMENT.md).
+
 ## Live successful transfers and balances
 
 The owner authorized **4 GEN cumulative test stakes**. Two 2 GEN entries and both native payouts completed. No further test stake or second-wallet transfer was sent. The account was CLI-managed `0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92`; no private key was exported or placed in the app.

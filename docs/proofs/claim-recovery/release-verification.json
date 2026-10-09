@@ -1,0 +1,54 @@
+{
+  "verifiedAt": "2026-10-09T15:09:15Z",
+  "sourceCommit": "83c04b2b37b0e30fd230830c9e2e525886f630bf",
+  "project": "wattxs-projects/bullseye-genlayer",
+  "deploymentId": "dpl_3DRepjZQQWP5xmwKYhkQ8b59cnJb",
+  "deploymentUrl": "https://bullseye-genlayer-80dr7tcoo-wattxs-projects.vercel.app",
+  "publicUrl": "https://bullseye-genlayer.vercel.app",
+  "target": "production",
+  "status": "READY",
+  "framework": "Next.js 16.3.8",
+  "build": "Local and Vercel production builds passed; Next.js compilation approximately 12 seconds in the remote build log.",
+  "promotion": "Staged production build promoted without rebuilding. Public alias inspection resolves to the same deployment ID.",
+  "protectedDeploymentCheck": "Existing Vercel CLI authentication verified v2 proof and exact paid claim receipt before promotion. Access protection was preserved.",
+  "publicReceiptCheck": {
+    "movie": "barbie-practice",
+    "claimHash": "0x16b691bb18eaa7e8a0928bc194a2209d2a5094a36d8f7668e03595f2393e5eb5",
+    "state": "finalized",
+    "transferHash": "0x021f92d84e649770c0b61044aad180111ca7424daa057497032042e1d1967c51",
+    "nativeCreditWei": "2000000000000000000",
+    "payoutVersion": 2,
+    "recovery": "paid"
+  },
+  "checks": {
+    "directContractTests": 121,
+    "recoveryCasesIncluded": 44,
+    "applicationTests": 24,
+    "genvmLint": "Both pool contracts pass with a concrete pinned runner.",
+    "typecheck": "pass",
+    "eslint": "pass",
+    "deployedSourceAndReceipts": "pass; network-verification.json",
+    "fiveUpcomingSpecifications": "pass; original frozen rules and unknown outcomes retained",
+    "publicConsumerBrowser": "pass; ../../consumer-ui-verification.json; 320/1440 widths and controlled two-wallet SDK flows",
+    "publicEightMarketReads": "pass; ../../consumer-live-market-verification.json; 390 width, actual finalized StudioNet RPC reads, no wallet transaction",
+    "publicRecoveryBrowser": "pass; ui-verification.json; mobile historical and forecast views with controlled wallet/receipt transport"
+  },
+  "observability": {
+    "errorScan": "vercel logs dpl_3DRepjZQQWP5xmwKYhkQ8b59cnJb --level error --since 30m --limit 20",
+    "errorsFound": 2,
+    "errorSummary": "Studio RPC reported all 8 execution slots busy during the public market checks. All eight actual market-read checks subsequently passed.",
+    "externalDrains": "not inspected",
+    "monitoringVerified": "Existing Vercel request logs; no external monitoring claim.",
+    "keeper": "Daily route remains inactive pending server authentication configuration; open pages drive settlement and claim verification."
+  },
+  "fundedProof": {
+    "authorizedStakeGen": "4",
+    "cumulativeStakeGen": "4",
+    "walletBeforeWei": "8000999999999999998",
+    "walletAfterWei": "8000999999999999998",
+    "bothProofEscrowsAfterWei": "0",
+    "extraFundedTransactions": "No additional stake or second-wallet transfer."
+  },
+  "limits": "Hosted successful payouts are real StudioNet transfers. Failed-transfer and retry evidence uses controlled fixtures. Forecast payout uses an isolated test oracle. No hosted native failure, live multi-wallet payout, mainnet guarantee or retroactive legacy repair is claimed.",
+  "portal": "Existing contribution edit prepared with six evidence links, updated contracts, response and original YouTube demo. Save and resubmit was not clicked."
+}
