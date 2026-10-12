@@ -40,10 +40,16 @@ export async function musicSnapshot(id?: string, participant?: string): Promise<
     return {contracts: addresses, markets, pools: [], serverTime: Math.floor(Date.now() / 1000)};
   });
   const source = await market(id);
+  const proof = await cached('proof-transactions', 30, async () => JSON.parse(await readFile(join(process.cwd(), 'public/music-proof.json'), 'utf8')) as {markets: Record<string, {id: string}>; transactions: Record<string, string>});
+  const caseKey = Object.entries(proof.markets).find(([, record]) => record.id === id)?.[0];
+  const transactions = caseKey ? ['resolve', 'resolve-child-0'].flatMap((suffix, index) => {
+    const hash = proof.transactions[caseKey + '-' + suffix];
+    return /^0x[a-fA-F0-9]{64}$/.test(hash ?? '') ? [{label: index ? 'Final activation transaction' : 'Resolution transaction', hash}] : [];
+  }) : [];
   const ids = await cached('pool-ids:' + id, 30, () => read(addresses.pools, 'get_source_pool_ids', [id])) as string[];
   const pools = await Promise.all(ids.slice(-5).map(poolId => cached('pool:' + poolId, 15, async () => JSON.parse(String(await read(addresses.pools, 'get_pool', [poolId]))) as MusicPool)));
   const rawPrediction = participant ? await cached('prediction:' + id + ':' + participant, 15, () => read(addresses.markets, 'get_prediction', [id, participant])) : null;
-  return {contracts: addresses, markets: [source], market: source, pools, prediction: rawPrediction ? JSON.parse(String(rawPrediction)) : null, serverTime: Math.floor(Date.now() / 1000)};
+  return {contracts: addresses, markets: [source], market: source, pools, prediction: rawPrediction ? JSON.parse(String(rawPrediction)) : null, transactions, serverTime: Math.floor(Date.now() / 1000)};
 }
 export async function musicReceipt(hash: TransactionHash): Promise<Partial<MusicReceipt>> {
   const addresses = await contracts();
