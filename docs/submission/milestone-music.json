@@ -2,7 +2,7 @@
   "action": "Propose an update",
   "project": "Bullseye",
   "milestone": "Music: Billboard 200 album debuts",
-  "status": "draft-live-consensus-blocked-owner-submits",
+  "status": "draft-live-proofs-complete-release-verification-in-progress-owner-submits",
   "summary": "Bullseye adds Music alongside its existing Film platform: Billboard 200 rank-bin and same-week head-to-head markets, plain-English question compilation, archived complete-chart evidence, simulated StudioNet GEN pools, and a combined free-points season. Validators judge album identity and ambiguity; deterministic code handles extraction, winners, native payouts and scores. Film oracle and funded pools are preserved. Historical examples disclose known outcomes and use exhibition standings. This draft is not submitted automatically.",
   "judgmentPoints": "One narrow model call compiles the exact album, primary/collaborative artist, named deluxe aliases and Saturday chart date. Ambiguous questions are rejected. A second narrow judgment identifies the debut row from code-extracted archived chart data. Independent validators must agree on complete rows digest, matched positions and the leader quote in their own extraction. CDX capture selection, full 200-row validation, quote checks, winner selection, GEN distribution and season scoring run in code.",
   "network": "StudioNet 61999; simulated GEN, not production-chain money",
@@ -79,18 +79,58 @@
     "surrender-season": "https://studio.genlayer.com/transactions/0xfa4ada05e9c55679b627849576c7f060a5fb27f4d7660f447d59831b67cd2194",
     "patina-resolve": "https://studio.genlayer.com/transactions/0x2d663f7b8f876f946a3259058366bfe188c6d6ed3646ce63afb57ae356aa964b",
     "pairing-resolve": "https://studio.genlayer.com/transactions/0x25429edf762bca405ef6b9e965e95fc2472039741d6ac8dff6b779f126146761",
-    "film-season-barbie-network-demo": "https://studio.genlayer.com/transactions/0xed3798297f0f9815c3de9fef7539643114e699fa58a567486f9b228600db04e2"
+    "film-season-barbie-network-demo": "https://studio.genlayer.com/transactions/0xed3798297f0f9815c3de9fef7539643114e699fa58a567486f9b228600db04e2",
+    "patina-resolve-child-0": "https://studio.genlayer.com/transactions/0x8d338ccea328dd9ec58735e3492a9e6e3a3e45db87a8ae497d227c7e88f9cccb",
+    "patina-season": "https://studio.genlayer.com/transactions/0x5064e5a5ac3eb3c0ab6f1e931a49f00e95639691ac2a299ef61ce85c18d7453b",
+    "pairing-resolve-child-0": "https://studio.genlayer.com/transactions/0x48e8012515c387ae1ec790109c18c593cf6cd227bf23aacf385791595ed82e57",
+    "pairing-season": "https://studio.genlayer.com/transactions/0x42c23c39fc9ba0daca2875160ea4c011be112d90189c93213e776519a4f44340"
   },
   "howToVerify": "Read the dated manifest and run npm run verify:music. It checks actual on-chain source hashes, finalized successful receipts, complete archive digests and ranks, native credited payout, combined season and preserved Film pools without writes. Controlled browser tests never count as live GEN proof. See the tutorial, architecture diagram, direct tests and browser report for reproducible details.",
   "demo": "https://youtu.be/IUI4EQOu00M",
   "demoScope": "Existing Film recording; use docs/DEMO.md for the updated two-minute Music walkthrough. No new Music video is claimed.",
   "remainingProof": [
-    "Patina adjudication and same-week pairing awaiting finalized validator consensus; no result is forced",
-    "Remaining Patina/pairing season imports, strict full read-only verification",
-    "Production deployment and anonymous hosted browser verification"
+    "Strict read-only final verification and production deployment",
+    "Anonymous hosted desktop/mobile verification"
   ],
-  "diagnostics": "A superseded candidate paid its 0.01 GEN stake in full. Patina exposed a JSON response omitting position:null; the finalized diagnostic and regression tests justify bounded normalization after complete extraction. Its failed receipt is retained. Midnights remains an older pending archive diagnostic.",
+  "diagnostics": "Early archive and formatting failures are retained. One superseded funded candidate credited its 0.01 GEN in full. The corrected release also credited its approved 0.01 GEN in full. The observed missing-null absence shape is narrowly normalized only after complete 200-row extraction. Patina and pairing subsequently finalized on their original hashes after consensus delay; cancellation was refused, and no result was forced. Midnights is an older pending archive diagnostic.",
   "priorFundedProof": "https://github.com/JWattjr/Bullseye/blob/main/docs/proofs/music-2026-10-12-release/manifest.json",
   "fundedProof": "The approved additional 0.01 simulated StudioNet GEN stake was settled, credited back to the approved wallet by the finalized native child, and verified paid. The wallet returned to its pre-stake balance. No additional deposit is needed.",
-  "sourceCommit": "775bacfbe57070a4fd5dbe06ebfca6453a028c17"
+  "sourceCommit": "bb52baa4ced689d8645d2131ccfaeefb20a22f82",
+  "proofCases": [
+    {
+      "case": "renaissance",
+      "id": "renaissance-music-proof",
+      "status": "resolved",
+      "transaction": "https://studio.genlayer.com/transactions/0x268130f81afee2ed2bd79e15dd032fd15fab87c692cf215b3fcb2a33ffbbecf3"
+    },
+    {
+      "case": "surrender",
+      "id": "surrender-music-proof",
+      "status": "resolved",
+      "transaction": "https://studio.genlayer.com/transactions/0xae9bf0c9323b391d037534e8c6a3a46bc5e9bb941af72d649b9de64ecd928e93"
+    },
+    {
+      "case": "patina",
+      "id": "patina-music-proof",
+      "status": "resolved",
+      "transaction": "https://studio.genlayer.com/transactions/0x2d663f7b8f876f946a3259058366bfe188c6d6ed3646ce63afb57ae356aa964b"
+    },
+    {
+      "case": "pairing",
+      "id": "pairing-music-proof",
+      "status": "resolved",
+      "transaction": "https://studio.genlayer.com/transactions/0x25429edf762bca405ef6b9e965e95fc2472039741d6ac8dff6b779f126146761"
+    },
+    {
+      "case": "ambiguous",
+      "id": "ambiguous-music-proof",
+      "status": "rejected",
+      "transaction": "https://studio.genlayer.com/transactions/0x58bef43900e6726cadc55b532381a4c53de15aea510ad4b93b7d627698bac73b"
+    }
+  ],
+  "seasonProof": {
+    "musicEntries": 4,
+    "filmEntries": 1,
+    "historicalExhibitionPoints": 796
+  }
 }

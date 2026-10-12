@@ -1,22 +1,21 @@
-# Music release proof — live absence correction
+# Music release proof
 
-Status: blocked on live consensus; not submission-ready yet. The three shipping contracts and source hashes are in `manifest.json`. The exact source commit is pinned in the manifest and independently matches the deployed byte hashes.
+The five required Music cases have actual finalized successful receipts: Renaissance #1, Surrender #12, Patina not on the complete 200-row chart, Renaissance #1 versus Surrender #12, and an ambiguous proposed question rejected with a reason. `manifest.json` records the three shipping addresses, exact deployed source hashes, checked source commit and all parent/callback hashes.
 
-This release normalizes the finalized diagnostic's exact absent-album response: an empty quote with an omitted null position, after complete 200-row extraction. Quoted rows without positions, additional fields and partial charts remain invalid. All positive cases rerun on these addresses. The previous funded candidate is preserved in `../music-2026-10-12-release/`; its 0.01 GEN was fully collected, and its failed Patina receipt remains disclosed.
+The approved additional 0.01 simulated StudioNet GEN deposit was settled, credited back to the approved wallet by its finalized native child, and independently verified paid by the contract callback. Before and after collection the wallet held 8000999999999999956 wei; the pool contract holds zero. The separately scoped `paid-candidate-verification.json` proves these values and exact Git/on-chain source bytes. No further deposit is required or authorized.
 
-Checks completed before this live run:
+The season contains four finalized Music predictions and the existing Barbie Film prediction, with 796 historical exhibition points. GEN pool positions and free season points are distinct. Historical known outcomes remain outside competition.
 
-- 199 direct contract/parser tests passed, including Film recovery and four additional omission/partial-chart regressions.
-- The corrected Markets source passed GenVM lint. Pools and Seasons bytes are unchanged from their earlier passing lint and 199-test run.
-- 30 existing and Music app tests passed.
-- TypeScript, ESLint and the production webpack build passed. The new functional browser assertions will additionally inspect the real absent-album result and funded pool.
-- Film desktop/mobile browser regression passed. Earlier read-only regression confirmed the original oracle and both pool registries, with current replacement pools at zero GEN and legacy Street Fighter and Cat in the Hat retaining 2 GEN each.
-- The bounded Impeccable review is complete. No additional screenshots or visual review batches are needed for this contract correction.
+Checks already completed:
 
-Exactly one additional approved 0.01 simulated StudioNet GEN stake was deposited into this pool, settled, credited back to the approved wallet by the finalized native child, and independently verified paid by the contract callback. The wallet returned to its pre-stake balance of 8000999999999999956 wei. A pre-broadcast reservation and fixed recipient/account guard prevent a blind second deposit. No additional GEN is required or authorized. No Portal submission is performed.
+- 199 direct contract/parser tests, including Film payout recovery and four absent-response/partial-chart regressions.
+- GenVM lint on all three pinned shipping contracts.
+- 31 app tests, TypeScript, ESLint and the production webpack build.
+- Actual local Music routes at 1440×960 and 390×844, including absence, funded result, head-to-head and rejection, with no overflow or console errors. Wallet/proposal/failure/reload controls are isolated fixtures and never broadcast. See `browser-local-verification.json` and the separately labeled controlled report. No additional screenshots were captured.
+- Actual Film regression and source bindings: three resolved films; current replacement pools at zero GEN; legacy Street Fighter and Cat in the Hat retain 2 GEN each. See `source-read-regression.json`.
 
-Renaissance (#1) and Surrender (#12) are finalized with complete archived evidence and imported into the season. Patina and the same-week pairing are still awaiting consensus finality. The leader response or a submitted hash is not counted as a completed proof; the strict verifier remains gated on all required finalized results.
+The full strict verifier and production release are the remaining gates. It must check all actual final receipts, exact identity/date/rank/archive digests, native payout and combined season before this milestone is called ready.
 
-The strict read-only verifier ran and correctly failed on the unfinished Patina receipt. `consensus-blocker.json` records the saved hashes and observed disagreement. The current source/binding and Film regression check passed in `source-read-regression.json`; the separately scoped native payout check passed in `paid-candidate-verification.json`. These partial checks do not substitute for full milestone verification.
+History is retained rather than hidden: earlier superseded source candidates, the prior fully collected funded proof, a failed premature season import, an evidence-pending Surrender adjudication, and the temporary Patina consensus disagreement. `consensus-blocker.json` is now historical and resolved. `strict-verification-failure.txt` records the earlier correctly gated failure while Patina was unfinished. The canonical saved Patina and pairing hashes later finalized; no forced result, duplicate stake or replacement adjudication was used.
 
-The existing Barbie Film prediction was also imported with a finalized successful zero-GEN transaction. The track record now contains Renaissance, Surrender and Film; Patina and pairing still require finalized source outcomes before import.
+The bounded Impeccable review is complete. The existing YouTube recording demonstrates Film only; the updated Music walkthrough is in `docs/DEMO.md`. The Portal update remains an owner-submitted draft, and no Portal submission is performed.

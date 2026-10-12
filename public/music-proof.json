@@ -1,6 +1,5 @@
 {
   "network": "StudioNet",
-  "simulated": true,
   "contracts": {
     "markets": "0xE5ec1394569C0E7770641F230Bb8aD9ddbc42177",
     "pools": "0x66880A4447878E8497f241267374C208916800f5",
@@ -55,10 +54,14 @@
     "surrender-season": "0xfa4ada05e9c55679b627849576c7f060a5fb27f4d7660f447d59831b67cd2194",
     "patina-resolve": "0x2d663f7b8f876f946a3259058366bfe188c6d6ed3646ce63afb57ae356aa964b",
     "pairing-resolve": "0x25429edf762bca405ef6b9e965e95fc2472039741d6ac8dff6b779f126146761",
-    "film-season-barbie-network-demo": "0xed3798297f0f9815c3de9fef7539643114e699fa58a567486f9b228600db04e2"
+    "film-season-barbie-network-demo": "0xed3798297f0f9815c3de9fef7539643114e699fa58a567486f9b228600db04e2",
+    "patina-resolve-child-0": "0x8d338ccea328dd9ec58735e3492a9e6e3a3e45db87a8ae497d227c7e88f9cccb",
+    "patina-season": "0x5064e5a5ac3eb3c0ab6f1e931a49f00e95639691ac2a299ef61ce85c18d7453b",
+    "pairing-resolve-child-0": "0x48e8012515c387ae1ec790109c18c593cf6cd227bf23aacf385791595ed82e57",
+    "pairing-season": "0x42c23c39fc9ba0daca2875160ea4c011be112d90189c93213e776519a4f44340"
   },
-  "sourceCommit": "775bacfbe57070a4fd5dbe06ebfca6453a028c17",
-  "status": "awaiting-live-consensus-not-submission-ready",
+  "sourceCommit": "bb52baa4ced689d8645d2131ccfaeefb20a22f82",
+  "status": "live-proofs-complete",
   "markets": {
     "funded": {
       "id": "funded-music-proof",
@@ -348,7 +351,24 @@
       "resolution_deadline": 1791903492,
       "state": {
         "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
-        "evidence": null,
+        "evidence": {
+          "charts": [
+            {
+              "capture": "20220930063616",
+              "cdx_digest": "IAJ6VKD4TXA7AJKSOM5S7SYCY5UVDUPR",
+              "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+              "snapshot": "https://web.archive.org/web/20220930063616id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+              "week": "2022-08-13"
+            }
+          ],
+          "matches": [
+            {
+              "position": null,
+              "quote": ""
+            }
+          ],
+          "status": "resolved"
+        },
         "histogram": [
           0,
           0,
@@ -408,8 +428,8 @@
           "version": 1
         },
         "specification_hash": "26ae0e2ac0aec3b257566a5f19ff69271a4e07739e69775fa9f9ee88652b8556",
-        "status": "open",
-        "winner": null
+        "status": "resolved",
+        "winner": 5
       }
     },
     "pairing": {
@@ -419,7 +439,28 @@
       "resolution_deadline": 1791903706,
       "state": {
         "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
-        "evidence": null,
+        "evidence": {
+          "charts": [
+            {
+              "capture": "20220930063616",
+              "cdx_digest": "IAJ6VKD4TXA7AJKSOM5S7SYCY5UVDUPR",
+              "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+              "snapshot": "https://web.archive.org/web/20220930063616id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+              "week": "2022-08-13"
+            }
+          ],
+          "matches": [
+            {
+              "position": 1,
+              "quote": "#1 | Renaissance | Beyonce | LW: — | Weeks: 1"
+            },
+            {
+              "position": 12,
+              "quote": "#12 | Surrender | Maggie Rogers | LW: — | Weeks: 1"
+            }
+          ],
+          "status": "resolved"
+        },
         "histogram": [
           1,
           0
@@ -460,9 +501,10 @@
           "version": 1
         },
         "specification_hash": "fdfbc614094a7d2376a2a6ca1d2a16853dfa122d87e3d926f44038412e702d5b",
-        "status": "open",
-        "winner": null
+        "status": "resolved",
+        "winner": 0
       }
     }
-  }
+  },
+  "simulated": true
 }
