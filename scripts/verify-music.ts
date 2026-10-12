@@ -36,9 +36,9 @@ for(const [name,hash] of Object.entries(proof.transactions)) {
   assert.equal(String(raw.value),'10000000000000000');
  }
  checks.push({name,hash,status:receipt.statusName,expectedFailure:!!expectedFailure,nativeCredit:native&&!expectedFailure});
- await new Promise(resolve=>setTimeout(resolve,1100)); // Respect StudioNet request capacity.
+ await new Promise(resolve=>setTimeout(resolve,2500)); // The live RPC reported a 30-request/minute bucket.
 }
-const read=async(address:`0x${string}`,functionName:string,args:Parameters<typeof client.readContract>[0]['args'])=>client.readContract({address,functionName,args,transactionHashVariant:TransactionHashVariant.LATEST_FINAL});
+const read=async(address:`0x${string}`,functionName:string,args:Parameters<typeof client.readContract>[0]['args'])=>{await new Promise(resolve=>setTimeout(resolve,2500));return client.readContract({address,functionName,args,transactionHashVariant:TransactionHashVariant.LATEST_FINAL});};
 const marketResults=[];
 const identity=(value:string)=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
 const expectedAlbums:Record<string,[string,string][]>={renaissance:[['Renaissance','Beyonce']],funded:[['Renaissance','Beyonce']],surrender:[['Surrender','Maggie Rogers']],patina:[['Patina','Tallies']],pairing:[['Renaissance','Beyonce'],['Surrender','Maggie Rogers']]};
