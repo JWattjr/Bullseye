@@ -84,6 +84,26 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     return hash;
   }
   const step = process.env.BULLSEYE_STEP;
+  if (step === 'music-free-final-tail') {
+    for (const selected of ['patina','pairing']) {
+      process.env.BULLSEYE_MUSIC_CASE=selected;
+      for (const next of ['music-resolve','music-season']) {process.env.BULLSEYE_STEP=next;await musicDeploy(client);}
+    }
+    process.env.BULLSEYE_STEP='music-film-season';await musicDeploy(client);return;
+  }
+  if (step === 'music-recover-final-proof') {
+    for (const [selected, steps] of [
+      ['funded', ['music-resolve', 'music-settle', 'music-claim']],
+      ['surrender', ['music-retry-pending', 'music-season']],
+      ['patina', ['music-resolve', 'music-season']],
+      ['pairing', ['music-resolve', 'music-season']],
+    ] as [string, string[]][]) {
+      process.env.BULLSEYE_MUSIC_CASE = selected;
+      for (const next of steps) {process.env.BULLSEYE_STEP = next; await musicDeploy(client);}
+    }
+    process.env.BULLSEYE_STEP = 'music-film-season'; await musicDeploy(client);
+    return;
+  }
   if (step === 'music-full-final-proof') {
     process.env.BULLSEYE_MUSIC_CASE = 'funded';
     for (const next of ['music-compile', 'music-open', 'music-stake', 'music-free-cases', 'music-finish-free', 'music-complete-approved-proof']) {
@@ -176,6 +196,31 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
   if (!questions[key] || !proof.contracts.markets) throw Error('Deploy music and select a known proof case first.');
   const address = proof.contracts.markets as `0x${string}`;
   const identifier = key + '-music-proof';
+  if (step === 'music-retry-pending') {
+    const current = JSON.parse(String(await read(address, 'get_market', [identifier])));
+    if (current.status === 'resolved') {proof.markets[key].state=current;save();return;}
+    if (current.status !== 'pending') throw Error('Only an evidence-pending source may retry.');
+    const original = key + '-resolve', retained = key + '-resolve-pending-1';
+    if (!proof.transactions[retained]) {
+      if (!proof.transactions[original]) throw Error('A recorded finalized pending adjudication is required.');
+      await final(proof.transactions[original], original);
+      proof.transactions[retained] = proof.transactions[original];
+      writeFileSync(folder + '/' + retained + '.json', readFileSync(folder + '/' + original + '.json'));
+      delete proof.transactions[original];
+      const season = key + '-season';
+      if (proof.transactions[season]) {
+        const failed = season + '-unfinalized-1';
+        const receipt = JSON.parse(readFileSync(folder + '/' + season + '.json','utf8'));
+        if (successfulFinalized(receipt)) throw Error('Never replace a successful season import.');
+        proof.transactions[failed]=proof.transactions[season];
+        proof.expectedFailedTransactions=[...new Set([...(proof.expectedFailedTransactions??[]),failed])];
+        writeFileSync(folder + '/' + failed + '.json',stringify(receipt));
+        delete proof.transactions[season];
+      }
+      save();
+    }
+    await write(original, address, 'adjudicate', [identifier]);
+  }
   if (step === 'music-retry-ambiguous' && key === 'ambiguous') {
     const failed = proof.transactions['ambiguous-compile'];
     if (!failed || proof.transactions['ambiguous-compile-failed-1']) throw Error('Only the documented failed first compilation may be retried here.');
@@ -247,6 +292,8 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     proof.balanceAfterClaim = String(await client.getBalance({address: wallet as `0x${string}`}));
   }
   if (step === 'music-season') {
+    const source=JSON.parse(String(await read(address,'get_market',[identifier])));
+    if (!['resolved','void'].includes(source.status)) throw Error('Wait for the source result before requesting a season import.');
     const wallet = typeof client.account === 'string' ? client.account : client.account?.address;
     await write(key + '-season', proof.contracts.seasons, 'sync_music', [identifier, wallet!]);
     proof.season = JSON.parse(String(await read(proof.contracts.seasons, 'get_track_record', [wallet!])));

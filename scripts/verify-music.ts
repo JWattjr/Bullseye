@@ -40,6 +40,8 @@ for(const [name,hash] of Object.entries(proof.transactions)) {
 }
 const read=async(address:`0x${string}`,functionName:string,args:Parameters<typeof client.readContract>[0]['args'])=>client.readContract({address,functionName,args,transactionHashVariant:TransactionHashVariant.LATEST_FINAL});
 const marketResults=[];
+const identity=(value:string)=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+const expectedAlbums:Record<string,[string,string][]>={renaissance:[['Renaissance','Beyonce']],funded:[['Renaissance','Beyonce']],surrender:[['Surrender','Maggie Rogers']],patina:[['Patina','Tallies']],pairing:[['Renaissance','Beyonce'],['Surrender','Maggie Rogers']]};
 for(const [key,record] of Object.entries(proof.markets) as [string,{id:string;pool?:string}][]) {
  const market=JSON.parse(String(await read(proof.contracts.markets,'get_market',[record.id])));
  if(key==='midnights') {
@@ -48,8 +50,15 @@ for(const [key,record] of Object.entries(proof.markets) as [string,{id:string;po
   marketResults.push({key,id:record.id,diagnostic:true,status:market.status,evidence:market.evidence});
   continue;
  }
- if(key==='ambiguous') assert.equal(market.status,'rejected');
+ if(key==='ambiguous') {assert.equal(market.status,'rejected');assert.ok(market.rejection_reason.trim());}
  else {assert.equal(market.status,'resolved',key+' live resolution required');assert.ok(market.evidence.charts.every((c:{capture:string;rows_digest:string;snapshot:string})=>/^\d{14}$/.test(c.capture)&&/^[a-f0-9]{64}$/.test(c.rows_digest)&&c.snapshot.includes(c.capture+'id_/')));}
+ if(expectedAlbums[key]) {
+  assert.equal(market.spec.market_type,key==='pairing'?'head_to_head':'rank');
+  assert.equal(market.spec.albums.length,expectedAlbums[key].length);
+  for(const [index,[title,artist]] of expectedAlbums[key].entries()) {
+   const album=market.spec.albums[index];assert.equal(identity(album.title),identity(title));assert.equal(identity(album.artist),identity(artist));assert.equal(album.chart_week,'2022-08-13');
+  }
+ }
  const expected=key==='patina'?null:key==='surrender'?12:1;
  if(key!=='ambiguous') assert.equal(market.evidence.matches[0].position,expected);
  if(key==='patina') {assert.equal(market.winner,5);assert.equal(market.evidence.matches[0].quote,'');}
