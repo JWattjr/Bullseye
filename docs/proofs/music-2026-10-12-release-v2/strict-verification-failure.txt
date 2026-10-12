@@ -1,0 +1,20 @@
+
+> bullseye@0.1.0 verify:music
+> tsx scripts/verify-music.ts
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: patina-resolve finalized successful execution
+    at <anonymous> (C:\Users\User\Desktop\Genlayer apps\bullseye\scripts\verify-music.ts:31:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.12.0

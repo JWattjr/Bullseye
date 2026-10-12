@@ -1,0 +1,416 @@
+{
+  "network": "StudioNet",
+  "simulated": true,
+  "milestone": "music",
+  "sourceCommit": null,
+  "contracts": {
+    "markets": "0xeB570697E9951ee5C849751A69bB0bC19f1E70F7",
+    "pools": "0x625f3157C7f206bD05692B6b0fB5bf1147a78509",
+    "seasons": "0xd0caf448111a38095bC3F8e6de6f48B406E4A9d4"
+  },
+  "transactions": {
+    "markets-deploy": "0xbd733c532d836ea3fcd6d5ddc82227768f2606eb4097dc46589857014e36fb5e",
+    "pools-deploy": "0x85bcb6e7b05c7247455a67f793b1368bd96e686d64eb78d18054129f4d568d1a",
+    "seasons-deploy": "0x573d703bbcbd90fe7b91f2181d65b28be17d6f83abf2b46ba16208b39fd8b1cc",
+    "renaissance-compile": "0xa010208d97f62b9498bfd21f1e2cb6de7cf9399dd0a7bf0b71df0cc5603385d5",
+    "renaissance-compile-child-0": "0xf17f608c5039c81d463e400bd1dbc2db8265adbf75a52c3291c5b07dcd27dea6",
+    "renaissance-open": "0x23f60f0214cd7f7085c1fd650efa107b3c87926583b6f4877c5126ec04e8b111",
+    "renaissance-open-child-0": "0xb7b303fbfc3fb4216c09992059e4e01f0c517d971e90a959a156dba1e2fce3c1",
+    "renaissance-predict": "0x7852a1e4d9325717a622434dca90311c524e75bddcf358b36e267f6c0606632a",
+    "surrender-compile": "0x02e3f2e92e96f03298f3e00117fbb6a2e88ee4fd7163ffd35425a3761af0e2e5",
+    "surrender-compile-child-0": "0x5616ea6a69f18539ac0eee433bc7ccf4fe815c1cd9354ecef5442e7f15ba22f2",
+    "surrender-open": "0xe8d8c5c37e76e0927da95440f3c249178e360c067a2fe64c2b54f8a12b80b8d8",
+    "surrender-open-child-0": "0xe58480494e1974722d57fdeae49f8c69ab21486697709307bda371563992c55e",
+    "surrender-predict": "0x25dc83ff3a53eefac0a6c0ecc8b4066e0ec9a5e0f67b3407e898457ea56e0081",
+    "midnights-compile": "0xcd3cc1a94f419eab83e2f75624a3e62a4d467c2d44823d8e0462fe947873e464",
+    "midnights-compile-child-0": "0xb0599e09d9918aa6e27981ec84b9809174b3b5efa2c3dcb58ef25ebe7ee1d38f",
+    "midnights-open": "0x565c270cd5314d2b7c62e31cd6efd9caae3f2029cb21eaec6a5d130205b0178a",
+    "midnights-open-child-0": "0x5a1920eea02ce16c0c4e26daffacc5fe60aa5a0ab4690551e87b8d1510255295",
+    "midnights-predict": "0x7cbd418ca57a0ae201153b25dd5941296d1c0cd71e30984eb37dfdee9cba5814",
+    "pairing-compile": "0x12e691ceadf4e57ebd4cd665b4774923639986fdb973829b197c35b55cc73820",
+    "pairing-compile-child-0": "0x34d7c5353e8ebaea39eb41d8326a223417e5efb265b2898b7d0abe77c6132506",
+    "pairing-open": "0x822df8b959960c6b296fabb221e667ccf4c7307b06ee42fd84c4c6eccaf43cad",
+    "pairing-open-child-0": "0x24be43d0b36e4a72f7bc25a445213b7bf217be64a6be42d13bb5a6fd4b6ede18",
+    "pairing-predict": "0xa2638f60a82a6d4b9827af67e80e5201e39c35c6d4be3f46ae421511199771ca",
+    "ambiguous-compile-failed-1": "0x2cbbf5fabe5631e3bbf393ef66e6d298649b0e18144aef65cbafc00c26ede22e",
+    "ambiguous-compile": "0x47a556798ed6c78f7c92e8a1227fe5cd5d73474a2841b06d3c88ab3a85e36415",
+    "renaissance-resolve": "0xa49cae257dfcd79413a30f93b37844a70a310fcaad42541f919802692ce8892c",
+    "renaissance-resolve-child-0": "0xe13febfa8ec59623cecd122300fb46483e2bce954b92db4b61e78aff7307fec3",
+    "renaissance-season": "0x78d729ccebc6e9a26a80fee47a0c355cbdc6670a4845d8c77472831a9da22ee0",
+    "surrender-resolve": "0x74426d92913ca157ad0d2a87784696fed968cbc67f848ebed300562d2e000a57",
+    "surrender-resolve-child-0": "0x1d90834d842257f2f356538b004304cfb1789f1eb472d219c9446074e86d253c",
+    "surrender-season": "0x10e0c9301e8f2a77770ebad1a2b2c48730d35ae31ca7f9184685e948d05a363d",
+    "midnights-resolve": "0x117805a5b8720ea3e5a6180875fd57a6b812c64ea73292eda339d06bd03180df"
+  },
+  "sourceHashes": {
+    "markets": "25d064cd3ee8f25b8f0eb6aedbcd220a9dfee6fd929471d6702b87959fd01093",
+    "pools": "7906e6b42d9e3389282cf88f1946410bb53991bf7c6bb49221f5ab9def388ca4",
+    "seasons": "3340aa6474c66c8e5eee2189c8a66f93456cc011c48b104c783835b2117e9990"
+  },
+  "markets": {
+    "renaissance": {
+      "id": "renaissance-music-proof",
+      "question": "Where did Renaissance by Beyonce debut on the Billboard 200 chart dated August 13, 2022? Count standard and deluxe editions together under the standard album entry.",
+      "entry_deadline": 1791800557,
+      "resolution_deadline": 1791886057,
+      "state": {
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "evidence": {
+          "charts": [
+            {
+              "capture": "20221019033417",
+              "cdx_digest": "MK4BBQQ43EJITPLGIKROE4DFCEBJ4KPF",
+              "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+              "snapshot": "https://web.archive.org/web/20221019033417id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+              "week": "2022-08-13"
+            }
+          ],
+          "matches": [
+            {
+              "position": 1,
+              "quote": "#1 | Renaissance | Beyonce | LW: — | Weeks: 1"
+            }
+          ],
+          "status": "resolved"
+        },
+        "histogram": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "participants": [
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+        ],
+        "question": "Where did Renaissance by Beyonce debut on the Billboard 200 chart dated August 13, 2022? Count standard and deluxe editions together under the standard album entry.",
+        "rejection_reason": "",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Beyoncé",
+              "chart_week": "2022-08-13",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Renaissance"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1791800557,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1660348800,
+          "resolution_deadline": 1791886057,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 1
+        },
+        "specification_hash": "99e98541a98f24c123801a705b3e2b2a04699ab384135f785b5fb524cfe740ed",
+        "status": "resolved",
+        "winner": 0
+      }
+    },
+    "surrender": {
+      "id": "surrender-music-proof",
+      "question": "Where did Surrender by Maggie Rogers debut on the Billboard 200 chart dated August 13, 2022?",
+      "entry_deadline": 1791800745,
+      "resolution_deadline": 1791886245,
+      "state": {
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "evidence": {
+          "charts": [
+            {
+              "capture": "20221019033417",
+              "cdx_digest": "MK4BBQQ43EJITPLGIKROE4DFCEBJ4KPF",
+              "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+              "snapshot": "https://web.archive.org/web/20221019033417id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+              "week": "2022-08-13"
+            }
+          ],
+          "matches": [
+            {
+              "position": 12,
+              "quote": "#12 | Surrender | Maggie Rogers | LW: — | Weeks: 1"
+            }
+          ],
+          "status": "resolved"
+        },
+        "histogram": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "participants": [
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+        ],
+        "question": "Where did Surrender by Maggie Rogers debut on the Billboard 200 chart dated August 13, 2022?",
+        "rejection_reason": "",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Maggie Rogers",
+              "chart_week": "2022-08-13",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Surrender"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1791800745,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1660348800,
+          "resolution_deadline": 1791886245,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 1
+        },
+        "specification_hash": "b7770f811c255330fd8ab2b077b7916a92bfdaa0c5197656f133efb6192106ca",
+        "status": "resolved",
+        "winner": 3
+      }
+    },
+    "midnights": {
+      "id": "midnights-music-proof",
+      "question": "Where did Midnights (3am Edition) by Taylor Swift debut on the Billboard 200 chart dated November 5, 2022? Count this deluxe edition together with the standard Midnights entry.",
+      "entry_deadline": 1791800935,
+      "resolution_deadline": 1791886435,
+      "state": {
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "evidence": null,
+        "histogram": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "participants": [
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+        ],
+        "question": "Where did Midnights (3am Edition) by Taylor Swift debut on the Billboard 200 chart dated November 5, 2022? Count this deluxe edition together with the standard Midnights entry.",
+        "rejection_reason": "",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [
+                "Midnights (3am Edition)"
+              ],
+              "artist": "Taylor Swift",
+              "chart_week": "2022-11-05",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Midnights"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1791800935,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1667606400,
+          "resolution_deadline": 1791886435,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 1
+        },
+        "specification_hash": "30a52301d7c2a95b5f85194ee6741f979555fb06e4fcd0de2ca52c962cd20305",
+        "status": "open",
+        "winner": null
+      }
+    },
+    "pairing": {
+      "id": "pairing-music-proof",
+      "question": "Did Renaissance by Beyonce debut higher than Surrender by Maggie Rogers on the Billboard 200 chart dated August 13, 2022?",
+      "entry_deadline": 1791801144,
+      "resolution_deadline": 1791886644,
+      "state": {
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "evidence": null,
+        "histogram": [
+          1,
+          0
+        ],
+        "participants": [
+          "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92"
+        ],
+        "question": "Did Renaissance by Beyonce debut higher than Surrender by Maggie Rogers on the Billboard 200 chart dated August 13, 2022?",
+        "rejection_reason": "",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Beyoncé",
+              "chart_week": "2022-08-13",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Renaissance"
+            },
+            {
+              "aliases": [],
+              "artist": "Maggie Rogers",
+              "chart_week": "2022-08-13",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Surrender"
+            }
+          ],
+          "bins": [
+            "A",
+            "B"
+          ],
+          "entry_deadline": 1791801144,
+          "historical": true,
+          "market_type": "head_to_head",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1660348800,
+          "resolution_deadline": 1791886644,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 1
+        },
+        "specification_hash": "c3770531f1e3d80bae631167aae797b0431c8ba776ba5c6eec843b853be81046",
+        "status": "open",
+        "winner": null
+      }
+    },
+    "ambiguous": {
+      "id": "ambiguous-music-proof",
+      "question": "Where will Taylor Swift next studio album debut on the Billboard 200?",
+      "entry_deadline": 1791801597,
+      "resolution_deadline": 1791887097
+    }
+  },
+  "fundedStakeWei": "0",
+  "film": "0x756ddF8D588DA4D598F9F90947DB92Bced10D68E",
+  "status": "superseded-unfunded-candidate",
+  "deploymentVerified": true,
+  "expectedFailedTransactions": [
+    "ambiguous-compile-failed-1"
+  ],
+  "season": {
+    "competitive": {
+      "average_closeness": null,
+      "best_streak": 0,
+      "entries": 0,
+      "hit_rate": null,
+      "hits": 0,
+      "points": 0,
+      "streak": 0
+    },
+    "historical": {
+      "average_closeness": 100,
+      "best_streak": 2,
+      "entries": 2,
+      "hit_rate": 100,
+      "hits": 2,
+      "points": 400,
+      "streak": 2
+    },
+    "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+    "results": [
+      {
+        "category": "music",
+        "closeness": 100,
+        "correct": true,
+        "entry_deadline": 1791800557,
+        "has_exact": true,
+        "historical": true,
+        "market_id": "renaissance-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 200,
+        "specification_hash": "99e98541a98f24c123801a705b3e2b2a04699ab384135f785b5fb524cfe740ed",
+        "void": false
+      },
+      {
+        "category": "music",
+        "closeness": 100,
+        "correct": true,
+        "entry_deadline": 1791800745,
+        "has_exact": true,
+        "historical": true,
+        "market_id": "surrender-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 200,
+        "specification_hash": "b7770f811c255330fd8ab2b077b7916a92bfdaa0c5197656f133efb6192106ca",
+        "void": false
+      }
+    ]
+  },
+  "supersededReason": "Live rejection output omitted null market_type. Canonical rejection normalization added; source changed, so this candidate is not the final release. No native GEN was deposited."
+}

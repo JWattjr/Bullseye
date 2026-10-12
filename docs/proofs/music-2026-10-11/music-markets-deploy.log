@@ -1,0 +1,897 @@
+- Setting up the deployment environment...
+[genlayer-js] initializeConsensusSmartContract() is deprecated and will be removed in a future release. The consensus contract is now resolved from the static chain definition.
+
+Deployment Parameters:
+{
+  code: '# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }\r\n' +
+    '"""Deterministic Billboard 200 extraction. Never pass page HTML to a model.\r\n' +
+    '\r\n' +
+    'This module is kept separately so the saved source fixture can exercise the\r\n' +
+    'same parser that will be bundled into the deployed intelligent contract.\r\n' +
+    '"""\r\n' +
+    'import hashlib\r\n' +
+    'import json\r\n' +
+    'import re\r\n' +
+    'from html.parser import HTMLParser\r\n' +
+    '\r\n' +
+    '\r\n' +
+    'class ChartRows(HTMLParser):\r\n' +
+    '    def __init__(self):\r\n' +
+    '        super().__init__(convert_charrefs=True)\r\n' +
+    '        self.depth = 0\r\n' +
+    '        self.cells = []\r\n' +
+    '        self.collectors = []\r\n' +
+    '        self.rows = []\r\n' +
+    '\r\n' +
+    '    def handle_starttag(self, tag, attrs):\r\n' +
+    "        classes = dict(attrs).get('class', '').split()\r\n" +
+    '        if not self.depth:\r\n' +
+    "            if tag == 'div' and 'o-chart-results-list-row-container' in classes:\r\n" +
+    '                self.depth = 1\r\n' +
+    '                self.cells = []\r\n' +
+    '                self.collectors = []\r\n' +
+    '            return\r\n' +
+    "        if tag == 'div':\r\n" +
+    '            self.depth += 1\r\n' +
+    "        if tag in ('span', 'h3'):\r\n" +
+    "            self.collectors.append({'tag': tag, 'classes': classes, 'text': []})\r\n" +
+    '\r\n' +
+    '    def handle_data(self, data):\r\n' +
+    '        for collector in self.collectors:\r\n' +
+    "            collector['text'].append(data)\r\n" +
+    '\r\n' +
+    '    def handle_endtag(self, tag):\r\n' +
+    '        if not self.depth:\r\n' +
+    '            return\r\n' +
+    "        if tag in ('span', 'h3') and self.collectors:\r\n" +
+    '            # Close the nearest matching text element, retaining nested text.\r\n' +
+    '            for index in range(len(self.collectors) - 1, -1, -1):\r\n' +
+    "                if self.collectors[index]['tag'] == tag:\r\n" +
+    '                    collector = self.collectors.pop(index)\r\n' +
+    "                    value = ' '.join(''.join(collector['text']).split())\r\n" +
+    "                    self.cells.append((tag, collector['classes'], value))\r\n" +
+    '                    break\r\n' +
+    "        if tag == 'div':\r\n" +
+    '            self.depth -= 1\r\n' +
+    '            if not self.depth:\r\n' +
+    '                self.rows.append(self.cells)\r\n' +
+    '                self.collectors = []\r\n' +
+    '\r\n' +
+    '\r\n' +
+    'def integer(value, low, high):\r\n' +
+    "    if not re.fullmatch(r'[0-9]+', value):\r\n" +
+    "        raise ValueError('non-integer chart metric')\r\n" +
+    '    result = int(value)\r\n' +
+    '    if not low <= result <= high:\r\n' +
+    "        raise ValueError('chart metric outside bounds')\r\n" +
+    '    return result\r\n' +
+    '\r\n' +
+    '\r\n' +
+    'def extract_rows(page):\r\n' +
+    '    parser = ChartRows()\r\n' +
+    '    parser.feed(page)\r\n' +
+    '    parser.close()\r\n' +
+    '    if parser.depth or len(parser.rows) != 200:\r\n' +
+    "        raise ValueError('complete 200-row chart required')\r\n" +
+    '    rows = []\r\n' +
+    '    for cells in parser.rows:\r\n' +
+    '        values = [cell[2] for cell in cells if cell[2]]\r\n' +
+    '        position = integer(values[0], 1, 200)\r\n' +
+    '        titles = [text for tag, classes, text in cells\r\n' +
+    "                  if tag == 'h3' and ('a-truncate-ellipsis-2line' in classes\r\n" +
+    "                                      or 'a-no-trucate' in classes)]\r\n" +
+    '        artists = [text for tag, classes, text in cells\r\n' +
+    "                   if tag == 'span' and 'a-no-trucate' in classes]\r\n" +
+    '        if len(titles) != 1 or len(artists) != 1:\r\n' +
+    "            raise ValueError('ambiguous chart row markup')\r\n" +
+    '        title, artist = titles[0], artists[0]\r\n' +
+    '        if not 1 <= len(title) <= 200 or not 1 <= len(artist) <= 300:\r\n' +
+    "            raise ValueError('unbounded chart identity')\r\n" +
+    '        def metric(label):\r\n' +
+    '            matches = [values[index + 1] for index, text in enumerate(values[:-1])\r\n' +
+    '                       if text == label]\r\n' +
+    '            if not matches or len(set(matches)) != 1:\r\n' +
+    "                raise ValueError('missing or inconsistent chart metric')\r\n" +
+    '            return matches[0]\r\n' +
+    "        if 'LW' in values and 'WEEKS ON CHART' in values:\r\n" +
+    "            last = metric('LW')\r\n" +
+    "            weeks = integer(metric('WEEKS ON CHART'), 1, 10000)\r\n" +
+    '        else:\r\n' +
+    '            # Archived 2022 layout: LW / peak / weeks, duplicated for mobile.\r\n' +
+    '            # Select only the dedicated statistic cells, never hidden history.\r\n' +
+    "            stats = [text for tag, classes, text in cells if tag == 'span'\r\n" +
+    "                     and 'c-label' in classes\r\n" +
+    "                     and 'lrv-u-padding-tb-050@mobile-max' in classes]\r\n" +
+    '            if len(stats) != 6 or stats[:3] != stats[3:]:\r\n' +
+    "                raise ValueError('missing or inconsistent archived chart metrics at #'\r\n" +
+    '                                 + str(position))\r\n' +
+    '            last = stats[0]\r\n' +
+    '            integer(stats[1], 1, 200)\r\n' +
+    '            weeks = integer(stats[2], 1, 10000)\r\n' +
+    "        last_week = None if last in ('-', '—') else integer(last, 1, 200)\r\n" +
+    "        rows.append({'position': position, 'title': title, 'artist': artist,\r\n" +
+    "                     'last_week': last_week, 'weeks': weeks})\r\n" +
+    "    if [row['position'] for row in rows] != list(range(1, 201)):\r\n" +
+    "        raise ValueError('ordered unique positions 1 through 200 required')\r\n" +
+    '    return rows\r\n' +
+    '\r\n' +
+    '\r\n' +
+    'def rows_digest(rows):\r\n' +
+    '    encoded = json.dumps(rows, ensure_ascii=False, sort_keys=True,\r\n' +
+    "                         separators=(',', ':')).encode('utf-8')\r\n" +
+    '    return hashlib.sha256(encoded).hexdigest()\r\n' +
+    '\r\n' +
+    '\r\n' +
+    'def row_quote(row):\r\n' +
+    "    last = '—' if row['last_week'] is None else str(row['last_week'])\r\n" +
+    "    return ('#' + str(row['position']) + ' | ' + row['title'] + ' | '\r\n" +
+    "            + row['artist'] + ' | LW: ' + last + ' | Weeks: ' + str(row['weeks']))\r\n" +
+    '\r\n' +
+    '"""Music judgment contract body; build-music-contracts.py embeds music_rows.py.\r\n' +
+    '\r\n' +
+    'Wallets supply a question and scheduling envelope, never an authoritative album\r\n' +
+    'specification or capture URL. Only validators compile identity and settle it.\r\n' +
+    '"""\r\n' +
+    'from datetime import datetime, timezone\r\n' +
+    'from urllib.parse import urlencode\r\n' +
+    'from genlayer import *\r\n' +
+    '\r\n' +
+    "HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130.0.0.0 Safari/537.36', 'Accept': 'text/html,application/json;q=0.9,*/*;q=0.8'}\r\n" +
+    "BINS = [{'lower': 1, 'upper': 2}, {'lower': 2, 'upper': 6},\r\n" +
+    "        {'lower': 6, 'upper': 11}, {'lower': 11, 'upper': 51},\r\n" +
+    "        {'lower': 51, 'upper': 201}, {'lower': None, 'upper': None}]\r\n" +
+    "SNAPSHOT_POLICY = 'earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL'\r\n" +
+    '\r\n' +
+    '\r\n' +
+    'def canonical(value):\r\n' +
+    "    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'))\r\n" +
+    '\r\n' +
+    '\r\n' +
+    'def require(condition, message):\r\n' +
+    '    if not condition:\r\n' +
+    "        raise gl.vm.UserError('[EXPECTED] ' + message)\r\n" +
+    '\r\n' +
+    '\r\n' +
+    'def now():\r\n' +
+    "    return int(datetime.fromisoformat(str(gl.message_raw['datetime']).replace('Z', '+00:00')).timestamp())\r\n" +
+    '\r\n' +
+    '\r\n' +
+    'def week_time(week):\r\n' +
+    "    require(isinstance(week, str) and re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}', week), 'exact chart week required')\r\n" +
+    "    date = datetime.fromisoformat(week + 'T00:00:00+00:00')\r\n" +
+    "    require(date.weekday() == 5 and 2010 <= date.year <= 2100, 'Saturday Billboard 200 chart week required')\r\n" +
+    '    return int(date.timestamp())\r\n' +
+    '\r\n' +
+    '\r\n' +
+    'def validate_compilation(output):\r\n' +
+    "    require(isinstance(output, dict) and set(output) == {'decision', 'market_type', 'albums', 'reason'}, 'compile schema')\r\n" +
+    "    require(output['decision'] in ('accepted', 'rejected'), 'compile decision')\r\n" +
+    "    require(isinstance(output['reason'], str) and len(output['reason']) <= 600, 'bounded compile reason')\r\n" +
+    "    if output['decision'] == 'rejected':\r\n" +
+    "        require(output['market_type'] is None and output['albums'] == [] and output['reason'].strip(), 'rejection reason required')\r\n" +
+    '        return output\r\n' +
+    "    require(output['market_type'] in ('rank', 'head_to_head'), 'market type')\r\n" +
+    "    require(output['reason'] == '', 'accepted compile reason')\r\n" +
+    "    albums = output['albums']\r\n" +
+    "    require(isinstance(albums, list) and len(albums) == (1 if output['market_type'] == 'rank' else 2), 'album count')\r\n" +
+    '    for album in albums:\r\n' +
+    "        require(isinstance(album, dict) and set(album) == {'title', 'artist', 'aliases', 'chart_week', 'identity_rule'}, 'album schema')\r\n" +
+    "        for key, limit in (('title', 200), ('artist', 300), ('identity_rule', 700)):\r\n" +
+    "            require(isinstance(album[key], str) and 1 <= len(album[key]) <= limit and album[key] == album[key].strip(), 'bounded album identity')\r\n" +
+    "        require(album['identity_rule'] in ('combined_standard_deluxe', 'exact_edition'), 'canonical edition rule')\r\n" +
+    "        aliases = album['aliases']\r\n" +
+    "        require(isinstance(aliases, list) and len(aliases) <= 5 and all(isinstance(a, str) and 1 <= len(a) <= 200 for a in aliases), 'bounded aliases')\r\n" +
+    "        week_time(album['chart_week'])\r\n" +
+    '    return output\r\n' +
+    '\r\n' +
+    '\r\n' +
+    'def rank_bin(position):\r\n' +
+    '    if position is None:\r\n' +
+    '        return 5\r\n' +
+    '    for index, item in enumerate(BINS[:5]):\r\n' +
+    "        if item['lower'] <= position < item['upper']:\r\n" +
+    '            return index\r\n' +
+    "    raise ValueError('rank outside chart')\r\n" +
+    '\r\n' +
+    '\r\n' +
+    'def select_captures(index, source, observation, timestamp):\r\n' +
+    "    require(isinstance(index, list) and index and index[0] == ['timestamp', 'original', 'statuscode', 'digest'], 'CDX schema')\r\n" +
+    '    eligible = []\r\n' +
+    '    for row in index[1:]:\r\n' +
+    '        if not isinstance(row, list) or len(row) != 4:\r\n' +
+    '            continue\r\n' +
+    '        stamp, original, status, digest = row\r\n' +
+    "        if not isinstance(stamp, str) or not re.fullmatch(r'[0-9]{14}', stamp) or original != source or status != '200':\r\n" +
+    '            continue\r\n' +
+    "        capture_time = int(datetime.strptime(stamp, '%Y%m%d%H%M%S').replace(tzinfo=timezone.utc).timestamp())\r\n" +
+    '        if observation <= capture_time <= timestamp:\r\n' +
+    '            eligible.append((stamp, digest))\r\n' +
+    '    return sorted(set(eligible))[:8]\r\n' +
+    '\r\n' +
+    '\r\n' +
+    'def fetch_chart(week, observation, timestamp):\r\n' +
+    "    source = 'https://www.billboard.com/charts/billboard-200/' + week + '/'\r\n" +
+    "    start = datetime.fromtimestamp(observation, timezone.utc).strftime('%Y%m%d%H%M%S')\r\n" +
+    "    end = datetime.fromtimestamp(timestamp, timezone.utc).strftime('%Y%m%d%H%M%S')\r\n" +
+    "    query = urlencode({'url': source, 'output': 'json', 'filter': 'statuscode:200',\r\n" +
+    "                       'fl': 'timestamp,original,statuscode,digest', 'from': start,\r\n" +
+    "                       'to': end, 'limit': '8'})\r\n" +
+    "    response = gl.nondet.web.get('https://web.archive.org/cdx/search/cd"... 15568 more characters,
+  args: [],
+  leaderOnly: false
+}
+
+Deployment Transaction Hash:
+0xc5b84b02ac0c2669df49cd4306304df628c80bf7b1a386dd086d5c681862e220
+
+Deployment Receipt:
+{
+  hash: '0xc5b84b02ac0c2669df49cd4306304df628c80bf7b1a386dd086d5c681862e220',
+  from_address: '0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92',
+  to_address: '0x9Bc54115a04E6a005985a69C33926E4CcF52F868',
+  data: {
+    calldata: { readable: '{}' },
+    contract_address: '0x9Bc54115a04E6a005985a69C33926E4CcF52F868'
+  },
+  status: 5,
+  result: 6,
+  consensus_data: {
+    votes: {
+      '0x03D58A4DeF6fDFc032A56374785a5F571D07Bc11': 'idle',
+      '0x36728d2a123aB444E603EE5b2ad17d18Bb193557': 'agree',
+      '0x3D83ab507785b95ca5C208bEc80CCe3D5ca98100': 'agree',
+      '0xDB1c35c1f05d885999b8f13e5735307BcC16Be88': 'agree',
+      '0xcE1d6bBB36B744536153966B4DD42276f5ADd0F8': 'idle'
+    },
+    leader_receipt: [
+      {
+        execution_result: 'SUCCESS',
+        genvm_result: {
+          stderr: '',
+          stdout: '',
+          raw_error: null,
+          error_code: null,
+          error_description: null
+        },
+        mode: 'leader',
+        vote: null,
+        node_config: {
+          stake: 100,
+          address: '0xDB1c35c1f05d885999b8f13e5735307BcC16Be88',
+          primary_model: {
+            model: 'openai/gpt-5.4',
+            config: {
+              models: [
+                'openai/gpt-5.4',
+                'anthropic/claude-sonnet-4.6',
+                'google/gemini-3-flash-preview'
+              ]
+            },
+            plugin: 'openai-compatible',
+            provider: 'openrouter',
+            plugin_config: {
+              api_url: 'https://openrouter.ai/api',
+              api_key_env_var: 'OPENROUTERAPIKEY'
+            },
+            fallback_validator: '0x76c25AFC12c75485703cCFfd0083AA6201455B25'
+          },
+          secondary_model: {
+            model: 'policy:prd-mistral',
+            config: {
+              policy_ir: [
+                'policy',
+                [
+                  'and',
+                  [ 'meets_req' ],
+                  [ 'not', [ 'is', 'disabled' ] ],
+                  [ 'cmp', 'success_rate', 'ge', 0.2 ],
+                  [
+                    'or',
+                    [ 'family_eq', 'mistral-large' ],
+                    [ 'family_eq', 'gpt-oss-120b' ],
+                    [ 'family_eq', 'gpt-5.4' ]
+                  ]
+                ],
+                [
+                  'add',
+                  [
+                    'scale',
+                    100,
+                    [
+                      'gate',
+                      [ 'family_eq', 'mistral-large' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    10,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gpt-oss-120b' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    1,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gpt-5.4' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    0.25,
+                    [ 'neg', [ 'normalize', [ 'field', 'price_in' ] ] ]
+                  ],
+                  [
+                    'scale',
+                    0.45,
+                    [
+                      'neg',
+                      [ 'normalize', [ 'field', 'price_out' ] ]
+                    ]
+                  ],
+                  [ 'scale', 0.2, [ 'field', 'success_rate' ] ],
+                  [
+                    'scale',
+                    0.1,
+                    [
+                      'neg',
+                      [ 'normalize', [ 'field', 'latency_ms' ] ]
+                    ]
+                  ]
+                ],
+                [ 'argmax' ],
+                [ 'id' ],
+                [ 'always', { action: 'next_candidate' } ]
+              ],
+              timeout_ms: 22000,
+              first_token_timeout_ms: 7000
+            },
+            plugin: 'openai-compatible',
+            address: '0x76c25AFC12c75485703cCFfd0083AA6201455B25',
+            provider: 'llm-router',
+            plugin_config: {
+              api_url: 'https://router.ygr.ai',
+              api_key_env_var: 'LLM_ROUTER_API_KEY'
+            }
+          }
+        },
+        calldata: { readable: '{}' },
+        eq_outputs: {},
+        result: { status: 'return', payload: { readable: 'null' } }
+      },
+      {
+        execution_result: 'SUCCESS',
+        genvm_result: {
+          stderr: '',
+          stdout: '',
+          raw_error: null,
+          error_code: null,
+          error_description: null
+        },
+        mode: 'validator',
+        vote: 'agree',
+        node_config: {
+          stake: 100,
+          address: '0xDB1c35c1f05d885999b8f13e5735307BcC16Be88',
+          primary_model: {
+            model: 'openai/gpt-5.4',
+            config: {
+              models: [
+                'openai/gpt-5.4',
+                'anthropic/claude-sonnet-4.6',
+                'google/gemini-3-flash-preview'
+              ]
+            },
+            plugin: 'openai-compatible',
+            provider: 'openrouter',
+            plugin_config: {
+              api_url: 'https://openrouter.ai/api',
+              api_key_env_var: 'OPENROUTERAPIKEY'
+            },
+            fallback_validator: '0x76c25AFC12c75485703cCFfd0083AA6201455B25'
+          },
+          secondary_model: {
+            model: 'policy:prd-mistral',
+            config: {
+              policy_ir: [
+                'policy',
+                [
+                  'and',
+                  [ 'meets_req' ],
+                  [ 'not', [ 'is', 'disabled' ] ],
+                  [ 'cmp', 'success_rate', 'ge', 0.2 ],
+                  [
+                    'or',
+                    [ 'family_eq', 'mistral-large' ],
+                    [ 'family_eq', 'gpt-oss-120b' ],
+                    [ 'family_eq', 'gpt-5.4' ]
+                  ]
+                ],
+                [
+                  'add',
+                  [
+                    'scale',
+                    100,
+                    [
+                      'gate',
+                      [ 'family_eq', 'mistral-large' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    10,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gpt-oss-120b' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    1,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gpt-5.4' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    0.25,
+                    [ 'neg', [ 'normalize', [ 'field', 'price_in' ] ] ]
+                  ],
+                  [
+                    'scale',
+                    0.45,
+                    [
+                      'neg',
+                      [ 'normalize', [ 'field', 'price_out' ] ]
+                    ]
+                  ],
+                  [ 'scale', 0.2, [ 'field', 'success_rate' ] ],
+                  [
+                    'scale',
+                    0.1,
+                    [
+                      'neg',
+                      [ 'normalize', [ 'field', 'latency_ms' ] ]
+                    ]
+                  ]
+                ],
+                [ 'argmax' ],
+                [ 'id' ],
+                [ 'always', { action: 'next_candidate' } ]
+              ],
+              timeout_ms: 22000,
+              first_token_timeout_ms: 7000
+            },
+            plugin: 'openai-compatible',
+            address: '0x76c25AFC12c75485703cCFfd0083AA6201455B25',
+            provider: 'llm-router',
+            plugin_config: {
+              api_url: 'https://router.ygr.ai',
+              api_key_env_var: 'LLM_ROUTER_API_KEY'
+            }
+          }
+        },
+        calldata: { readable: '{}' },
+        result: { status: 'return', payload: { readable: 'null' } }
+      }
+    ],
+    validators: [
+      {
+        execution_result: 'SUCCESS',
+        genvm_result: {
+          stderr: '',
+          stdout: '',
+          raw_error: null,
+          error_code: null,
+          error_description: null
+        },
+        mode: 'validator',
+        vote: 'agree',
+        node_config: {
+          stake: 100,
+          address: '0x3D83ab507785b95ca5C208bEc80CCe3D5ca98100',
+          primary_model: {
+            model: 'policy:prd-gpt-5-4',
+            config: {
+              policy_ir: [
+                'policy',
+                [
+                  'and',
+                  [ 'meets_req' ],
+                  [ 'not', [ 'is', 'disabled' ] ],
+                  [ 'cmp', 'success_rate', 'ge', 0.2 ],
+                  [
+                    'or',
+                    [ 'family_eq', 'gpt-5.4' ],
+                    [ 'family_eq', 'gemini-3-flash-preview' ],
+                    [ 'family_eq', 'gpt-oss-120b' ]
+                  ]
+                ],
+                [
+                  'add',
+                  [
+                    'scale',
+                    100,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gpt-5.4' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    10,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gemini-3-flash-preview' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    1,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gpt-oss-120b' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    0.25,
+                    [ 'neg', [ 'normalize', [ 'field', 'price_in' ] ] ]
+                  ],
+                  [
+                    'scale',
+                    0.45,
+                    [
+                      'neg',
+                      [ 'normalize', [ 'field', 'price_out' ] ]
+                    ]
+                  ],
+                  [ 'scale', 0.2, [ 'field', 'success_rate' ] ],
+                  [
+                    'scale',
+                    0.1,
+                    [
+                      'neg',
+                      [ 'normalize', [ 'field', 'latency_ms' ] ]
+                    ]
+                  ]
+                ],
+                [ 'argmax' ],
+                [ 'id' ],
+                [ 'always', { action: 'next_candidate' } ]
+              ],
+              timeout_ms: 22000,
+              first_token_timeout_ms: 7000
+            },
+            plugin: 'openai-compatible',
+            provider: 'llm-router',
+            plugin_config: {
+              api_url: 'https://router.ygr.ai',
+              api_key_env_var: 'LLM_ROUTER_API_KEY'
+            },
+            fallback_validator: '0xBBb165E4c9d73a1493D363280f7067Cd07891dBE'
+          },
+          secondary_model: {
+            model: 'openai/gpt-5.4',
+            config: {
+              models: [
+                'openai/gpt-5.4',
+                'anthropic/claude-sonnet-4.6',
+                'google/gemini-3-flash-preview'
+              ]
+            },
+            plugin: 'openai-compatible',
+            address: '0xBBb165E4c9d73a1493D363280f7067Cd07891dBE',
+            provider: 'openrouter',
+            plugin_config: {
+              api_url: 'https://openrouter.ai/api',
+              api_key_env_var: 'OPENROUTERAPIKEY'
+            }
+          }
+        }
+      },
+      {
+        execution_result: 'SUCCESS',
+        genvm_result: {
+          stderr: '',
+          stdout: '',
+          raw_error: null,
+          error_code: null,
+          error_description: null
+        },
+        mode: 'validator',
+        vote: 'agree',
+        node_config: {
+          stake: 100,
+          address: '0x36728d2a123aB444E603EE5b2ad17d18Bb193557',
+          primary_model: {
+            model: 'policy:prd-grok',
+            config: {
+              policy_ir: [
+                'policy',
+                [
+                  'and',
+                  [ 'meets_req' ],
+                  [ 'not', [ 'is', 'disabled' ] ],
+                  [ 'cmp', 'success_rate', 'ge', 0.2 ],
+                  [
+                    'or',
+                    [ 'family_eq', 'grok-4.3' ],
+                    [ 'family_eq', 'gpt-5.4' ],
+                    [ 'family_eq', 'gemini-3-flash-preview' ]
+                  ]
+                ],
+                [
+                  'add',
+                  [
+                    'scale',
+                    100,
+                    [
+                      'gate',
+                      [ 'family_eq', 'grok-4.3' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    10,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gpt-5.4' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    1,
+                    [
+                      'gate',
+                      [ 'family_eq', 'gemini-3-flash-preview' ],
+                      [ 'lit', 1 ]
+                    ]
+                  ],
+                  [
+                    'scale',
+                    0.25,
+                    [ 'neg', [ 'normalize', [ 'field', 'price_in' ] ] ]
+                  ],
+                  [
+                    'scale',
+                    0.45,
+                    [
+                      'neg',
+                      [ 'normalize', [ 'field', 'price_out' ] ]
+                    ]
+                  ],
+                  [ 'scale', 0.2, [ 'field', 'success_rate' ] ],
+                  [
+                    'scale',
+                    0.1,
+                    [
+                      'neg',
+                      [ 'normalize', [ 'field', 'latency_ms' ] ]
+                    ]
+                  ]
+                ],
+                [ 'argmax' ],
+                [ 'id' ],
+                [ 'always', { action: 'next_candidate' } ]
+              ],
+              timeout_ms: 22000,
+              first_token_timeout_ms: 7000
+            },
+            plugin: 'openai-compatible',
+            provider: 'llm-router',
+            plugin_config: {
+              api_url: 'https://router.ygr.ai',
+              api_key_env_var: 'LLM_ROUTER_API_KEY'
+            },
+            fallback_validator: '0x14402D49f317CE1a2F35BAE01b1804A2A9703dCb'
+          },
+          secondary_model: {
+            model: 'anthropic/claude-sonnet-4.6',
+            config: {
+              models: [
+                'anthropic/claude-sonnet-4.6',
+                'openai/gpt-5.4',
+                'google/gemini-3-flash-preview'
+              ]
+            },
+            plugin: 'openai-compatible',
+            address: '0x14402D49f317CE1a2F35BAE01b1804A2A9703dCb',
+            provider: 'openrouter',
+            plugin_config: {
+              api_url: 'https://openrouter.ai/api',
+              api_key_env_var: 'OPENROUTERAPIKEY'
+            }
+          }
+        }
+      },
+      {
+        execution_result: 'ERROR',
+        genvm_result: {
+          stderr: 'Validator execution cancelled after quorum',
+          stdout: '',
+          raw_error: { fatal: false, causes: [ 'VALIDATOR_QUORUM_REACHED' ] },
+          error_code: 'CONSENSUS_VALIDATOR_QUORUM_REACHED'
+        },
+        mode: 'validator',
+        vote: 'idle',
+        node_config: {
+          id: 5522,
+          model: 'policy:prd-sonnet',
+          stake: 100,
+          config: {
+            policy_ir: [
+              'policy',
+              [
+                'and',
+                [ 'meets_req' ],
+                [ 'not', [ 'is', 'disabled' ] ],
+                [ 'cmp', 'success_rate', 'ge', 0.2 ],
+                [
+                  'or',
+                  [ 'family_eq', 'claude-sonnet-4-6' ],
+                  [ 'family_eq', 'gpt-5.4' ],
+                  [ 'family_eq', 'gemini-3-flash-preview' ]
+                ]
+              ],
+              [
+                'add',
+                [
+                  'scale',
+                  100,
+                  [
+                    'gate',
+                    [ 'family_eq', 'claude-sonnet-4-6' ],
+                    [ 'lit', 1 ]
+                  ]
+                ],
+                [
+                  'scale',
+                  10,
+                  [ 'gate', [ 'family_eq', 'gpt-5.4' ], [ 'lit', 1 ] ]
+                ],
+                [
+                  'scale',
+                  1,
+                  [
+                    'gate',
+                    [ 'family_eq', 'gemini-3-flash-preview' ],
+                    [ 'lit', 1 ]
+                  ]
+                ],
+                [
+                  'scale',
+                  0.25,
+                  [ 'neg', [ 'normalize', [ 'field', 'price_in' ] ] ]
+                ],
+                [
+                  'scale',
+                  0.45,
+                  [ 'neg', [ 'normalize', [ 'field', 'price_out' ] ] ]
+                ],
+                [ 'scale', 0.2, [ 'field', 'success_rate' ] ],
+                [
+                  'scale',
+                  0.1,
+                  [ 'neg', [ 'normalize', [ 'field', 'latency_ms' ] ] ]
+                ]
+              ],
+              [ 'argmax' ],
+              [ 'id' ],
+              [ 'always', { action: 'next_candidate' } ]
+            ],
+            timeout_ms: 22000,
+            first_token_timeout_ms: 7000
+          },
+          plugin: 'openai-compatible',
+          address: '0xcE1d6bBB36B744536153966B4DD42276f5ADd0F8',
+          provider: 'llm-router',
+          plugin_config: {
+            api_url: 'https://router.ygr.ai',
+            api_key_env_var: 'LLM_ROUTER_API_KEY'
+          },
+          fallback_validator: '0x03D58A4DeF6fDFc032A56374785a5F571D07Bc11'
+        }
+      },
+      {
+        execution_result: 'ERROR',
+        genvm_result: {
+          stderr: 'Validator execution cancelled after quorum',
+          stdout: '',
+          raw_error: { fatal: false, causes: [ 'VALIDATOR_QUORUM_REACHED' ] },
+          error_code: 'CONSENSUS_VALIDATOR_QUORUM_REACHED'
+        },
+        mode: 'validator',
+        vote: 'idle',
+        node_config: {
+          id: 5535,
+          model: 'google/gemini-3-flash-preview',
+          stake: 100,
+          config: {
+            models: [
+              'google/gemini-3-flash-preview',
+              'openai/gpt-5.4',
+              'anthropic/claude-sonnet-4.6'
+            ]
+          },
+          plugin: 'openai-compatible',
+          address: '0x03D58A4DeF6fDFc032A56374785a5F571D07Bc11',
+          provider: 'openrouter',
+          plugin_config: {
+            api_url: 'https://openrouter.ai/api',
+            api_key_env_var: 'OPENROUTERAPIKEY'
+          },
+          fallback_validator: '0x6737ca1d6BDF8b7C4f19143E2D55581Ca64eb7C3'
+        }
+      }
+    ]
+  },
+  gaslimit: 797,
+  nonce: 797,
+  created_at: '2026-10-12T04:37:24.001832+00:00',
+  leader_only: false,
+  execution_mode: 'NORMAL',
+  origin_address: '0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92',
+  triggered_on: null,
+  appeal_validators_timeout: false,
+  sim_config: {
+    signed_rollup_transaction: '0xf9652b82031d808307a12094b7278a61aa25c888815afc32ad3cc52ff24fe57580b964c427241a99000000000000000000000000db433ff614bdd1ece21aa97221c3e0a7ecf79c9200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000063eef963ebb963e623207b2022446570656e6473223a202270792d67656e6c617965723a316a623435616138796e683261396339786e33623771716838736d3571393368776670376a716d7773666868386a707a3039683622207d0d0a22222244657465726d696e69737469632042696c6c626f617264203230302065787472616374696f6e2e204e65766572207061737320706167652048544d4c20746f2061206d6f64656c2e0d0a0d0a54686973206d6f64756c65206973206b6570742073657061726174656c7920736f2074686520736176656420736f7572636520666978747572652063616e206578657263697365207468650d0a73616d652070617273657220746861742077696c6c2062652062756e646c656420696e746f20746865206465706c6f79656420696e74656c6c6967656e7420636f6e74726163742e0d0a2222220d0a696d706f727420686173686c69620d0a696d706f7274206a736f6e0d0a696d706f72742072650d0a66726f6d2068746d6c2e70617273657220696d706f72742048544d4c5061727365720d0a0d0a0d0a636c617373204368617274526f77732848544d4c506172736572293a0d0a20202020646566205f5f696e69745f5f2873656c66293a0d0a2020202020202020737570657228292e5f5f696e69745f5f28636f6e766572745f63686172726566733d54727565290d0a202020202020202073656c662e6465707468203d20300d0a202020202020202073656c662e63656c6c73203d205b5d0d0a202020202020202073656c662e636f6c6c6563746f7273203d205b5d0d0a202020202020202073656c662e726f7773203d205b5d0d0a0d0a202020206465662068616e646c655f73746172747461672873656c662c207461672c206174747273293a0d0a2020202020202020636c6173736573203d2064696374286174747273292e6765742827636c617373272c202727292e73706c697428290d0a20202020202020206966206e6f742073656c662e64657074683a0d0a202020202020202020202020696620746167203d3d20276469762720616e6420276f2d63686172742d726573756c74732d6c6973742d726f772d636f6e7461696e65722720696e20636c61737365733a0d0a2020202020202020202020202020202073656c662e6465707468203d20310d0a2020202020202020202020202020202073656c662e63656c6c73203d205b5d0d0a2020202020202020202020202020202073656c662e636f6c6c6563746f7273203d205b5d0d0a20202020202020202020202072657475726e0d0a2020202020202020696620746167203d3d2027646976273a0d0a20202020202020202020202073656c662e6465707468202b3d20310d0a202020202020202069662074616720696e2028277370616e272c2027683327293a0d0a20202020202020202020202073656c662e636f6c6c6563746f72732e617070656e64287b27746167273a207461672c2027636c6173736573273a20636c61737365732c202774657874273a205b5d7d290d0a0d0a202020206465662068616e646c655f646174612873656c662c2064617461293a0d0a2020202020202020666f7220636f6c6c6563746f7220696e2073656c662e636f6c6c6563746f72733a0d0a202020202020202020202020636f6c6c6563746f725b2774657874275d2e617070656e642864617461290d0a0d0a202020206465662068616e646c655f656e647461672873656c662c20746167293a0d0a20202020202020206966206e6f742073656c662e64657074683a0d0a20202020202020202020202072657475726e0d0a202020202020202069662074616720696e2028277370616e272c20276833272920616e642073656c662e636f6c6c6563746f72733a0d0a2020202020202020202020202320436c6f736520746865206e656172657374206d61746368696e67207465787420656c656d656e742c2072657461696e696e67206e657374656420746578742e0d0a202020202020202020202020666f7220696e64657820696e2072616e6765286c656e2873656c662e636f6c6c6563746f727329202d20312c202d312c202d31293a0d0a2020202020202020202020202020202069662073656c662e636f6c6c6563746f72735b696e6465785d5b27746167275d203d3d207461673a0d0a2020202020202020202020202020202020202020636f6c6c6563746f72203d2073656c662e636f6c6c6563746f72732e706f7028696e646578290d0a202020202020202020202020202020202020202076616c7565203d202720272e6a6f696e2827272e6a6f696e28636f6c6c6563746f725b2774657874275d292e73706c69742829290d0a202020202020202020202020202020202020202073656c662e63656c6c732e617070656e6428287461672c20636f6c6c6563746f725b27636c6173736573275d2c2076616c756529290d0a2020202020202020202020202020202020202020627265616b0d0a2020202020202020696620746167203d3d2027646976273a0d0a20202020202020202020202073656c662e6465707468202d3d20310d0a2020202020202020202020206966206e6f742073656c662e64657074683a0d0a2020202020202020202020202020202073656c662e726f77732e617070656e642873656c662e63656c6c73290d0a2020202020202020202020202020202073656c662e636f6c6c6563746f7273203d205b5d0d0a0d0a0d0a64656620696e74656765722876616c75652c206c6f772c2068696768293a0d0a202020206966206e6f742072652e66756c6c6d617463682872275b302d395d2b272c2076616c7565293a0d0a202020202020202072616973652056616c75654572726f7228276e6f6e2d696e7465676572206368617274206d657472696327290d0a20202020726573756c74203d20696e742876616c7565290d0a202020206966206e6f74206c6f77203c3d20726573756c74203c3d20686967683a0d0a202020202020202072616973652056616c75654572726f7228276368617274206d6574726963206f75747369646520626f756e647327290d0a2020202072657475726e20726573756c740d0a0d0a0d0a64656620657874726163745f726f77732870616765293a0d0a20202020706172736572203d204368617274526f777328290d0a202020207061727365722e666565642870616765290d0a202020207061727365722e636c6f736528290d0a202020206966207061727365722e6465707468206f72206c656e287061727365722e726f77732920213d203230303a0d0a202020202020202072616973652056616c75654572726f722827636f6d706c657465203230302d726f7720636861727420726571756972656427290d0a20202020726f7773203d205b5d0d0a20202020666f722063656c6c7320696e207061727365722e726f77733a0d0a202020202020202076616c756573203d205b63656c6c5b325d20666f722063656c6c20696e2063656c6c732069662063656c6c5b325d5d0d0a2020202020202020706f736974696f6e203d20696e74656765722876616c7565735b305d2c20312c20323030290d0a20202020202020207469746c6573203d205b7465787420666f72207461672c20636c61737365732c207465787420696e2063656c6c730d0a202020202020202020202020202020202020696620746167203d3d202768332720616e64202827612d7472756e636174652d656c6c69707369732d326c696e652720696e20636c61737365730d0a20202020202020202020202020202020202020202020202020202020202020202020202020206f722027612d6e6f2d747275636174652720696e20636c6173736573295d0d0a202020202020202061727469737473203d205b7465787420666f72207461672c20636c61737365732c207465787420696e2063656c6c730d0a20202020202020202020202020202020202020696620746167203d3d20277370616e2720616e642027612d6e6f2d747275636174652720696e20636c61737365735d0d0a20202020202020206966206c656e287469746c65732920213d2031206f72206c656e28617274697374732920213d20313a0d0a20202020202020202020202072616973652056616c75654572726f722827616d626967756f757320636861727420726f77206d61726b757027290d0a20202020202020207469746c652c20617274697374203d207469746c65735b305d2c20617274697374735b305d0d0a20202020202020206966206e6f742031203c3d206c656e287469746c6529203c3d20323030206f72206e6f742031203c3d206c656e2861727469737429203c3d203330303a0d0a20202020202020202020202072616973652056616c75654572726f722827756e626f756e646564206368617274206964656e7469747927290d0a2020202020202020646566206d6574726963286c6162656c293a0d0a2020202020202020202020206d617463686573203d205b76616c7565735b696e646578202b20315d20666f7220696e6465782c207465787420696e20656e756d65726174652876616c7565735b3a2d315d290d0a202020202020202020202020202020202020202020202069662074657874203d3d206c6162656c5d0d0a2020202020202020202020206966206e6f74206d617463686573206f72206c656e28736574286d617463686573292920213d20313a0d0a2020202020202020202020202020202072616973652056616c75654572726f7228276d697373696e67206f7220696e636f6e73697374656e74206368617274206d657472696327290d0a20202020202020202020202072657475726e206d6174636865735b305d0d0a2020202020202020696620274c572720696e2076616c75657320616e6420275745454b53204f4e2043484152542720696e2076616c7565733a0d0a2020202020202020202020206c617374203d206d657472696328274c5727290d0a2020202020202020202020207765656b73203d20696e7465676572286d657472696328275745454b53204f4e20434841525427292c20312c203130303030290d0a2020202020202020656c73653a0d0a202020202020202020202020232041726368697665642032303232206c61796f75743a204c57202f207065616b202f207765656b732c206475706c69636174656420666f72206d6f62696c652e0d0a202020202020202020202020232053656c656374206f6e6c792074686520646564696361746564207374617469737469632063656c6c732c206e657665722068696464656e20686973746f72792e0d0a2020202020202020202020207374617473203d205b7465787420666f72207461672c20636c61737365732c207465787420696e2063656c6c7320696620746167203d3d20277370616e270d0a202020202020202020202020202020202020202020616e642027632d6c6162656c2720696e20636c61737365730d0a202020202020202020202020202020202020202020616e6420276c72762d752d70616464696e672d74622d303530406d6f62696c652d6d61782720696e20636c61737365735d0d0a2020202020202020202020206966206c656e2873746174732920213d2036206f722073746174735b3a335d20213d2073746174735b333a5d3a0d0a2020202020202020202020202020202072616973652056616c75654572726f7228276d697373696e67206f7220696e636f6e73697374656e74206172636869766564206368617274206d6574726963732061742023270d0a2020202020202020202020202020202020202020202020202020202020202020202b2073747228706f736974696f6e29290d0a2020202020202020202020206c617374203d2073746174735b305d0d0a202020202020202020202020696e74656765722873746174735b315d2c20312c20323030290d0a2020202020202020202020207765656b73203d20696e74656765722873746174735b325d2c20312c203130303030290d0a20202020202020206c6173745f7765656b203d204e6f6e65206966206c61737420696e2028272d272c2027e28094272920656c736520696e7465676572286c6173742c20312c20323030290d0a2020202020202020726f77732e617070656e64287b27706f736974696f6e273a20706f736974696f6e2c20277469746c65273a207469746c652c2027617274697374273a206172746973742c0d0a202020202020202020202020202020202020202020276c6173745f7765656b273a206c6173745f7765656b2c20277765656b73273a207765656b737d290d0a202020206966205b726f775b27706f736974696f6e275d20666f7220726f7720696e20726f77735d20213d206c6973742872616e676528312c2032303129293a0d0a202020202020202072616973652056616c75654572726f7228276f72646572656420756e6971756520706f736974696f6e732031207468726f7567682032303020726571756972656427290d0a2020202072657475726e20726f'... 41806 more characters
+  },
+  value_credited: false,
+  sender: '0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92',
+  recipient: '0x9Bc54115a04E6a005985a69C33926E4CcF52F868',
+  tx_id: '0xc5b84b02ac0c2669df49cd4306304df628c80bf7b1a386dd086d5c681862e220',
+  activator: '0xDB1c35c1f05d885999b8f13e5735307BcC16Be88',
+  last_leader: '0xDB1c35c1f05d885999b8f13e5735307BcC16Be88',
+  result_name: 'MAJORITY_AGREE',
+  num_of_rounds: '1',
+  last_round: {
+    round: '0',
+    leader_index: '0',
+    votes_committed: '5',
+    votes_revealed: '5',
+    appeal_bond: '0',
+    rotations_left: '3',
+    result: 6,
+    round_validators: [
+      '0xDB1c35c1f05d885999b8f13e5735307BcC16Be88',
+      '0x3D83ab507785b95ca5C208bEc80CCe3D5ca98100',
+      '0x36728d2a123aB444E603EE5b2ad17d18Bb193557',
+      '0xcE1d6bBB36B744536153966B4DD42276f5ADd0F8',
+      '0x03D58A4DeF6fDFc032A56374785a5F571D07Bc11'
+    ],
+    validator_votes_hash: [
+      '0x70762e8d229cb41e10b710b458cd33d0b15ad253657c8eeeac72a91c55d52e41',
+      '0x3f31897a6eaef788db2bf691f7e052a80d1f3d72425eda1124db4f750fe21a7e',
+      '0xb0f336bd97f423036c818a40f96e8fbc14cd3bd6ff066b62cf4cf2830e384340',
+      '0x00a0fca6b5a0c581e2098b470a166bd7fa2261bb28a2d320c6973aeba51d6757',
+      '0x80b52a3f60e04af948aa0a199b9f593b7cede4c4f48696aca8db2b6db6364fcc'
+    ],
+    validator_votes: [ 1, 1, 1, 5, 5 ],
+    validator_votes_name: [ 'AGREE', 'AGREE', 'AGREE', 'IDLE', 'IDLE' ]
+  },
+  type: 1,
+  status_name: 'ACCEPTED'
+}
+
+Result:
+{
+  'Transaction Hash': '0xc5b84b02ac0c2669df49cd4306304df628c80bf7b1a386dd086d5c681862e220',
+  'Contract Address': '0x9Bc54115a04E6a005985a69C33926E4CcF52F868'
+}
+
+√ Contract deployed successfully.
