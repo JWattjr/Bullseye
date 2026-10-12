@@ -83,6 +83,19 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     return hash;
   }
   const step = process.env.BULLSEYE_STEP;
+  if (step === 'music-complete-approved-proof') {
+    for (const [selected, steps] of [
+      ['funded', ['music-resolve', 'music-settle', 'music-claim']],
+      ['patina', ['music-resolve', 'music-season']],
+    ] as [string, string[]][]) {
+      const record = proof.markets[selected];
+      if (!record) throw Error('Prepare the approved proof and absence case first.');
+      while (Date.now() / 1000 < record.entry_deadline) await new Promise(resolve => setTimeout(resolve, Math.min(30_000, (record.entry_deadline - Date.now() / 1000) * 1000 + 100)));
+      process.env.BULLSEYE_MUSIC_CASE = selected;
+      for (const next of steps) {process.env.BULLSEYE_STEP = next; await musicDeploy(client);}
+    }
+    return;
+  }
   if (step === 'music-approved-proof') {
     for (const [selected, steps] of [
       ['funded', ['music-compile', 'music-open', 'music-stake']],

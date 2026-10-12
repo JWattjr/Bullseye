@@ -51,7 +51,7 @@ Recorded owner demo: https://youtu.be/IUI4EQOu00M. The October 9 recovery correc
 | --- | --- | --- |
 | 0:00–0:15 | Open Film, then choose Music in the header. | Film is preserved; Billboard 200 album markets sit beside it. StudioNet simulated GEN is disclosed. |
 | 0:15–0:40 | Open Renaissance and inspect its resolved #1 result. Expand How this settles. | Frozen artist/edition/week, CDX-selected complete archive, canonical row quote and full digest. |
-| 0:40–1:00 | Open Surrender, Midnights and the Renaissance–Surrender pairing. | Mid-chart debut, deluxe-to-standard identity, and same-week lower-position comparison. |
+| 0:40–1:00 | Open Surrender, Patina and the Renaissance–Surrender pairing. | Mid-chart debut, absence from a complete chart, and same-week lower-position comparison. Midnights is a separately disclosed pending archive diagnostic, not a completed result. |
 | 1:00–1:20 | Open Propose; demonstrate the recorded ambiguous rejection and an accepted compiled preview. | Models compile plain English; the creator reviews the immutable spec before opening. Avoid claiming an unrecorded proposal is finalized. |
 | 1:20–1:40 | Show the dated music proof's stake, settlement and verified native claim receipts when complete. | 0.01 GEN owner-approved stake; successful parent alone is insufficient. No new broadcast required for review. |
 | 1:40–2:00 | Open Season, choose Historical exhibition, connect the proof wallet or show the recorded standing. | Existing Film plus finalized Music free predictions, points/closeness/streaks, separate competitive table. |
