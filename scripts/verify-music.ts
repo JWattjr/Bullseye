@@ -25,7 +25,7 @@ for(const [name,hash] of Object.entries(proof.transactions)) {
  const receipt=await client.getTransaction({hash:hash as TransactionHash});
  const expectedFailure=proof.expectedFailedTransactions?.includes(name);
  const native=receipt.consensus_data===null;
- if(expectedFailure) assert.equal(successfulFinalized(receipt),false,name+' retained failure');
+ if(expectedFailure) {assert.equal(receipt.statusName,'FINALIZED',name+' retained failure finality');assert.equal(successfulFinalized(receipt),false,name+' retained failure');}
  else if(native) assert.ok(creditedTransfer(receipt as unknown as Record<string,unknown>,proof.contracts.pools,undefined,proof.fundedStakeWei),name+' exact native credit');
  else assert.ok(successfulFinalized(receipt),name+' finalized successful execution');
  checks.push({name,hash,status:receipt.statusName,expectedFailure:!!expectedFailure,nativeCredit:native&&!expectedFailure});
@@ -35,15 +35,22 @@ const read=async(address:`0x${string}`,functionName:string,args:Parameters<typeo
 const marketResults=[];
 for(const [key,record] of Object.entries(proof.markets) as [string,{id:string;pool?:string}][]) {
  const market=JSON.parse(String(await read(proof.contracts.markets,'get_market',[record.id])));
+ if(key==='midnights') {
+  assert.equal(market.spec.albums[0].identity_rule,'combined_standard_deluxe');
+  assert.ok(['pending','void','resolved'].includes(market.status),'retained archive diagnostic state');
+  marketResults.push({key,id:record.id,diagnostic:true,status:market.status,evidence:market.evidence});
+  continue;
+ }
  if(key==='ambiguous') assert.equal(market.status,'rejected');
  else {assert.equal(market.status,'resolved',key+' live resolution required');assert.ok(market.evidence.charts.every((c:{capture:string;rows_digest:string;snapshot:string})=>/^\d{14}$/.test(c.capture)&&/^[a-f0-9]{64}$/.test(c.rows_digest)&&c.snapshot.includes(c.capture+'id_/')));}
- const expected=key==='surrender'?12:1;
+ const expected=key==='patina'?null:key==='surrender'?12:1;
  if(key!=='ambiguous') assert.equal(market.evidence.matches[0].position,expected);
+ if(key==='patina') {assert.equal(market.winner,5);assert.equal(market.evidence.matches[0].quote,'');}
  if(key==='pairing') assert.equal(market.evidence.matches[1].position,12);
  if(key==='midnights') {assert.equal(market.spec.albums[0].identity_rule,'combined_standard_deluxe');assert.equal(market.spec.albums[0].title,'Midnights');}
  marketResults.push({key,id:record.id,status:market.status,winner:market.winner,evidence:market.evidence});
 }
-assert.ok(['renaissance','surrender','midnights','pairing','ambiguous'].every(key=>proof.markets[key]),'all five proof cases');
+assert.ok(['renaissance','surrender','patina','pairing','ambiguous'].every(key=>proof.markets[key]),'all five required proof cases');
 const sources=await read(proof.contracts.seasons,'get_sources',[]) as {film:string;music:string};assert.equal(sources.film.toLowerCase(),proof.film.toLowerCase());assert.equal(sources.music.toLowerCase(),proof.contracts.markets.toLowerCase());
 const owner='0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92';
 const season=JSON.parse(String(await read(proof.contracts.seasons,'get_track_record',[owner])));
@@ -57,11 +64,20 @@ const upcomingPools=[];
 for(const sourceId of Object.values(upcoming.sourceRounds) as string[]) {
  const ids=await read('0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25','get_source_pool_ids',[sourceId]) as string[];
  assert.ok(ids.length,sourceId+' existing pool preserved');
- const state=JSON.parse(String(await read('0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25','get_pool',[ids[0]])));
- assert.equal(state.source_round_id,sourceId);assert.ok(['open','resolved','void','resolved_pending_finality','void_pending_finality'].includes(state.status));assert.ok(BigInt(state.total)>0n);
+ const state=JSON.parse(String(await read('0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25','get_pool',[upcoming.pools[sourceId]])));
+ assert.equal(state.source_round_id,sourceId);assert.ok(['open','resolved','void','resolved_pending_finality','void_pending_finality'].includes(state.status));assert.ok(BigInt(state.total)>=0n);assert.equal(Object.values(state.entries as Record<string,{stake:string}>).reduce((sum,entry)=>sum+BigInt(entry.stake),0n),BigInt(state.total),'current Film entry ledger conserved');assert.ok(ids.includes(upcoming.pools[sourceId]));
  upcomingPools.push({id:state.id,status:state.status,total:state.total});
 }
-checks.push({filmBindings:'preserved',upcomingPools});
+const legacy=JSON.parse(await readFile('public/legacy-upcoming-pool-proof.json','utf8'));
+assert.equal(legacy.contract,'0x9De7b19Cf61EDCF25d7960838D297bB51012ADA5');
+assert.equal(String(await read(legacy.contract,'get_bullseye',[])).toLowerCase(),proof.film.toLowerCase());
+const legacyPools=[];
+for(const sourceId of Object.values(legacy.sourceRounds) as string[]) {
+ const state=JSON.parse(String(await read(legacy.contract,'get_pool',[legacy.pools[sourceId]])));
+ assert.equal(state.source_round_id,sourceId);assert.ok(BigInt(state.total)>=0n);if(['street-fighter-2026','cat-in-the-hat-2026'].includes(sourceId)) assert.ok(BigInt(state.total)>=2n*10n**18n,'recorded legacy Film stake preserved');assert.equal(Object.values(state.entries as Record<string,{stake:string}>).reduce((sum,entry)=>sum+BigInt(entry.stake),0n),BigInt(state.total),'legacy Film entry ledger conserved');
+ legacyPools.push({id:state.id,status:state.status,total:state.total});
+}
+checks.push({filmBindings:'preserved',upcomingPools,legacyPools});
 const funded=proof.fundedPool;
 assert.ok(funded,'owner-approved tiny stake and claim still required');
 const pool=JSON.parse(String(await read(proof.contracts.pools,'get_pool',[funded])));

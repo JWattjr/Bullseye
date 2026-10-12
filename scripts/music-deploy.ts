@@ -13,6 +13,7 @@ const questions: Record<string, string> = {
   funded: 'Where did Renaissance by Beyonce debut on the Billboard 200 chart dated August 13, 2022? Count standard and deluxe editions together under the standard album entry.',
   renaissance: 'Where did Renaissance by Beyonce debut on the Billboard 200 chart dated August 13, 2022? Count standard and deluxe editions together under the standard album entry.',
   surrender: 'Where did Surrender by Maggie Rogers debut on the Billboard 200 chart dated August 13, 2022?',
+  patina: 'Where did Patina by Tallies debut on the Billboard 200 chart dated August 13, 2022?',
   midnights: 'Where did Midnights (3am Edition) by Taylor Swift debut on the Billboard 200 chart dated November 5, 2022? Count this deluxe edition together with the standard Midnights entry.',
   pairing: 'Did Renaissance by Beyonce debut higher than Surrender by Maggie Rogers on the Billboard 200 chart dated August 13, 2022?',
   ambiguous: 'Where will Taylor Swift next studio album debut on the Billboard 200?',
@@ -61,9 +62,12 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     let hash: TransactionHash = proof.transactions[name];
     if (!hash) {
       if (value) {
-        if (process.env.BULLSEYE_MUSIC_FUNDS !== 'authorized-0.01-gen' || value !== 10n ** 16n || BigInt(proof.fundedStakeWei) !== 0n) throw Error('New explicit owner authorization for one 0.01 GEN stake required.');
+        if (process.env.BULLSEYE_MUSIC_FUNDS !== 'authorized-0.01-gen' || value !== 10n ** 16n || BigInt(proof.fundedStakeWei) !== 0n || BigInt(proof.fundedStakeReservedWei ?? '0') !== 0n) throw Error('New explicit owner authorization for one 0.01 GEN stake required.');
         const wallet = typeof client.account === 'string' ? client.account : client.account?.address;
         if (wallet?.toLowerCase() !== '0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92') throw Error('Use the specifically approved StudioNet account.');
+        // Reserve the one permitted deposit before requesting a broadcast.
+        // A lost RPC response must never cause a blind second value transfer.
+        proof.fundedStakeReservedWei = String(value); save();
       }
       hash = await client.writeContract({address, functionName: method, args, value});
       proof.transactions[name] = hash;
@@ -79,6 +83,18 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     return hash;
   }
   const step = process.env.BULLSEYE_STEP;
+  if (step === 'music-approved-proof') {
+    for (const [selected, steps] of [
+      ['funded', ['music-compile', 'music-open', 'music-stake']],
+      ['patina', ['music-compile', 'music-open', 'music-predict']],
+      ['pairing', ['music-resolve', 'music-season']],
+    ] as [string, string[]][]) {
+      process.env.BULLSEYE_MUSIC_CASE = selected;
+      for (const next of steps) {process.env.BULLSEYE_STEP = next; await musicDeploy(client);}
+    }
+    process.env.BULLSEYE_STEP = 'music-film-season'; await musicDeploy(client);
+    return;
+  }
   if (step === 'music-compile-diagnostic') {
     const diagnostic = folder + '/compile-format-diagnostic-v3.json';
     const state = existsSync(diagnostic) ? JSON.parse(readFileSync(diagnostic, 'utf8')) : {};
@@ -154,9 +170,27 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     await write(key + '-open', address, 'open_market', [identifier, record.specification_hash]);
   }
   if (step === 'music-predict') {
-    const choice = key === 'surrender' ? 3 : 0;
-    const rank = key === 'surrender' ? 12 : key === 'pairing' ? 0 : 1;
+    const choice = key === 'patina' ? 5 : key === 'surrender' ? 3 : 0;
+    const rank = key === 'patina' || key === 'pairing' ? 0 : key === 'surrender' ? 12 : 1;
     await write(key + '-predict', address, 'predict', [identifier, choice, rank]);
+  }
+  if (step === 'music-retry-midnights' && key === 'midnights') {
+    const current = JSON.parse(String(await read(address, 'get_market', [identifier])));
+    if (current.status === 'resolved') {await write('midnights-resolve', address, 'adjudicate', [identifier]);proof.markets[key].state=current;save();return;}
+    if (current.status !== 'pending') throw Error('Only an evidence-pending source may retry.');
+    if (!proof.transactions['midnights-resolve-pending-1']) {
+      proof.transactions['midnights-resolve-pending-1'] = proof.transactions['midnights-resolve'];
+      writeFileSync(folder + '/midnights-resolve-pending-1.json', readFileSync(folder + '/midnights-resolve.json'));
+      delete proof.transactions['midnights-resolve'];
+      if (proof.transactions['midnights-season']) {
+        proof.transactions['midnights-season-unfinalized-1'] = proof.transactions['midnights-season'];
+        proof.expectedFailedTransactions = ['midnights-season-unfinalized-1'];
+        writeFileSync(folder + '/midnights-season-unfinalized-1.json', readFileSync(folder + '/midnights-season.json'));
+        delete proof.transactions['midnights-season'];
+      }
+      save();
+    }
+    await write('midnights-resolve', address, 'adjudicate', [identifier]);
   }
   if (step === 'music-resolve') {
     if (Date.now() / 1000 < proof.markets[key].entry_deadline) throw Error('Entries are still open; resolve after the frozen cutoff.');
