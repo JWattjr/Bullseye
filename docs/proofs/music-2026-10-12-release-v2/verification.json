@@ -1,0 +1,693 @@
+{
+  "verifiedAt": "2026-10-12T19:58:44.025Z",
+  "network": "StudioNet",
+  "simulated": true,
+  "contracts": {
+    "markets": "0xE5ec1394569C0E7770641F230Bb8aD9ddbc42177",
+    "pools": "0x66880A4447878E8497f241267374C208916800f5",
+    "seasons": "0x3270Dc5B014c9285690e8806f3b434567E0761D8"
+  },
+  "sourceCommit": "bb52baa4ced689d8645d2131ccfaeefb20a22f82",
+  "checks": [
+    {
+      "name": "markets-deploy",
+      "hash": "0xbd91b82b20d840492fc7a22c047ef1b08fbd928499b7ac5b83603b1c815de158",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pools-deploy",
+      "hash": "0xd12642a32976cf60170cec1d1537b50e001c0d19408fc8043340033efce12390",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "seasons-deploy",
+      "hash": "0xdf271286a80130281962876b8fdfa7830f87b409addd82c9768c96d9fc6bcc2e",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-compile",
+      "hash": "0x5890fbbe5979b37f02e9ef17dd32e5956f118dd2354803b50cbc45342b2f42e0",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-compile-child-0",
+      "hash": "0x4d0a166b0b4526fd12b1db9badc7d23e9f600602bc0f999fb84592f547017f54",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-open",
+      "hash": "0x0ffb018ef9bc3c5fc49e4f339ea82aaa7623f2db350da553f1f550b25f9b72e2",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-open-child-0",
+      "hash": "0xc918af9608e316e06421b02c1b0ed3e421e41129e0a5c6330e49784533e71b63",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-stake",
+      "hash": "0xa5e194797f08c70f0b5f42325f50b004b62a58118cae681323ab02b9c471904c",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "ambiguous-compile",
+      "hash": "0x58bef43900e6726cadc55b532381a4c53de15aea510ad4b93b7d627698bac73b",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "ambiguous-compile-child-0",
+      "hash": "0x314b4af98ed11ea0983ea28ff5ce028af94fde9ec578bbf00f09d5b11727cb39",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "renaissance-compile",
+      "hash": "0xd022be0b3044633e11c548bac58ae666b5d8f0d62e17c61bf52fb636daa289be",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "renaissance-compile-child-0",
+      "hash": "0x0e5cad4a0fb7200dd5b564cd8323051424cb83c14a64efbd8023a62d4bd5f81b",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "renaissance-open",
+      "hash": "0xfd44a844ca9f75a20d8faab5ae489ed0922572660f0a1d605284bb80d2702a15",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "renaissance-open-child-0",
+      "hash": "0x96ded87e27362b1604d9dca9f14b04b5318d4fd7515045770e14aa2b40f0ef3e",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "renaissance-predict",
+      "hash": "0x0fb83ebcb1121c35a2db0d033ff29c0586efbb9338f0fb3d14a643999d3fe45c",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-compile",
+      "hash": "0x5d3d521c6793d1ef3f460e81690d00f70ca78c5757a72f259c5aeff2d94a5736",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-compile-child-0",
+      "hash": "0xbc2ef0c7aaca582c716b44a627e46048d2e08536d4a5c75b648d561d5ba686c9",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-open",
+      "hash": "0xc8cdca9f5716fa887463211317888eb7d5da5ccfca1b4082f55c6ae3d039e69a",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-open-child-0",
+      "hash": "0x47c5912ee6f56df57f13fad36c4dad80d4adcc83ce89ffa3662696d2db055cab",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-predict",
+      "hash": "0x7423fc7badad3e1dc6b34e8fb089fcb24c9dc23e6a888ea2a06c304fea9299c8",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "patina-compile",
+      "hash": "0x469fc8abeefd480501f593c2dc0ee550fd6150ce9b4c064f42f092f930e2c69b",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "patina-compile-child-0",
+      "hash": "0x5ddb8a1a282f603571bd46e002bcfb111ec1b37bd03620478f9b14f1075fbbc1",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "patina-open",
+      "hash": "0x285d9d41d991cf1af8aee82fad690fa90ef67f9736232288e0c2d9ae39f06c4d",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "patina-open-child-0",
+      "hash": "0xe9c11074b664abc3d2bae1b0fd51689767b22fd8e2f5a26b977814b98b85ce16",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "patina-predict",
+      "hash": "0x9d9eb00d619b673dd124ba4f184f2570b0ff0cc619669e49b2f451821bb6973b",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pairing-compile",
+      "hash": "0x17756ce9fec7d1ac52376283c2f557b32b03d27c4f89672e3436cbb04afaaaaa",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pairing-compile-child-0",
+      "hash": "0x0a99fa1eb74c7757a36a17ee14fc6fa264f2f357c4f165f6e0cf81f85931bdea",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pairing-open",
+      "hash": "0xc1459048de8ba7b06a13fdad624491d7eaa140083256d1190410d74ef4ee8bb5",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pairing-open-child-0",
+      "hash": "0x7be6c5d47653579d9252b2013688d685308db1f56476c0dd9e2af09001fcd434",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pairing-predict",
+      "hash": "0x12eaa3649083df8622212ea741dc5b1ab903a025811bc77af790d715d579c0a1",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "renaissance-resolve",
+      "hash": "0x268130f81afee2ed2bd79e15dd032fd15fab87c692cf215b3fcb2a33ffbbecf3",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "renaissance-resolve-child-0",
+      "hash": "0xd298870b210d7ae303e0c45b966720fbef5763eab63257c62a58b010c15838c3",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "renaissance-season",
+      "hash": "0x40ca92aea9d33d805c3c69b19fbfbd0e124e6a3e544c976cc4ba31c9d47552c4",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-resolve",
+      "hash": "0x8ce96e30fed515719b14040046f102bbbe310b92859e7448da00eae3bdd3e315",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-resolve-child-0",
+      "hash": "0x47b94575fc6626f229c4a624cef3b9af6c498de71f27cfd3648a611fa71491c1",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-settle",
+      "hash": "0x15a88ebbed3a7919d7505b435cbb72c7065817d529406426f33841dee143ef9a",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-settle-child-0",
+      "hash": "0x8d50dd198bcec0f4d4115362fdb2f0ad835cf86d61f3008a2877dec2869f377f",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-claim",
+      "hash": "0x3b46f29c567e6c4401ab4c1c9185309814c7a2ae55f5cefa522d162cf1a5a726",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-claim-child-0",
+      "hash": "0x0bc2af19984065e50c0391cd8e086443857a72fa72eb18419b4a73bca3787ecf",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": true
+    },
+    {
+      "name": "funded-verify-claim",
+      "hash": "0xac2a24c71521fc8e3d8174d18e2346b98b00a06be223e261afbbf1deec81d665",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "funded-verify-claim-child-0",
+      "hash": "0xf9452bcf054f4dcfffa3a2d824d845927e67ad37a155d920e269d0d1fc8bf71b",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-resolve-pending-1",
+      "hash": "0x38ee530a64d6c054f485c45d333531feb513539be627e3504e259f98630a5bef",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-season-unfinalized-1",
+      "hash": "0xab1d412d548612ec59dbe14135c71a3bc5708dc160cd102be14eae0eb8d559da",
+      "status": "FINALIZED",
+      "expectedFailure": true,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-resolve",
+      "hash": "0xae9bf0c9323b391d037534e8c6a3a46bc5e9bb941af72d649b9de64ecd928e93",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-resolve-child-0",
+      "hash": "0x9ff1a572f419de59d6a947f0189fdc9b5ed11aae41280515d892c200bcb5e211",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "surrender-season",
+      "hash": "0xfa4ada05e9c55679b627849576c7f060a5fb27f4d7660f447d59831b67cd2194",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "patina-resolve",
+      "hash": "0x2d663f7b8f876f946a3259058366bfe188c6d6ed3646ce63afb57ae356aa964b",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pairing-resolve",
+      "hash": "0x25429edf762bca405ef6b9e965e95fc2472039741d6ac8dff6b779f126146761",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "film-season-barbie-network-demo",
+      "hash": "0xed3798297f0f9815c3de9fef7539643114e699fa58a567486f9b228600db04e2",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "patina-resolve-child-0",
+      "hash": "0x8d338ccea328dd9ec58735e3492a9e6e3a3e45db87a8ae497d227c7e88f9cccb",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "patina-season",
+      "hash": "0x5064e5a5ac3eb3c0ab6f1e931a49f00e95639691ac2a299ef61ce85c18d7453b",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pairing-resolve-child-0",
+      "hash": "0x48e8012515c387ae1ec790109c18c593cf6cd227bf23aacf385791595ed82e57",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "name": "pairing-season",
+      "hash": "0x42c23c39fc9ba0daca2875160ea4c011be112d90189c93213e776519a4f44340",
+      "status": "FINALIZED",
+      "expectedFailure": false,
+      "nativeCredit": false
+    },
+    {
+      "filmBindings": "preserved",
+      "upcomingPools": [
+        {
+          "id": "street-fighter-2026-pool-v2-1",
+          "status": "open",
+          "total": "0"
+        },
+        {
+          "id": "clayface-2026-pool-v2-2",
+          "status": "open",
+          "total": "0"
+        },
+        {
+          "id": "cat-in-the-hat-2026-pool-v2-3",
+          "status": "open",
+          "total": "0"
+        },
+        {
+          "id": "hunger-games-sunrise-2026-pool-v2-4",
+          "status": "open",
+          "total": "0"
+        },
+        {
+          "id": "dune-three-2026-pool-v2-5",
+          "status": "open",
+          "total": "0"
+        }
+      ],
+      "legacyPools": [
+        {
+          "id": "street-fighter-2026-pool-1",
+          "status": "open",
+          "total": "2000000000000000000"
+        },
+        {
+          "id": "clayface-2026-pool-2",
+          "status": "open",
+          "total": "0"
+        },
+        {
+          "id": "cat-in-the-hat-2026-pool-3",
+          "status": "open",
+          "total": "2000000000000000000"
+        },
+        {
+          "id": "hunger-games-sunrise-2026-pool-4",
+          "status": "open",
+          "total": "0"
+        },
+        {
+          "id": "dune-three-2026-pool-5",
+          "status": "open",
+          "total": "0"
+        }
+      ]
+    }
+  ],
+  "markets": [
+    {
+      "key": "funded",
+      "id": "funded-music-proof",
+      "status": "resolved",
+      "winner": 0,
+      "evidence": {
+        "charts": [
+          {
+            "capture": "20221019033417",
+            "cdx_digest": "MK4BBQQ43EJITPLGIKROE4DFCEBJ4KPF",
+            "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+            "snapshot": "https://web.archive.org/web/20221019033417id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+            "week": "2022-08-13"
+          }
+        ],
+        "matches": [
+          {
+            "position": 1,
+            "quote": "#1 | Renaissance | Beyonce | LW: — | Weeks: 1"
+          }
+        ],
+        "status": "resolved"
+      }
+    },
+    {
+      "key": "ambiguous",
+      "id": "ambiguous-music-proof",
+      "status": "rejected",
+      "winner": null,
+      "evidence": null
+    },
+    {
+      "key": "renaissance",
+      "id": "renaissance-music-proof",
+      "status": "resolved",
+      "winner": 0,
+      "evidence": {
+        "charts": [
+          {
+            "capture": "20221019033417",
+            "cdx_digest": "MK4BBQQ43EJITPLGIKROE4DFCEBJ4KPF",
+            "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+            "snapshot": "https://web.archive.org/web/20221019033417id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+            "week": "2022-08-13"
+          }
+        ],
+        "matches": [
+          {
+            "position": 1,
+            "quote": "#1 | Renaissance | Beyonce | LW: — | Weeks: 1"
+          }
+        ],
+        "status": "resolved"
+      }
+    },
+    {
+      "key": "surrender",
+      "id": "surrender-music-proof",
+      "status": "resolved",
+      "winner": 3,
+      "evidence": {
+        "charts": [
+          {
+            "capture": "20221019033417",
+            "cdx_digest": "MK4BBQQ43EJITPLGIKROE4DFCEBJ4KPF",
+            "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+            "snapshot": "https://web.archive.org/web/20221019033417id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+            "week": "2022-08-13"
+          }
+        ],
+        "matches": [
+          {
+            "position": 12,
+            "quote": "#12 | Surrender | Maggie Rogers | LW: — | Weeks: 1"
+          }
+        ],
+        "status": "resolved"
+      }
+    },
+    {
+      "key": "patina",
+      "id": "patina-music-proof",
+      "status": "resolved",
+      "winner": 5,
+      "evidence": {
+        "charts": [
+          {
+            "capture": "20220930063616",
+            "cdx_digest": "IAJ6VKD4TXA7AJKSOM5S7SYCY5UVDUPR",
+            "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+            "snapshot": "https://web.archive.org/web/20220930063616id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+            "week": "2022-08-13"
+          }
+        ],
+        "matches": [
+          {
+            "position": null,
+            "quote": ""
+          }
+        ],
+        "status": "resolved"
+      }
+    },
+    {
+      "key": "pairing",
+      "id": "pairing-music-proof",
+      "status": "resolved",
+      "winner": 0,
+      "evidence": {
+        "charts": [
+          {
+            "capture": "20220930063616",
+            "cdx_digest": "IAJ6VKD4TXA7AJKSOM5S7SYCY5UVDUPR",
+            "rows_digest": "466db60d981920164e6cf16b8e4c86d13bbf1062c2d66fe6c982bac086771ae7",
+            "snapshot": "https://web.archive.org/web/20220930063616id_/https://www.billboard.com/charts/billboard-200/2022-08-13/",
+            "week": "2022-08-13"
+          }
+        ],
+        "matches": [
+          {
+            "position": 1,
+            "quote": "#1 | Renaissance | Beyonce | LW: — | Weeks: 1"
+          },
+          {
+            "position": 12,
+            "quote": "#12 | Surrender | Maggie Rogers | LW: — | Weeks: 1"
+          }
+        ],
+        "status": "resolved"
+      }
+    }
+  ],
+  "season": {
+    "competitive": {
+      "average_closeness": null,
+      "best_streak": 0,
+      "entries": 0,
+      "hit_rate": null,
+      "hits": 0,
+      "points": 0,
+      "streak": 0
+    },
+    "historical": {
+      "average_closeness": 98,
+      "best_streak": 5,
+      "entries": 5,
+      "hit_rate": 100,
+      "hits": 5,
+      "points": 796,
+      "streak": 5
+    },
+    "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+    "results": [
+      {
+        "category": "music",
+        "closeness": 100,
+        "correct": true,
+        "entry_deadline": 1791817554,
+        "has_exact": true,
+        "historical": true,
+        "market_id": "renaissance-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 200,
+        "specification_hash": "880248bbc31f86e8e19c62de00673b8aea0e30774ea716058cf02b6ec06ae219",
+        "void": false
+      },
+      {
+        "category": "music",
+        "closeness": 100,
+        "correct": true,
+        "entry_deadline": 1791817805,
+        "has_exact": true,
+        "historical": true,
+        "market_id": "surrender-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 200,
+        "specification_hash": "6c271efa4c6b0f6576358e4b66948297efe39c87fb175fd38c1213725bc531fe",
+        "void": false
+      },
+      {
+        "category": "film",
+        "closeness": 96,
+        "correct": true,
+        "entry_deadline": 1790986872,
+        "has_exact": true,
+        "historical": true,
+        "market_id": "barbie-network-demo",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 196,
+        "specification_hash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96",
+        "void": false
+      },
+      {
+        "category": "music",
+        "closeness": 0,
+        "correct": true,
+        "entry_deadline": 1791817992,
+        "has_exact": false,
+        "historical": true,
+        "market_id": "patina-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 100,
+        "specification_hash": "26ae0e2ac0aec3b257566a5f19ff69271a4e07739e69775fa9f9ee88652b8556",
+        "void": false
+      },
+      {
+        "category": "music",
+        "closeness": 0,
+        "correct": true,
+        "entry_deadline": 1791818206,
+        "has_exact": false,
+        "historical": true,
+        "market_id": "pairing-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 100,
+        "specification_hash": "fdfbc614094a7d2376a2a6ca1d2a16853dfa122d87e3d926f44038412e702d5b",
+        "void": false
+      }
+    ]
+  },
+  "filmRegression": [
+    {
+      "id": "barbie-network-demo",
+      "status": "resolved",
+      "value": 162022044
+    },
+    {
+      "id": "oppenheimer-film-source",
+      "status": "resolved",
+      "value": 82455420
+    },
+    {
+      "id": "dune-film-source",
+      "status": "resolved",
+      "value": 82505391
+    }
+  ],
+  "fundedPool": "funded-music-proof-music-pool-1",
+  "claim": {
+    "amount": "10000000000000000",
+    "attempt": 1,
+    "claim_hash": "0x3b46f29c567e6c4401ab4c1c9185309814c7a2ae55f5cefa522d162cf1a5a726",
+    "status": "paid",
+    "transfer_hash": "0x0bc2af19984065e50c0391cd8e086443857a72fa72eb18419b4a73bca3787ecf"
+  },
+  "balances": {
+    "beforeStake": "8000999999999999956",
+    "afterStake": "7990999999999999956",
+    "afterClaim": "8000999999999999956",
+    "pool": "0"
+  }
+}

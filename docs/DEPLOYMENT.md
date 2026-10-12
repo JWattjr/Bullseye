@@ -1,5 +1,16 @@
 # Hosted demonstration
 
+## Music milestone — October 12, 2026
+
+Music is promoted on [the public app](https://bullseye-genlayer.vercel.app/music), backed by deployment `dpl_GnsCP6gUthgPWMpciofEB4TPS1rM` at [its immutable URL](https://bullseye-genlayer-d1y1c2lyo-wattxs-projects.vercel.app). The immutable URL retains Vercel authentication; the public alias is checked anonymously.
+
+The source-only Git archive was `c2ee72d14498b6a73cb4b6a95677e6fdbc93cd4d`, with exact contract source pinned to `bb52baa4ced689d8645d2131ccfaeefb20a22f82`. It excludes real environment files, managed wallet keys, local data and test caches. The existing `wattxs-projects/bullseye-genlayer` project, Node 24 and browser practice storage were retained. Remote Next.js 16.3.8 Turbopack build passed in 19 seconds. The production build was staged with `--skip-domain`, checked with existing Vercel CLI authentication, then promoted without rebuilding.
+
+The strict read-only verifier passed all actual Music cases, complete archived evidence, exact native credit, combined season and Film pool preservation. Protected API checks showed Patina absent, four Music plus Film season entries, and the original Film pool source. One temporary season API 502 recovered on retry. Anonymous hosted Music desktop/mobile checks and all eight Film ticket checks passed, without screenshots or wallet broadcasts; see [release verification](proofs/music-2026-10-12-release-v2/release-verification.json).
+
+The Portal update remains an owner-submitted draft. No new cron secret was created. As before, the optional daily keeper remains inactive; open pages perform permissionless zero-GEN maintenance, with unfinished receipts retained before retry.
+
+
 Latest release: **October 9, 2026, payout recovery correction**. Both current pool contracts reserve claims before native transfer and verify exact credit before recording payment. New historical stakes use `0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403`; upcoming stakes use `0xBC8b76e39B6364E16E85F5881ccC0ece5ddb9a25`. Legacy positions remain directed to their original contracts. See [correction report](CLAIM-RECOVERY.md) and [release verification](proofs/claim-recovery/release-verification.json).
 
 ## Deploy result

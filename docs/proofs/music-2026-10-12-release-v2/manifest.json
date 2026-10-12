@@ -514,7 +514,7 @@
   },
   "fundedStakeWei": "10000000000000000",
   "film": "0x756ddF8D588DA4D598F9F90947DB92Bced10D68E",
-  "status": "live-proofs-complete-awaiting-production-verification",
+  "status": "verified-live-and-hosted-owner-submission-ready",
   "deploymentVerified": true,
   "balanceBeforeStake": "8000999999999999956",
   "fundedStakeReservedWei": "10000000000000000",
@@ -612,8 +612,10 @@
   "expectedFailedTransactions": [
     "surrender-season-unfinalized-1"
   ],
-  "remainingProof": [
-    "Strict read-only final release verification",
-    "Production deployment and anonymous hosted browser verification"
-  ]
+  "remainingProof": [],
+  "deployment": {
+    "id": "dpl_GnsCP6gUthgPWMpciofEB4TPS1rM",
+    "url": "https://bullseye-genlayer.vercel.app/music",
+    "archiveCommit": "c2ee72d14498b6a73cb4b6a95677e6fdbc93cd4d"
+  }
 }

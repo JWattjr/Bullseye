@@ -1,6 +1,6 @@
 # Bullseye
 
-A film prediction platform powered by GenLayer. Choose an opening-weekend revenue range, stake 2–100 StudioNet GEN, and collect your share of the winning pool. GenLayer validators interpret the frozen rules and independently retrieve the published result. Winners share the whole pot proportionally; no pool fee is deducted.
+A Film and Music prediction platform powered by GenLayer. Forecast opening-weekend box office or Billboard 200 album debuts, stake simulated StudioNet GEN, and collect a proportional share of the winning pool. Film accepts 2–100 GEN; Music accepts 0.01–100 GEN. Validators compile Music questions and independently verify archived complete-chart evidence. Free Film and Music predictions also share a season leaderboard. No pool fee is deducted.
 
 **[Live app](https://bullseye-genlayer.vercel.app) · [Two-minute demo](docs/DEMO.md) · [Tutorial](docs/TUTORIAL.md) · [Portal submission](docs/SUBMISSION.md) · [Verification](docs/VERIFICATION.md)**
 
@@ -63,7 +63,7 @@ npx tsx scripts/verify-upcoming.ts
 
 Start the app before browser checks. Set `BULLSEYE_URL` to another origin. `npm run test:browser` covers keyboard interaction, practice scoring, persistence, evidence, drafts, synthetic rehearsal and error recovery. `npx tsx scripts/consumer-check.ts` covers the consumer wallet flow using isolated fixtures without broadcasts. Set `BULLSEYE_VERIFY_FILMS=yes` for `npx tsx scripts/movie-stakes-check.ts` to check all eight tickets using actual finalized network reads. Browser scripts use installed Playwright Chromium; see [tutorial setup](docs/TUTORIAL.md).
 
-Latest release verification: **121 contract tests, 24 application tests**, lint, strict TypeScript, production build, published desktop/mobile consumer checks and actual finalized reads. Mock two-wallet collection is identified separately from signed single-entrant network proof.
+Film recovery release verification (October 9): **121 contract tests, 24 application tests**, lint, strict TypeScript, production build, published desktop/mobile consumer checks and actual finalized reads. Mock two-wallet collection is identified separately from signed single-entrant network proof.
 
 ## Scope
 
