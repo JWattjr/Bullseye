@@ -70,3 +70,12 @@ Latest release verification: **121 contract tests, 24 application tests**, lint,
 Owner-only oracle creators; one metric and publisher; 200 entrants per market; browser-local practice; StudioNet availability/rate limits; no permanent full-page archive; receipt-verified recovery for failed native transfers; retries wait for fully backed unpaid obligations. First verified results ignore later source corrections. Upcoming release changes never silently rewrite the frozen weekend. The background keeper is implemented but inactive pending its secret; open-page settlement works. See [deployment](docs/DEPLOYMENT.md) and [pool behavior](docs/POOLS.md).
 
 Code and original typographic art are MIT licensed; font licenses remain in their packages. Film titles identify events. No studio posters or stills are shipped. The existing Portal contribution is under steward review; this release addresses its payout-recovery correction. No reward or eligibility is promised.
+
+
+## Music milestone
+
+Bullseye Music adds Billboard 200 album rank and head-to-head forecasting alongside the preserved Film contracts. Browse `/music`, propose a plain-English question at `/music/propose`, and see combined Film + Music free-points standings at `/season`. Music uses 0.01–100 simulated StudioNet GEN; Film retains its existing 2 GEN minimum.
+
+Three adjacent contracts split judgment, native pools, and free seasons. Music questions are genuinely compiled by independent models; resolution reads the earliest eligible complete archived 200-row chart from bounded CDX candidates. Digests, positions, and quoted rows must agree. The music pools and seasons contain no LLM. See [architecture](docs/ARCHITECTURE.md), [Music tutorial](docs/TUTORIAL-MUSIC.md), and [dated proof status](docs/proofs/music-2026-10-12-release/manifest.json).
+
+Run `npm run verify:music` for read-only source/receipt/outcome/native-credit/season/Film checks. Run `npm run test:music:browser` against `BULLSEYE_URL` for desktop and 390×844 flows. Its wallet transport is controlled and never broadcasts. The Portal update is an owner-submitted draft at `docs/submission/milestone-music.json`; no submission is automated. A complete milestone requires all live proofs, including explicit approval for its tiny GEN deposit.

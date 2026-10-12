@@ -17,7 +17,7 @@ PARENT = '0x' + 'aa' * 32
 CHILD = '0x' + 'bb' * 32
 
 
-@pytest.fixture(params=['film_pools', 'forecast_pools'])
+@pytest.fixture(params=['film_pools', 'forecast_pools', 'music_pools'])
 def recovery(request, direct_vm, direct_deploy, direct_owner, direct_alice, direct_bob, direct_charlie, monkeypatch):
     vm = direct_vm
     vm._chain_id = 61999
@@ -29,15 +29,20 @@ def recovery(request, direct_vm, direct_deploy, direct_owner, direct_alice, dire
     ledger = {wallet: 10 * GEN for wallet in wallets}
     ledger[contract] = 0
     emitted, callbacks, receipts, reads = [], [], {}, []
-    source = {'spec': spec('competitive' if request.param == 'forecast_pools' else 'historical'),
-              'status': 'open' if request.param == 'forecast_pools' else 'resolved',
+    source = {'spec': spec('historical' if request.param == 'film_pools' else 'competitive'),
+              'status': 'resolved' if request.param == 'film_pools' else 'open',
               'specification_hash': 'frozen', 'winner': 2, 'evidence': {'normalized_value': 162022044}}
+    if request.param == 'music_pools':
+        source['spec'].update(bins=source['spec']['ranges'], historical=False)
+        source['question'] = 'Where will this named album debut on its frozen chart week?'
+        source['evidence']['matches'] = [{'position': 8, 'quote': 'controlled row fixture'}]
     import genlayer.gl as sdk
     from genlayer.py import calldata
 
     class Source:
         def view(self): return self
         def get_round(self, identifier): return json.dumps(source)
+        def get_market(self, identifier): return json.dumps(source)
 
     class Self:
         def emit(self, **kwargs):

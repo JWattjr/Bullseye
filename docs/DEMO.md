@@ -43,3 +43,17 @@ Unedited published-app captures; these are not wallet-transaction recordings:
 ![Published mobile prediction ticket](../.impeccable/review/consumer/upcoming-ticket-live.jpg)
 
 Recorded owner demo: https://youtu.be/IUI4EQOu00M. The October 9 recovery correction is documented separately in [CLAIM-RECOVERY.md](CLAIM-RECOVERY.md); the existing video does not establish that later failure test. Run the read-only recovery verifier and the controlled browser test linked there.
+
+
+## Music update: two-minute owner/reviewer script
+
+| Time | Action | Evidence |
+| --- | --- | --- |
+| 0:00–0:15 | Open Film, then choose Music in the header. | Film is preserved; Billboard 200 album markets sit beside it. StudioNet simulated GEN is disclosed. |
+| 0:15–0:40 | Open Renaissance and inspect its resolved #1 result. Expand How this settles. | Frozen artist/edition/week, CDX-selected complete archive, canonical row quote and full digest. |
+| 0:40–1:00 | Open Surrender, Midnights and the Renaissance–Surrender pairing. | Mid-chart debut, deluxe-to-standard identity, and same-week lower-position comparison. |
+| 1:00–1:20 | Open Propose; demonstrate the recorded ambiguous rejection and an accepted compiled preview. | Models compile plain English; the creator reviews the immutable spec before opening. Avoid claiming an unrecorded proposal is finalized. |
+| 1:20–1:40 | Show the dated music proof's stake, settlement and verified native claim receipts when complete. | 0.01 GEN owner-approved stake; successful parent alone is insufficient. No new broadcast required for review. |
+| 1:40–2:00 | Open Season, choose Historical exhibition, connect the proof wallet or show the recorded standing. | Existing Film plus finalized Music free predictions, points/closeness/streaks, separate competitive table. |
+
+The update draft is `docs/submission/milestone-music.json`; only the owner submits it. The existing YouTube video is a Film demonstration and does not establish this new Music flow. Record an updated walkthrough with this script if the Portal asks for a new video. The live proof manifest is the source of truth for completion; missing funded proof must remain disclosed.

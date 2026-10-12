@@ -41,3 +41,32 @@ Both pool contracts reserve `claim(poolId, attempt)` before emitting a transfer.
 Hosted browser storage contains guest practice, drafts and public receipt projections, keyed appropriately by wallet. It cannot authorize contract entries or payouts. Wallet-selected watch views are public projections, not authentication to private data. Alternatively, a local single-process serialized file database uses an HttpOnly guest cookie; this is unsuitable for an ephemeral or multi-process deployment.
 
 The publisher controls source facts and availability. Retained passage hashes prove integrity of an excerpt, not permanent whole-page retention or factual truth. Only The Numbers and domestic opening-weekend revenue are supported. Creator authorization remains owner-only; pools cap 200 entrants and 2000 pool records. StudioNet is a development simulator; broader shared-testnet deployment, durable indexing and production monitoring remain later work.
+
+
+## Adjacent Music contracts
+
+```mermaid
+flowchart LR
+    U[Wallet: question and schedule] --> M[MusicMarkets: validator compilation]
+    M --> O[Creator reviews frozen spec and opens]
+    O --> P[MusicPools: native GEN, no LLM]
+    A[Wayback CDX dated Billboard 200] --> E[Code extracts complete 200 rows]
+    E --> J[Validators identify album; agree digest, rank and quote]
+    J --> M
+    M -->|finalized immutable result| P
+    P --> C[Pull claim: exact native credit verified]
+    F[Existing Film oracle: The Numbers judgment] --> FP[Existing Film pools]
+    F -->|finalized free predictions| S[Seasons: points and streaks, no LLM]
+    M -->|finalized free predictions| S
+    S --> UI[Film + Music standings and results timeline]
+```
+
+The old Film oracle and both current Film pool addresses are preserved. Music uses separate source and pool records. `build-music-contracts.py` embeds the pure parser into a standalone pinned-runner source; the deployment helper refuses source-hash changes after recording an address. No local-only runner alias is used.
+
+Judgment occurs only in Music compilation and album identification. Code chooses CDX captures after observation, validates dated Billboard 200 markers, requires complete ordered rows, hashes all row fields, checks exact quotes and debut weeks, and determines winners. Models see extracted bounded data, not publisher HTML. Accepted compiled identities agree in their complete canonical form. Results activate through protected finality callbacks. Archive/identity uncertainty stays pending until a fixed deadline.
+
+MusicPools reads finalized source state, freezes its hash/deadlines, and distributes the whole pool through deterministic cumulative integer allocations. Void and empty-winner outcomes refund; unresolved sources allow a refund at the frozen source deadline plus one day. Claims use the existing verified-native-credit reservation/retry design. `verify_settlement` recovers a missed activation callback from a strictly validated finalized successful settlement receipt; it cannot invent a winner. Unknown native credit remains reserved until protocol evidence resolves it.
+
+The server reads LATEST_FINAL only, caches and bounds directory reads, and sends zero-value permissionless maintenance requests. Wallet stakes/claims use the existing provider and never expose a key to the server. Public wallet-scoped receipt metadata survives reload; source and pool records remain authoritative. Open pages drive music resolution, settlement, claim verification, and season imports; the unconfigured daily scheduler remains inactive. Browser closures do not change contract deadlines, and another caller can execute each permissionless step.
+
+Seasons imports finalized existing predictions rather than stake entries or administrator scores. It binds both source addresses and fixed season boundaries. Correct bins add 100, exact guesses add bounded closeness, and chronological idempotent records define hit rates and streaks. Historical exhibition remains distinct from competition. The dated proof manifest distinguishes actual network receipts from controlled browser transport and retained failed candidates.

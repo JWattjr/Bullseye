@@ -6,5 +6,6 @@ import '@fontsource/dm-sans/latin-700.css';
 import './globals.css';
 import './live.css';
 import './consumer.css';
-export const metadata:Metadata={title:'Bullseye — Call the opening weekend',description:'Film forecasting with StudioNet GEN pools and free league points. Pick a range, track the result, inspect the evidence.'};
+import './music.css';
+export const metadata:Metadata={title:'Bullseye — Film & Music predictions',description:'Forecast film openings and Billboard 200 album debuts with StudioNet GEN pools and free season points. Pick an outcome and inspect the evidence.'};
 export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>;}
