@@ -270,7 +270,13 @@ def _interpret_charts(spec, charts):
     output = gl.nondet.exec_prompt(prompt, response_format='json')
     require(isinstance(output, dict) and set(output) == {'status', 'matches'} and output['status'] in ('resolved', 'ambiguous'), 'resolution schema')
     require(isinstance(output['matches'], list) and len(output['matches']) == (len(spec['albums']) if output['status'] == 'resolved' else 0), 'match count')
-    for album, match in zip(spec['albums'], output['matches']):
+    for index, (album, match) in enumerate(zip(spec['albums'], output['matches'])):
+        # The live JSON response omitted position:null for an absent album.
+        # Normalize only that exact empty-quote shape after complete extraction;
+        # a missing numeric position or any additional field remains invalid.
+        if isinstance(match, dict) and set(match) == {'quote'} and match['quote'] == '':
+            match = {'position': None, 'quote': ''}
+            output['matches'][index] = match
         require(isinstance(match, dict) and set(match) == {'position', 'quote'}, 'match schema')
         position = match['position']
         if position is None:

@@ -6,7 +6,7 @@ import {studionet} from 'genlayer-js/chains';
 import {successfulFinalized} from '../lib/protocol';
 import {creditedTransfer} from '../lib/pool-proof';
 
-const folder = 'docs/proofs/music-2026-10-12-release';
+const folder = 'docs/proofs/music-2026-10-12-release-v2';
 const manifest = folder + '/manifest.json';
 const stringify = (value: unknown) => JSON.stringify(value, (_, item) => typeof item === 'bigint' ? String(item) : item, 2) + '\n';
 const questions: Record<string, string> = {
@@ -63,6 +63,7 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     if (!hash) {
       if (value) {
         if (process.env.BULLSEYE_MUSIC_FUNDS !== 'authorized-0.01-gen' || value !== 10n ** 16n || BigInt(proof.fundedStakeWei) !== 0n || BigInt(proof.fundedStakeReservedWei ?? '0') !== 0n) throw Error('New explicit owner authorization for one 0.01 GEN stake required.');
+        if (address.toLowerCase() !== '0x66880a4447878e8497f241267374c208916800f5') throw Error('Deposit recipient must be the explicitly approved corrected MusicPools.');
         const wallet = typeof client.account === 'string' ? client.account : client.account?.address;
         if (wallet?.toLowerCase() !== '0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92') throw Error('Use the specifically approved StudioNet account.');
         // Reserve the one permitted deposit before requesting a broadcast.
@@ -83,6 +84,23 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     return hash;
   }
   const step = process.env.BULLSEYE_STEP;
+  if (step === 'music-full-final-proof') {
+    process.env.BULLSEYE_MUSIC_CASE = 'funded';
+    for (const next of ['music-compile', 'music-open', 'music-stake', 'music-free-cases', 'music-finish-free', 'music-complete-approved-proof']) {
+      process.env.BULLSEYE_STEP = next; await musicDeploy(client);
+    }
+    return;
+  }
+  if (step === 'music-resolution-diagnostic') {
+    const diagnostic = folder + '/resolution-format-diagnostic.json';
+    const state = existsSync(diagnostic) ? JSON.parse(readFileSync(diagnostic, 'utf8')) : {};
+    const persist = () => writeFileSync(diagnostic, stringify(state));
+    if (!state.deploy) {state.deploy = await client.deployContract({code: readFileSync('tests/fixtures/music_resolution_format_probe.py','utf8'), args: []});persist();}
+    const deployed = await final(state.deploy, 'resolution-format-probe-deploy');state.address=deployed.recipient;persist();
+    if (!state.probe) {state.probe=await client.writeContract({address:state.address,functionName:'probe',args:[],value:0n});persist();}
+    await final(state.probe,'resolution-format-probe');
+    state.result = JSON.parse(String(await read(state.address, 'get_result', [])));persist();console.log('Resolution format diagnostic:',stringify(state.result));return;
+  }
   if (step === 'music-complete-approved-proof') {
     for (const [selected, steps] of [
       ['funded', ['music-resolve', 'music-settle', 'music-claim']],
@@ -126,7 +144,7 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
     return;
   }
   if (step === 'music-finish-free') {
-    for (const selected of ['renaissance', 'surrender', 'midnights', 'pairing']) {
+    for (const selected of ['renaissance', 'surrender', 'patina', 'pairing']) {
       const record = proof.markets[selected];
       while (Date.now() / 1000 < record.entry_deadline) await new Promise(resolve => setTimeout(resolve, Math.min(30_000, (record.entry_deadline - Date.now() / 1000) * 1000 + 100)));
       process.env.BULLSEYE_MUSIC_CASE = selected;
@@ -146,7 +164,7 @@ export async function musicDeploy(client: GenLayerClient<typeof studionet>) {
   }
   const key = process.env.BULLSEYE_MUSIC_CASE ?? 'renaissance';
   if (step === 'music-free-cases') {
-    for (const selected of ['ambiguous', 'renaissance', 'surrender', 'midnights', 'pairing']) {
+    for (const selected of ['ambiguous', 'renaissance', 'surrender', 'patina', 'pairing']) {
       process.env.BULLSEYE_MUSIC_CASE = selected;
       for (const next of selected === 'ambiguous' ? ['music-compile'] : ['music-compile', 'music-open', 'music-predict']) {
         process.env.BULLSEYE_STEP = next;

@@ -127,6 +127,36 @@ def test_not_on_chart_needs_complete_extraction(music, direct_vm):
     assert json.loads(music.get_market('debut'))['winner'] == 5
 
 
+def test_live_absence_omitted_null_position_is_canonicalized(music, direct_vm):
+    create(music, direct_vm)
+    warp(direct_vm, 2000000250)
+    evidence(direct_vm, [{'quote': ''}])
+    music.adjudicate('debut')
+    record = json.loads(music.get_market('debut'))
+    assert record['winner'] == 5
+    assert record['evidence']['matches'] == [{'position': None, 'quote': ''}]
+
+
+@pytest.mark.parametrize('match', [{'quote': QUOTE}, {'quote': '', 'extra': True}])
+def test_missing_position_does_not_normalize_a_row_or_extra_fields(music, direct_vm, match):
+    create(music, direct_vm)
+    warp(direct_vm, 2000000250)
+    evidence(direct_vm, [match])
+    with direct_vm.expect_revert('match schema'):
+        music.adjudicate('debut')
+
+
+def test_omitted_absence_position_cannot_bypass_partial_chart(music, direct_vm):
+    create(music, direct_vm)
+    warp(direct_vm, 2000000250)
+    evidence(direct_vm, [{'quote': ''}], page=PAGE[:1048576])
+    music.adjudicate('debut')
+    record = json.loads(music.get_market('debut'))
+    assert record['status'] == 'pending'
+    assert record['winner'] is None
+    assert record['evidence']['matches'] == []
+
+
 def test_missing_evidence_has_fixed_void_deadline(music, direct_vm):
     create(music, direct_vm)
     warp(direct_vm, 2000000250)

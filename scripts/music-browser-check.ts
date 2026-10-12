@@ -84,5 +84,5 @@ for(const [label,viewport] of [['desktop',{width:1440,height:960}],['mobile',{wi
  checks.push(label+': controlled SDK 0.01 GEN request (not broadcast), keyboard bins, bounds, exact rank validation, reload persistence, provisional/failure states and head-to-head ticket');
  await fixture.close();
 }
-await writeFile(controlledOnly?'.data/music-controlled-verification.json':'docs/proofs/music-2026-10-12-release/browser-verification.json',JSON.stringify({base,verifiedAt:new Date().toISOString(),checks,controlledTransport:'Wallet tests use isolated provider/RPC fixtures. No wallet transaction is broadcast.'},null,2)+'\n'); console.log(checks.join('\n'));
+await writeFile(controlledOnly?'.data/music-controlled-verification.json':'docs/proofs/music-2026-10-12-release-v2/browser-verification.json',JSON.stringify({base,verifiedAt:new Date().toISOString(),checks,controlledTransport:'Wallet tests use isolated provider/RPC fixtures. No wallet transaction is broadcast.'},null,2)+'\n'); console.log(checks.join('\n'));
 } finally {await browser.close();}

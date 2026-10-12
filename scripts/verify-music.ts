@@ -7,7 +7,7 @@ import {studionet} from 'genlayer-js/chains';
 import {TransactionHashVariant,type TransactionHash} from 'genlayer-js/types';
 import {successfulFinalized} from '../lib/protocol';
 import {creditedTransfer} from '../lib/pool-proof';
-const folder='docs/proofs/music-2026-10-12-release';
+const folder='docs/proofs/music-2026-10-12-release-v2';
 const proof=JSON.parse(await readFile(folder+'/manifest.json','utf8'));
 const client=createClient({chain:studionet}); // No account and no write methods.
 const owner='0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92';
