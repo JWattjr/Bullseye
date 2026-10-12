@@ -7,6 +7,7 @@ import {TransactionHashVariant, type TransactionHash} from 'genlayer-js/types';
 import {readClient, successfulFinalized} from './protocol';
 import {creditedTransfer} from './pool-proof';
 import type {MusicContracts, MusicMarket, MusicPool, MusicSnapshot, MusicReceipt, TrackRecord, SeasonScore} from './music';
+import {musicMaintenanceFinal} from './music';
 
 const client = readClient();
 const cache = new Map<string, {expires: number; promise: Promise<unknown>}>();
@@ -73,6 +74,12 @@ export async function musicReceipt(hash: TransactionHash): Promise<Partial<Music
 }
 const keeper = createClient({chain: studionet, account: createAccount()});
 const writes = new Map<string, {hash: TransactionHash; at: number}>();
+async function pendingMaintenance(key: string, knownHash?: TransactionHash) {
+  const previous = writes.get(key);
+  if (previous && Date.now() - previous.at < 90_000) return previous.hash;
+  const hash = previous?.hash ?? knownHash;
+  if (hash && !musicMaintenanceFinal(await musicReceipt(hash))) return hash;
+}
 export async function musicMaintenance(id: string, action: string, participant?: string, hash?: TransactionHash) {
   if (action === 'sync-film') {
     if (!participant) throw Error('Choose a wallet track record.');
@@ -83,8 +90,7 @@ export async function musicMaintenance(id: string, action: string, participant?:
     for (const roundId of Object.values(config.sourceRounds) as string[]) {
       if (profile.profile?.results.some(result => result.category === 'film' && result.market_id === roundId)) continue;
       const key = 'sync-film:' + roundId + ':' + participant;
-      const previous = writes.get(key);
-      if (previous && Date.now() - previous.at < 90_000) continue;
+      if (await pendingMaintenance(key)) continue;
       const entry = await read(config.bullseye, 'get_prediction', [roundId, participant]);
       if (!entry) continue;
       const record = JSON.parse(String(await read(config.bullseye, 'get_round', [roundId])));
@@ -101,8 +107,8 @@ export async function musicMaintenance(id: string, action: string, participant?:
     const profile = await musicSeason(participant);
     if (profile.profile?.results.some(result => result.category === 'music' && result.market_id === id)) return {state: 'complete'};
     const key = action + ':' + id + ':' + participant;
-    const previous = writes.get(key);
-    if (previous && Date.now() - previous.at < 90_000) return {state: 'pending', hash: previous.hash};
+    const previousHash = await pendingMaintenance(key);
+    if (previousHash) return {state: 'pending', hash: previousHash};
     const tx = await keeper.writeContract({address: snapshot.contracts.seasons, functionName: 'sync_music', args: [id, participant], value: 0n});
     writes.set(key, {hash: tx, at: Date.now()});
     for (const key of cache.keys()) if (key.startsWith('season:')) cache.delete(key);
@@ -128,8 +134,16 @@ export async function musicMaintenance(id: string, action: string, participant?:
     address = snapshot.contracts.pools; method = 'verify_claim'; args = [pool.id, participant, hash];
   } else throw Error('Unknown maintenance action.');
   const key = action + ':' + id + ':' + (hash ?? '');
-  const previous = writes.get(key);
-  if (previous && Date.now() - previous.at < 90_000) return {state: 'pending', hash: previous.hash};
+  // A published proof hash survives a cold server instance. Never duplicate its
+  // in-flight judgment merely because the finalized market still looks open.
+  let knownHash: TransactionHash | undefined;
+  if (action === 'resolve') {
+    const proof = await cached('maintenance-proof', 300, async () => JSON.parse(await readFile(join(process.cwd(), 'public/music-proof.json'), 'utf8')));
+    const proofKey = Object.entries(proof.markets as Record<string, {id: string}>).find(([, record]) => record.id === id)?.[0];
+    knownHash = proofKey ? proof.transactions[proofKey + '-resolve'] : undefined;
+  }
+  const previousHash = await pendingMaintenance(key, knownHash);
+  if (previousHash) return {state: 'pending', hash: previousHash};
   const tx = await keeper.writeContract({address, functionName: method, args, value: 0n});
   if (writes.size > 500) writes.delete(writes.keys().next().value!);
   writes.set(key, {hash: tx, at: Date.now()});

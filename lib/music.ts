@@ -21,6 +21,7 @@ export function exactRankError(value: string, choice: number | null): string {
 export const outcomeLabel = (market: MusicMarket, choice: number) => market.spec?.market_type === 'head_to_head' ? market.spec.albums[choice]?.title ?? 'Album' : rankLabels[choice] ?? 'Outcome';
 export const musicDate = (time: number) => new Date(time * 1000).toLocaleString('en-GB', {timeZone: 'UTC', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'}) + ' UTC';
 export const musicFinal = (receipt: MusicReceipt) => receipt.state === 'finalized-success' || receipt.state === 'finalized-error';
+export const musicMaintenanceFinal = (receipt: Partial<MusicReceipt>) => ['finalized-success', 'finalized-error'].includes(receipt.state ?? '') && (receipt.children ?? []).every(child => ['finalized-success', 'finalized-error', 'credited', 'failed'].includes(child.state));
 export function musicStake(value: string): bigint {
   if (!/^(?:0|[1-9]\d*)(?:\.\d{1,18})?$/.test(value)) throw Error('Enter a GEN amount from 0.01 to 100.');
   const [whole, fraction = ''] = value.split('.');
