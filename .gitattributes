@@ -1,3 +1,7 @@
 contracts/film_pools.py text eol=lf
 contracts/forecast_pools.py text eol=lf
 tests/fixtures/recovery_oracle.py text eol=lf
+# Preserve the exact deployed Music source bytes for on-chain SHA-256 proofs.
+contracts/music_markets.py -text
+contracts/music_pools.py -text
+contracts/seasons.py -text
