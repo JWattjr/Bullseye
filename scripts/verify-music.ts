@@ -10,6 +10,7 @@ import {creditedTransfer} from '../lib/pool-proof';
 const folder='docs/proofs/music-2026-10-12-release';
 const proof=JSON.parse(await readFile(folder+'/manifest.json','utf8'));
 const client=createClient({chain:studionet}); // No account and no write methods.
+const owner='0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92';
 const checks:unknown[]=[];
 for(const [role,file] of Object.entries({markets:'music_markets.py',pools:'music_pools.py',seasons:'seasons.py'})) {
  assert.equal(createHash('sha256').update(await readFile('contracts/'+file)).digest('hex'),proof.sourceHashes[role],role+' deployed source hash');
@@ -26,8 +27,14 @@ for(const [name,hash] of Object.entries(proof.transactions)) {
  const expectedFailure=proof.expectedFailedTransactions?.includes(name);
  const native=receipt.consensus_data===null;
  if(expectedFailure) {assert.equal(receipt.statusName,'FINALIZED',name+' retained failure finality');assert.equal(successfulFinalized(receipt),false,name+' retained failure');}
- else if(native) assert.ok(creditedTransfer(receipt as unknown as Record<string,unknown>,proof.contracts.pools,undefined,proof.fundedStakeWei),name+' exact native credit');
+ else if(native) assert.ok(creditedTransfer(receipt as unknown as Record<string,unknown>,proof.contracts.pools,owner,proof.fundedStakeWei),name+' exact native credit to approved wallet');
  else assert.ok(successfulFinalized(receipt),name+' finalized successful execution');
+ if(name==='funded-stake') {
+  const raw=receipt as unknown as Record<string,unknown>;
+  assert.equal(String(raw.sender??raw.from_address).toLowerCase(),owner);
+  assert.equal(String(raw.recipient??raw.to_address).toLowerCase(),proof.contracts.pools.toLowerCase());
+  assert.equal(String(raw.value),'10000000000000000');
+ }
  checks.push({name,hash,status:receipt.statusName,expectedFailure:!!expectedFailure,nativeCredit:native&&!expectedFailure});
  await new Promise(resolve=>setTimeout(resolve,1100)); // Respect StudioNet request capacity.
 }
@@ -52,7 +59,6 @@ for(const [key,record] of Object.entries(proof.markets) as [string,{id:string;po
 }
 assert.ok(['renaissance','surrender','patina','pairing','ambiguous'].every(key=>proof.markets[key]),'all five required proof cases');
 const sources=await read(proof.contracts.seasons,'get_sources',[]) as {film:string;music:string};assert.equal(sources.film.toLowerCase(),proof.film.toLowerCase());assert.equal(sources.music.toLowerCase(),proof.contracts.markets.toLowerCase());
-const owner='0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92';
 const season=JSON.parse(String(await read(proof.contracts.seasons,'get_track_record',[owner])));
 assert.ok(season.results.some((r:{category:string})=>r.category==='film'),'existing film imported');
 assert.ok(season.results.filter((r:{category:string})=>r.category==='music').length>=4,'all free music predictions imported');
@@ -83,6 +89,6 @@ assert.ok(funded,'owner-approved tiny stake and claim still required');
 const pool=JSON.parse(String(await read(proof.contracts.pools,'get_pool',[funded])));
 assert.equal(pool.status,'resolved');assert.equal(pool.claims[owner],proof.fundedStakeWei);assert.equal(pool.claim_attempts[owner].status,'paid');assert.equal(proof.fundedStakeWei,'10000000000000000');
 assert.ok(proof.sourceCommit,'source commit recorded');
-const report={verifiedAt:new Date().toISOString(),network:'StudioNet',simulated:true,contracts:proof.contracts,sourceCommit:proof.sourceCommit,checks,markets:marketResults,season,filmRegression:regression,fundedPool:pool.id,claim:pool.claim_attempts[owner]};
+const report={verifiedAt:new Date().toISOString(),network:'StudioNet',simulated:true,contracts:proof.contracts,sourceCommit:proof.sourceCommit,checks,markets:marketResults,season,filmRegression:regression,fundedPool:pool.id,claim:pool.claim_attempts[owner],balances:{beforeStake:proof.balanceBeforeStake,afterStake:proof.balanceAfterStake,afterClaim:proof.balanceAfterClaim}};
 await writeFile(folder+'/verification.json',JSON.stringify(report,null,2)+'\n');
 console.log('Verified five music cases, complete archive digests, finalized receipts, exact native credit, combined season and preserved Film bindings. No on-chain writes.');
