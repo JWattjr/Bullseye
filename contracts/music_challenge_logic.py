@@ -68,6 +68,7 @@ class BullseyeMusicChallenges(gl.Contract):
     cases: TreeMap[str, str]
     credits: TreeMap[str, u256]
     withdrawals: TreeMap[str, str]
+    recovered_deposits: TreeMap[str, bool]
     total_deposited: u256
     total_paid: u256
 
@@ -112,6 +113,30 @@ class BullseyeMusicChallenges(gl.Contract):
     def bind_markets(self, markets: str) -> None:
         require(not gl.message.value and gl.message.sender_address == self.owner and not self.markets, 'one-time owner source binding')
         self.markets = str(Address(markets)).lower()
+
+    @gl.public.write
+    def recover_failed_deposit(self, parent_hash: str) -> None:
+        require(not gl.message.value, 'free failed-deposit recovery')
+        parent_hash = receipt_hash(parent_hash)
+        if self.recovered_deposits.get(parent_hash, False):
+            return
+        contract = str(gl.message.contract_address).lower()
+        def observe():
+            parent = protocol_receipt(parent_hash)
+            leader = (parent.get('consensus_data') or {}).get('leader_receipt', [])
+            require(parent.get('status') == 'FINALIZED' and parent.get('value_credited') is True and leader
+                    and leader[0].get('execution_result') == 'ERROR', 'finalized failed execution with actual native deposit required')
+            require(str(parent.get('to_address', '')).lower() == contract, 'failed deposit recipient mismatch')
+            call = calldata.decode(base64.b64decode(parent['data']['calldata'], validate=True))
+            require(isinstance(call, dict) and call.get('method') in ('list_market', 'challenge'), 'failed listing or bond deposit only')
+            amount = int(parent.get('value', '0'))
+            require(amount == (LISTING_DEPOSIT if call['method'] == 'list_market' else CHALLENGE_BOND), 'exact failed deposit value required')
+            return {'participant': str(Address(parent['from_address'])).lower(), 'amount': amount}
+        evidence = gl.eq_principle.strict_eq(observe)
+        require(int(self.balance) >= int(self.total_deposited) - int(self.total_paid) + evidence['amount'], 'unaccounted native deposit backing required')
+        self.recovered_deposits[parent_hash] = True
+        self.total_deposited = u256(int(self.total_deposited) + evidence['amount'])
+        self._credit(evidence['participant'], evidence['amount'])
 
     @gl.public.write.payable
     def list_market(self, market_id: str, question: str, entry_deadline: int, resolution_deadline: int, historical: bool) -> None:
