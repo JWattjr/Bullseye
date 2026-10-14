@@ -9,6 +9,8 @@ receipt_helpers = '# StudioNet receipts' + pools.split('# StudioNet receipts', 1
 challenge = (contracts / 'music_challenge_logic.py').read_text(encoding='utf-8')
 header, challenge_body = challenge.split('\n', 1)
 (contracts / 'music_challenges.py').write_text(header + '\n' + core + '\n' + challenge_body.split('class BullseyeMusicChallenges', 1)[0] + '\n' + receipt_helpers + '\nclass BullseyeMusicChallenges' + challenge_body.split('class BullseyeMusicChallenges', 1)[1], encoding='utf-8', newline='\r\n')
+probe = (contracts / 'music_review_probe_logic.py').read_text(encoding='utf-8')
+(ROOT / 'tests/fixtures/musicplus_review_probe.py').write_text(header + '\n' + core + '\n' + challenge_body.split('class BullseyeMusicChallenges', 1)[0] + '\n' + probe, encoding='utf-8', newline='\r\n')
 
 logic = (contracts / 'music_market_logic.py').read_text(encoding='utf-8').split('\n', 1)[1]
 def replace_once(source, old, new):

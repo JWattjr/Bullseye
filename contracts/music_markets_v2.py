@@ -202,7 +202,7 @@ def review_release_url(url, domains):
     query = parse_qs(original.query)
     if (original.scheme == 'https' and original.hostname == 'en.wikipedia.org' and original.path == '/w/index.php'
             and not original.username and not original.password and not original.port
-            and set(query) <= {'title', 'oldid'} and len(query.get('oldid', [])) == 1
+            and set(query) <= {'title', 'oldid', 'action'} and query.get('action', ['render']) == ['render'] and len(query.get('oldid', [])) == 1
             and re.fullmatch(r'[0-9]{6,12}', query['oldid'][0])):
         return {'capture': 'Wikipedia oldid ' + query['oldid'][0], 'original': url, 'timestamp': None}
     return None

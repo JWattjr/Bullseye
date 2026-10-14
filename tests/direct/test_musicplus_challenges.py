@@ -349,3 +349,27 @@ def test_production_constructor_defaults_to_twenty_four_hours(direct_vm,direct_d
     assert json.loads(contract.get_config())['window_seconds']==86400
     assert json.loads(contract.get_config())['demo_window'] is False
 
+def test_passage_ids_expand_to_exact_evidence_before_storage(review,direct_vm):
+    contract,_=review
+    listing(review,direct_vm)
+    challenge(review,direct_vm)
+    rule='Billboard 200 tracking rules. '+RULE_QUOTE+' The chart date follows the Friday through Thursday tracking week.'
+    evidence=RELEASE_QUOTE+' This is the official release announcement and it identifies this exact album and primary artist.'
+    direct_vm.mock_web('.*example-rules.*',{'status':200,'body':'<p>'+rule+'</p>'})
+    direct_vm.mock_web('.*press-release/release.*',{'status':200,'body':'<p>'+evidence+'</p>'})
+    direct_vm.mock_llm('Rule on one proposed Billboard.*',json.dumps({'verdict':'AMENDED','option':'week:0:2022-08-13','rule_quote':'r0','evidence_quote':'e0','reason':'The selected archived passages establish the date and tracking lag.'}))
+    contract.adjudicate('case')
+    stored=json.loads(contract.get_challenge('case'))['ruling']
+    assert stored['rule_quote']==rule
+    assert stored['evidence_quote']==evidence
+
+def test_unknown_passage_id_does_not_create_a_ruling(review,direct_vm):
+    contract,_=review
+    listing(review,direct_vm)
+    challenge(review,direct_vm)
+    direct_vm.mock_web('.*example-rules.*',{'status':200,'body':'<p>'+RULE_QUOTE+' The chart date follows the Friday through Thursday tracking week.</p>'})
+    direct_vm.mock_web('.*press-release/release.*',{'status':200,'body':'<p>'+RELEASE_QUOTE+' This is an official release announcement identifying the album and primary artist.</p>'})
+    direct_vm.mock_llm('Rule on one proposed Billboard.*',json.dumps({'verdict':'UPHELD','option':None,'rule_quote':'r999','evidence_quote':'e0','reason':'Invalid passage choice.'}))
+    with direct_vm.expect_revert('rule quote missing'):contract.adjudicate('case')
+    assert json.loads(contract.get_challenge('case'))['ruling'] is None
+
