@@ -373,3 +373,14 @@ def test_unknown_passage_id_does_not_create_a_ruling(review,direct_vm):
     with direct_vm.expect_revert('rule quote missing'):contract.adjudicate('case')
     assert json.loads(contract.get_challenge('case'))['ruling'] is None
 
+def test_specification_passage_cites_album_identity_instead_of_deadlines(review,direct_vm):
+    contract,source=review
+    listing(review,direct_vm)
+    challenge(review,direct_vm,'EDITION_RULE',release='')
+    direct_vm.mock_web('.*example-rules.*',{'status':200,'body':'<p>'+RULE_QUOTE+' The chart date follows the Friday through Thursday tracking week.</p>'})
+    direct_vm.mock_llm('Rule on one proposed Billboard.*',json.dumps({'verdict':'UPHELD','option':None,'rule_quote':'r0','evidence_quote':'e0','reason':'The archived editions rule supports this exact album identity.'}))
+    contract.adjudicate('case')
+    stored=json.loads(contract.get_challenge('case'))['ruling']
+    assert json.loads(stored['evidence_quote'])==source['spec']['albums'][0]
+    assert 'entry_deadline' not in stored['evidence_quote']
+
