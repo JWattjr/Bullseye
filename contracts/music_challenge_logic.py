@@ -113,7 +113,7 @@ class BullseyeMusicChallenges(gl.Contract):
         require(not gl.message.value and gl.message.sender_address == self.owner and not self.markets, 'one-time owner source binding')
         self.markets = str(Address(markets)).lower()
 
-    @gl.public.write
+    @gl.public.write.payable
     def list_market(self, market_id: str, question: str, entry_deadline: int, resolution_deadline: int, historical: bool) -> None:
         require(self.markets and re.fullmatch(r'[a-z0-9-]{1,64}', market_id) and market_id not in self.listings, 'unique bounded listing and bound source')
         require(len(self.listing_ids) < 500 and 20 <= len(question) <= 2000, 'bounded listing capacity')
@@ -146,7 +146,7 @@ class BullseyeMusicChallenges(gl.Contract):
             item.update(status='review', review_started=now(), review_ends=now() + int(self.window_seconds), approved_hash=source['specification_hash'])
         self._save_listing(market_id, item)
 
-    @gl.public.write
+    @gl.public.write.payable
     def challenge(self, case_id: str, market_id: str, ground: str, argument: str, release_url: str) -> None:
         item = self._listing(market_id)
         require(item['status'] == 'review' and now() < item['review_ends'] and not item['active_case'] and not item['voided'], 'challenge window closed or another challenge open')
