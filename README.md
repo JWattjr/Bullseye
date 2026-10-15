@@ -2,6 +2,8 @@
 
 A Film and Music prediction platform powered by GenLayer. Forecast opening-weekend box office or Billboard 200 album debuts, stake simulated StudioNet GEN, and collect a proportional share of the winning pool. Film accepts 2–100 GEN; Music accepts 0.01–100 GEN. Validators compile Music questions and independently verify archived complete-chart evidence. Free Film and Music predictions also share a season leaderboard. No pool fee is deducted.
 
+Music+ adds bonded identity challenges before staking. Independent validators finalized genuine UPHELD, AMENDED and VOIDED cases against frozen Billboard reporting and release evidence; an upcoming Van Halen reissue also received a real edition amendment. Three upcoming GEN pools are open with unknown results. The contract defaults to a 24-hour review; this StudioNet demonstration discloses a ten-minute window, 0.004 GEN listing deposit and 0.001 GEN challenge bond. The complete 0.028 GEN proof package was collected back through verified native credit. [Proof and limitations](docs/MUSICPLUS-WIP.md), [identity-review tutorial](docs/TUTORIAL-MUSIC.md) and [architecture](docs/ARCHITECTURE.md). Film and the [previous Music release](https://bullseye-genlayer.vercel.app/music/previous) remain readable.
+
 **[Live app](https://bullseye-genlayer.vercel.app) · [Two-minute demo](docs/DEMO.md) · [Tutorial](docs/TUTORIAL.md) · [Portal submission](docs/SUBMISSION.md) · [Verification](docs/VERIFICATION.md)**
 
 ![Bullseye's published upcoming markets](.impeccable/review/consumer/upcoming-live.jpg)
@@ -31,6 +33,19 @@ Deterministic code controls deadlines, units, ranges, immutable entries, specifi
 | Historical GEN sessions | `0xD12AaAf442A01708f4DF0C5eb0B3171C3cAb9403` | [Film manifest](public/film-pool-proof.json) |
 
 The current historical proof retains a new 2 GEN Barbie deposit, exact native payout and independently finalized paid state. Earlier three-film receipts remain in the linked legacy manifest. [Payout recovery](docs/CLAIM-RECOVERY.md) contains both contract proofs, adversarial failure/retry tests and exact balances. Upcoming proof retains five finalized open specifications and pools with no predetermined outcomes. Raw receipts include failed or pending attempts rather than concealing them. [Proof limits](docs/VERIFICATION.md).
+
+## Music+ contracts and upcoming charts
+
+| Role | StudioNet address |
+|---|---|
+| Identity challenges | `0xee03ebD002BfACFba5379Ab01F17572081a8E373` |
+| Markets v2 | `0x51F0427e7D523FDC005B80b6758e48ACa2898833` |
+| GEN pools v2 | `0x190f37c4FeC9D3ECF1A0f900afed8d270A7E32aa` |
+| Film + Music seasons v2 | `0x50Bfbd7BA19856E020455be55C2E669A9dad9f59` |
+
+Big Stupid Heart (Andy Grammer) targets the 31 October 2026 chart. The Sea Has No Mercy (Bernie Taupin) and A Different Kind of Truth's physical reissue (Van Halen; chart position/re-entry, not a new debut) target 7 November. Entries close before their release tracking weeks. No result is pre-settled. Run `npm run settle:music -- <market-id>` at or after the chart observation date and retry until eligible archived evidence exists; [exact dates, IDs and refund bounds](docs/MUSICPLUS-WIP.md). No daily scheduler is configured.
+
+`npm run verify:music` checks both the preserved release and the [current proof](docs/proofs/musicplus-2026-10-14/manifest.json) read-only, including actual source bytes, finalized verdicts, undecided pools, old Film/Music history and exact returned GEN. The [verification report](docs/proofs/musicplus-2026-10-14/verification.json) retains the unrecoverable 0.004 GEN first-candidate failed deposit separately; it is not successful proof. All four final contracts use the concrete pinned GenVM runner.
 
 ## Run locally
 

@@ -10,6 +10,8 @@ import {creditedTransfer} from '../lib/pool-proof';
 const folder='docs/proofs/music-2026-10-12-release-v2';
 const proof=JSON.parse(await readFile(folder+'/manifest.json','utf8'));
 const client=createClient({chain:studionet}); // No account and no write methods.
+const interval=Number(process.env.BULLSEYE_RPC_INTERVAL_MS??2500);
+assert.ok(Number.isFinite(interval)&&interval>=2500&&interval<=30000,'bounded RPC interval');
 const owner='0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92';
 const checks:unknown[]=[];
 for(const [role,file] of Object.entries({markets:'music_markets.py',pools:'music_pools.py',seasons:'seasons.py'})) {
@@ -36,9 +38,9 @@ for(const [name,hash] of Object.entries(proof.transactions)) {
   assert.equal(String(raw.value),'10000000000000000');
  }
  checks.push({name,hash,status:receipt.statusName,expectedFailure:!!expectedFailure,nativeCredit:native&&!expectedFailure});
- await new Promise(resolve=>setTimeout(resolve,2500)); // The live RPC reported a 30-request/minute bucket.
+ await new Promise(resolve=>setTimeout(resolve,interval)); // The live RPC reported a 30-request/minute bucket.
 }
-const read=async(address:`0x${string}`,functionName:string,args:Parameters<typeof client.readContract>[0]['args'])=>{await new Promise(resolve=>setTimeout(resolve,2500));return client.readContract({address,functionName,args,transactionHashVariant:TransactionHashVariant.LATEST_FINAL});};
+const read=async(address:`0x${string}`,functionName:string,args:Parameters<typeof client.readContract>[0]['args'])=>{await new Promise(resolve=>setTimeout(resolve,interval));return client.readContract({address,functionName,args,transactionHashVariant:TransactionHashVariant.LATEST_FINAL});};
 const marketResults=[];
 const identity=(value:string)=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
 const expectedAlbums:Record<string,[string,string][]>={renaissance:[['Renaissance','Beyonce']],funded:[['Renaissance','Beyonce']],surrender:[['Surrender','Maggie Rogers']],patina:[['Patina','Tallies']],pairing:[['Renaissance','Beyonce'],['Surrender','Maggie Rogers']]};

@@ -11,7 +11,7 @@ const browser=await chromium.launch({headless:true,...(existsSync(cached)?{execu
 const controlledOnly=process.env.BULLSEYE_CONTROLLED_ONLY==='1';
 const capture=process.env.BULLSEYE_SKIP_CAPTURE!=='1';
 const checks:string[]=[]; const wallet='0x1111111111111111111111111111111111111111';
-const proof=JSON.parse(await readFile('public/music-proof.json','utf8'));
+const proof=JSON.parse(await readFile('public/music-previous-proof.json','utf8'));
 const source:MusicMarket={...proof.markets.renaissance.state,id:proof.markets.renaissance.id};
 try {
 for(const [label,viewport] of [['desktop',{width:1440,height:960}],['mobile',{width:390,height:844}]] as const) {
@@ -57,7 +57,7 @@ for(const [label,viewport] of [['desktop',{width:1440,height:960}],['mobile',{wi
  await p.evaluate(()=>localStorage.clear());await p.goto(base+'/music/propose');
  await p.getByLabel('Your question',{exact:true}).fill('Where did Renaissance by Beyonce debut August 13, 2022?');
  await p.getByLabel('Entries close · your local time').fill('2020-01-01T12:00');await p.getByLabel('Resolution deadline · your local time').fill('2020-01-02T12:00');
- await p.getByRole('button',{name:'Compile my question'}).click();await expect(p.getByRole('alert').filter({hasText:'one minute ahead'})).toContainText('one minute ahead');
+ await p.getByRole('button',{name:'Compile my question'}).click();await expect(p.getByRole('alert').filter({hasText:'full review window'})).toContainText('full review window plus one minute');
  const date=(seconds:number)=>new Date(Date.now()+seconds*1000).toISOString().slice(0,16);
  await p.getByLabel('Entries close · your local time').fill(date(3600));await p.getByLabel('Resolution deadline · your local time').fill(date(7200));
  market={...source,id:'proposal',status:'compiled'};receiptState='finalized-success';

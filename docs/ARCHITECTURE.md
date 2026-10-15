@@ -40,7 +40,7 @@ Both pool contracts reserve `claim(poolId, attempt)` before emitting a transfer.
 
 Hosted browser storage contains guest practice, drafts and public receipt projections, keyed appropriately by wallet. It cannot authorize contract entries or payouts. Wallet-selected watch views are public projections, not authentication to private data. Alternatively, a local single-process serialized file database uses an HttpOnly guest cookie; this is unsuitable for an ephemeral or multi-process deployment.
 
-The publisher controls source facts and availability. Retained passage hashes prove integrity of an excerpt, not permanent whole-page retention or factual truth. Only The Numbers and domestic opening-weekend revenue are supported. Creator authorization remains owner-only; pools cap 200 entrants and 2000 pool records. StudioNet is a development simulator; broader shared-testnet deployment, durable indexing and production monitoring remain later work.
+The publisher controls source facts and availability. Retained passage hashes prove integrity of an excerpt, not permanent whole-page retention or factual truth. Film sources support The Numbers domestic opening-weekend revenue; the separate Music source and archive policy are described below. Creator authorization remains owner-only; pools cap 200 entrants and 2000 pool records. StudioNet is a development simulator; broader shared-testnet deployment, durable indexing and production monitoring remain later work.
 
 
 ## Adjacent Music contracts
@@ -48,7 +48,10 @@ The publisher controls source facts and availability. Retained passage hashes pr
 ```mermaid
 flowchart LR
     U[Wallet: question and schedule] --> M[MusicMarkets: validator compilation]
-    M --> O[Creator reviews frozen spec and opens]
+    M --> R[Music v2: bonded identity review before stakes]
+    B[Archived Billboard rules and frozen release evidence] --> R
+    R --> Q[Independent validator judgment and bounded amendment]
+    Q --> O[Window clears: approved spec opens after finality]
     O --> P[MusicPools: native GEN, no LLM]
     A[Wayback CDX dated Billboard 200] --> E[Code extracts complete 200 rows]
     E --> J[Validators identify album; agree digest, rank and quote]
@@ -70,3 +73,17 @@ MusicPools reads finalized source state, freezes its hash/deadlines, and distrib
 The server reads LATEST_FINAL only, caches and bounds directory reads, and sends zero-value permissionless maintenance requests. Wallet stakes/claims use the existing provider and never expose a key to the server. Public wallet-scoped receipt metadata survives reload; source and pool records remain authoritative. Open pages drive music resolution, settlement, claim verification, and season imports; the unconfigured daily scheduler remains inactive. Browser closures do not change contract deadlines, and another caller can execute each permissionless step.
 
 Seasons imports finalized existing predictions rather than stake entries or administrator scores. It binds both source addresses and fixed season boundaries. Correct bins add 100, exact guesses add bounded closeness, and chronological idempotent records define hit rates and streaks. Historical exhibition remains distinct from competition. The dated proof manifest distinguishes actual network receipts from controlled browser transport and retained failed candidates.
+
+## Music+ identity judgments
+
+The Music+ implementation adds `music_challenges.py`, `music_markets_v2.py`, `music_pools_v2.py` and `seasons_v2.py`. Its release status and actual receipts are recorded in `docs/proofs/musicplus-2026-10-14/manifest.json`; unfinished candidates are not the production release. The original Music addresses and exact deployed source bytes remain readable through `/music/previous`. Film addresses and existing positions remain bound to their original contracts.
+
+A creator signs one payable `list_market` call with 0.004 simulated GEN. Challenges records the funded intent and emits compilation to the bound Markets contract after finality. Compilation activates a fresh review window; delayed compilation cannot silently shorten it. The constructor defaults to 24 hours. The explicitly disclosed StudioNet demonstration uses ten minutes, with a two-hour decision deadline. Each listing permits one challenge per ground and at most four challenges, with one active case at a time. Each challenge requires an exact 0.001 GEN bond.
+
+Validators independently fetch the fixed Billboard Wayback `id_` reference, the compiled specification and, for identity/date disputes, an allowlisted archived release announcement or permanent Wikipedia revision. Challenger arguments and fetched pages are data. Each validator repeats the judgment and compares verdict, generated option and evidence digests. It additionally checks the leader's actual quotes against its own fetched text. Passage IDs expand into exact evidence before storage; specification citations are bounded to the album identity or rank bins. No model can invent a replacement artist, title, date or bin.
+
+Code generates week amendments at ±7/14 days, two edition policies, or the complete fixed rank-bin set. UPHELD assigns the bond to the creator; AMENDED returns the bond and a fixed 0.001 GEN reward from the listing deposit; INSUFFICIENT_EVIDENCE returns the bond. These dispositions wait until the complete review clears. VOIDED refunds all original listing/bond deposits, cancels earlier provisional rewards and permanently prevents opening. Actual source hashes and finality callbacks gate both opening and pool staking.
+
+Every waiting state has a deadline. Missing evidence stays pending; expiry records an explicitly labelled insufficient-evidence fallback, never a claimed validator ruling. Expired/rejected compilation permits a full listing refund. Permissionless receipt-verified recovery repairs missed ruling, review and withdrawal callbacks. Exact failed listing/bond calls whose native value was credited can be refunded once to their original sender after successful independent verification of the finalized failed receipt. This cannot recover deposits sent to an older immutable contract lacking that method.
+
+Review credits use pull withdrawals with attempt nonces. Pending transfers reserve the credit; explicit finalized native credit marks paid; explicit failure restores retry credit once. Another receipt or uncertain credit cannot unlock a duplicate payout. `npm run settle:music` journals zero-GEN maintenance hashes for restart, opens reviewed markets, creates their pools and resolves eligible charts. It never signs deposits or claims. No daily scheduler is configured; a caller must run the keeper after observation dates and retry until a complete eligible archive exists or the refund deadline applies.

@@ -14,7 +14,8 @@
     "test:network": "tsx scripts/verify-network.ts",
     "deploy:contract": "powershell -ExecutionPolicy Bypass -File scripts/deploy.ps1",
     "rehearse": "tsx scripts/rehearse.ts",
-    "verify:music": "tsx scripts/verify-music.ts",
+    "verify:music": "tsx scripts/verify-music.ts && tsx scripts/verify-musicplus.ts",
+    "settle:music": "tsx scripts/settle-music.ts",
     "test:music:browser": "tsx scripts/music-browser-check.ts"
   },
   "dependencies": {

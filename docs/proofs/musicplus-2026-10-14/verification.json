@@ -1,0 +1,1272 @@
+{
+  "verifiedAt": "2026-10-15T08:53:46.600Z",
+  "network": "StudioNet",
+  "simulated": true,
+  "sourceCommit": "91ca4370a5b730ec3d059b783929a07333e71cbe",
+  "contracts": {
+    "challenges": "0xee03ebD002BfACFba5379Ab01F17572081a8E373",
+    "markets": "0x51F0427e7D523FDC005B80b6758e48ACa2898833",
+    "pools": "0x190f37c4FeC9D3ECF1A0f900afed8d270A7E32aa",
+    "seasons": "0x50Bfbd7BA19856E020455be55C2E669A9dad9f59"
+  },
+  "config": {
+    "amendment_reward": "1000000000000000",
+    "challenge_bond": "1000000000000000",
+    "demo_window": true,
+    "domains": [
+      "www.billboard.com",
+      "ca.billboard.com",
+      "media.rhino.com",
+      "www.hollywoodrecords.com"
+    ],
+    "listing_deposit": "4000000000000000",
+    "markets": "0x51f0427e7d523fdc005b80b6758e48aca2898833",
+    "rules_snapshot": "https://web.archive.org/web/20211010140829id_/https://www.billboard.com/articles/business/chart-beat/8528870/taylor-swift-lover-album-debuts-at-no-1-on-billboard-200-chart/",
+    "ruling_seconds": 7200,
+    "total_deposited": "28000000000000000",
+    "total_paid": "28000000000000000",
+    "window_seconds": 600
+  },
+  "checks": [
+    {
+      "name": "challenges-deploy",
+      "hash": "0x9841e28c8b656705b65305059821d5ed8bc251749bedee5e1c07f27fd381f330",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "markets-deploy",
+      "hash": "0x48805d7864379f569b5e72978e458bbf7a745715306c9e3190e3737077221c19",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bind-markets",
+      "hash": "0x1f386003371717cbc6ab6d7058271590a3f1adc0498f424810663fcf85facc7c",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "pools-deploy",
+      "hash": "0xe0b5a5bd304fce5dea8c542a339995f536e4eed24fb8985bce391dbb0b037bb8",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "seasons-deploy",
+      "hash": "0xd68401beb936bc5821b4d4a9622817f2112627d93f67aea37aec9f0aa7fefccf",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "andy-list",
+      "hash": "0xc556c50e5a31eb4a5a709f55f5164ad94ae0dbe33d4d03029827bb00641550f9",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "andy-list-child-0",
+      "hash": "0x4c2fd1667a780b9321f9d2df1d785976818c15e04843b7e29a7c19d980025b5c",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "andy-list-child-0-child-0",
+      "hash": "0x1531265a1cf4f0dc1a539261b9eee079af8f0ad3e49c41c882354be1a1b67e14",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "andy-list-child-0-child-0-child-0",
+      "hash": "0xe1ed5b8d19c7c9c3b2e7b1cb53480fb4a3ffd47df63b8a5eb21d4e7f10876fdd",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bernie-list",
+      "hash": "0x4bbe0a7036b848b2783305320291980ef9a354315ff85c99aa0a736d36a265e6",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bernie-list-child-0",
+      "hash": "0x2adad7ded538c16acfe44a337a81341a2ab55df33e9033308ff54836fb18b7ed",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bernie-list-child-0-child-0",
+      "hash": "0xd7947d0407bedb94b97ed02ba7dc0b9941b161d6a3c58f18e2c0d12ddc6ffde4",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bernie-list-child-0-child-0-child-0",
+      "hash": "0x1e0ca5f4c1b86522cac5307144df336f0c0b5b0aed3f2e31273c67742d0c3bd1",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-list",
+      "hash": "0x26ae4ec1dcecb4d6de829467ce61e15e2d8d77fe15e690dbda7f08759a6391eb",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-list-child-0",
+      "hash": "0x3aa16a5cfe0ed74f8ca72cc77581423c86c9fda234a329d9d5c6a7bbd09fa5e3",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-list-child-0-child-0",
+      "hash": "0xf9aa3cdeae260d42fe9f0946d520a513318ddf2eaba97ffa688e924f23a7b690",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-list-child-0-child-0-child-0",
+      "hash": "0xee7756967ea560764abf9707cd9dab73e3cd3c31206aed868e63e6653ce377c1",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-challenge",
+      "hash": "0x2b45ac135cdd789feb18301b713e64732480737d08f72001bce98719ce63c750",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-challenge-child-0",
+      "hash": "0x7fffa85cab9b41bb44f50ba455bd1a9c9b70ad80391f7e6116e8e49a523ef71a",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-adjudicate",
+      "hash": "0x4b10296527ae03c59cbe87a7b4b4cd69c94692705395cae0f9aae004eac19479",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-adjudicate-child-0",
+      "hash": "0x6a50cc42d310a941faf51786139d6427be12ba73125839edb1fa0579baa1a9b7",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-list",
+      "hash": "0xaea2dc5631ab6b64279cf13c76ca2a74f4550f44e8dc4d7a7caa630a82235eae",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-list-child-0",
+      "hash": "0x45a0a608bd655ecbf7f07ce625b7fd0a2c96f3ce330cead8ac7098947d52b581",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-list-child-0-child-0",
+      "hash": "0x51a2edfd189e568d88e41260f27044d978aa4a35e029d7b7092029b3a8533add",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-list-child-0-child-0-child-0",
+      "hash": "0xdcdf54f93ef63935efd64dcd07d3bdc657af4e8c8b5c4f869602b29e6a918125",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-challenge",
+      "hash": "0x923505c850799a65abdce80fb5e0f1741c75cd042863c743a2abcc7888f01547",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-challenge-child-0",
+      "hash": "0x37438043a3e2a572ae423ef84355fd347075b09a15c2aaaadab11005d891e4d8",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-adjudicate",
+      "hash": "0xac9ac7018e5e32009f4f50e809347b82a7859c7f78e9564f3ed4bd1bdd5fe550",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-adjudicate-child-0",
+      "hash": "0xd07e8bc477fc2c072f0be0ca752c8ca8a775b505116deae58b74dfacbeec3d10",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-adjudicate-child-0-child-0",
+      "hash": "0x4fe725bf3cd15d245e2c0dd0ab1267d704a70b1ae2e625f58ca86ebddfbd46f7",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-adjudicate-child-0-child-0-child-0",
+      "hash": "0xb87481edc0a4ae7203e9c23220628e8ddaa5fdeb55412a0b5289ca4df21fd8df",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-list",
+      "hash": "0x87bd6b4040d5363e9696a7284ca77fdf4c91870ab99ed1f02adc04f0ec60d9f3",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-list-child-0",
+      "hash": "0x1cd48a967ce937fed99c472677eeebc317430457b6f19be6c1ebe2b161ad9538",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-list-child-0-child-0",
+      "hash": "0x27bbd8430a07cf1425d021865f45dd09476634db50ce13c08efdd6a99c393d3d",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-list-child-0-child-0-child-0",
+      "hash": "0x39bd4a70b8cfc9db4ce25de6a4262c8f81ad6a17e4d0c9da56888bae528f1acb",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-challenge",
+      "hash": "0xb2556aaa002e1029063aa5540c127ed9f34eab719b6384b4257f377f8447159f",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-challenge-child-0",
+      "hash": "0xe823d07db8a61e5ff84ae8472362adbb61eae55053831e1ac55805ce7c144d2d",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-adjudicate",
+      "hash": "0x699ab346284c4b1455c2e489ef9954decca74b3a4226cfe84d161c6dffd38630",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-adjudicate-child-0",
+      "hash": "0x29dd771c188fe7ff77c28465a6e151d9b29cd48ebf3d37e431bdc259e7ad228f",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-adjudicate-child-0-child-0",
+      "hash": "0x01b8d1747a579c962f3245223fba2a3bb544a1b228d7418b52700296533ee1a2",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-adjudicate-child-0-child-0-child-0",
+      "hash": "0x8f9bb2ac6fc87a994b025813614efe0cdda8509baa81aad4d342877895f9945f",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-list",
+      "hash": "0x412799ff1eca189f2455ee3859a4048fca4f59a33c2c8b480d8b5638239a3c42",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-list-child-0",
+      "hash": "0x54c12cbbe62cfb90692777e0484f0b9cc3aec7bac86e81ff218cdfadbbb1e54c",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-list-child-0-child-0",
+      "hash": "0x139092909b59c8821494074ba525e27087b24a461ab6f432d4e94c0b0c91095d",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-list-child-0-child-0-child-0",
+      "hash": "0xce8fd767a6b7dfe832fe3d4b62b5d797793889aa1f8eba22e1a4687282a294ec",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-challenge",
+      "hash": "0x468be672cc571ec2359bc8a361cdbb058b9321d213b524db42b80415e555fd02",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-challenge-child-0",
+      "hash": "0x43c03056649df1e27d2c62e0ddd154c702da69192667943de3b227b37b85559b",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-adjudicate",
+      "hash": "0xebe4642067dd5c9b34320dd3d2b934be74b9069bdac90cda8cd7216a378eeb7c",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-adjudicate-child-0",
+      "hash": "0xd566ab7626576c3ab1c0d12bdfea5437e70e1f792e1cfd66ff938bd8cdda27dd",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-adjudicate-child-0-child-0",
+      "hash": "0x76058c230ad95af21ecc2ff36176a2c92fa112c396a59b9eb7de4434f00ae89d",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-adjudicate-child-0-child-0-child-0",
+      "hash": "0x5c61145d4fd576deea65b8add1204913ff518b1b60df352adfc47b0cbbf86550",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "andy-release-listing",
+      "hash": "0x3b0932d83c4f6ff54f732b92ec08e70fcf2715a354341503029b41bf2d2956b8",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bernie-open",
+      "hash": "0x34e1f2c859f6706e1bf08cf4ad9f70e55474ef8800562615b2685b8997c8b89d",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bernie-open-child-0",
+      "hash": "0xd321139528d68cc4658836de3dd5486c125a382cb46c570d00b5815b4df9e0a4",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bernie-pool",
+      "hash": "0x24c4bd77d0f30fe0427661860e3cc57f837a2cd99527cf0b952c6521521d033c",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "bernie-release-listing",
+      "hash": "0x91f464a88a84faff951455d47db8cc2f59d922a48f5ac00bec3c65673ce84da7",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-open",
+      "hash": "0xd39e06226162613ddc2fbd54e8b1748b2bcb1897ece2c0cd353d7e9cbd65f216",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-open-child-0",
+      "hash": "0x16f2165b4bc9e90a32b6a655ca46e29241c53d1a4d3062cc08888030db8ec309",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-pool",
+      "hash": "0x9cd025825d2875232e24ca158a9b5f89b8afbbd2e6817863b59c2829c07255f8",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "upheld-release-listing",
+      "hash": "0x46a225815be60a67d0dd9b5f9dc034c9fa0df8ca97d41970bd21515754d11b32",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-open",
+      "hash": "0x45238442c6a7343e4b40bbe09d1e395199ca7726537aabde725164997dc9b50b",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-pool",
+      "hash": "0x02b574d3438853affa5f177048c2021997f2cd9abfd143c1f0c3ab0c5b3b3f14",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "amended-release-listing",
+      "hash": "0xa9076bf16c7540aa4a5c1ef1a2e9504048694735fcefb54a8388ed0ebb4fd7d9",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "voided-release-void",
+      "hash": "0xb706b61cf8e72080c62516a78df4672b4082063836ae144844ef888a02647972",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-open",
+      "hash": "0xc1518962d1f3548b708bda7c725ab2e4a1c7d7bfc6eecba26e4eb98d75081882",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-open-child-0",
+      "hash": "0x415038b33f8669d29e87ee5a77f082cbc1b5683b7aadfb9980e37a9cea38181c",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-pool",
+      "hash": "0x8a33445c82896aaf086f1317b4f9df5a303b14399a7d80cf3c5a34a7bf108d41",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "vanhalen-release-listing",
+      "hash": "0x3c900bdcff30a6789474ac5e530a1c2237b098747fe65c410a92fc84ad950475",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "season-previous-renaissance",
+      "hash": "0x9351b79687982546224b2e3f804e31fcddc4d14ca5d764a55848fc898ad2afd4",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "season-previous-surrender",
+      "hash": "0xa6a0eaa7c1f35f75a06132c023be738d3289b801da32f2b52fe2f439c76e8c27",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "season-previous-patina",
+      "hash": "0x04a993169344369354388a17fb59b693b903d2b6cc68e6da011cc3264f5c12d4",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "season-previous-pairing",
+      "hash": "0xab50d6aa6191b62f48f89cf069040631ecbaf97f1f6b42e4fb34ad31df81a4a4",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "season-film-barbie",
+      "hash": "0xdcada3b11ac9dcc33ee68cb78091200ffa053208b80c3a8a531bfb40c4234e92",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "keeper-open-andy",
+      "hash": "0xd3cf1ef633c9c0633a44dcbf3cb96cc32d32575856a5a2b847f5a5a4680cbf3d",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "keeper-open-andy-child-0",
+      "hash": "0x1071d3330d104946a7bb7e7488cfce404326e30c27f761e2a9a02255ff6ab225",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "keeper-pool-andy",
+      "hash": "0x3ca7062a9a5ddead598d51e9b33f251d334dc42f0978b4aee6ee80e3a70de2e6",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "keeper-release-andy",
+      "hash": "0x2f9c2f6a95156569078e6f8b2c9193d84b6207ac6dbf4a5208551074c582f649",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "credit-claim-1",
+      "hash": "0xae6294441d59ea3cea1d07cd684165fe4b5c38fb43ffe63d0ea523a7b2d7f9a7",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "credit-claim-1-child-0",
+      "hash": "0xa0fe43e2e07631006943310079e5ae38286eb653fb54779c900c11082e7bbed6",
+      "state": "FINALIZED",
+      "native": true
+    },
+    {
+      "name": "credit-verify-1",
+      "hash": "0x0dc17afdc48d990bad2616a57b524675685b333018acd925baf5115e600a2022",
+      "state": "FINALIZED",
+      "native": false
+    },
+    {
+      "name": "credit-verify-1-child-0",
+      "hash": "0x5d9d23842ad62dbcefa3194de845a2b237731f0e8a7be5c50eaa88904797623f",
+      "state": "FINALIZED",
+      "native": false
+    }
+  ],
+  "cases": [
+    {
+      "key": "upheld",
+      "id": "lover-identity-review",
+      "verdict": "UPHELD",
+      "case": {
+        "argument": "Verify whether the proposed combined standard and deluxe identity for Lover is supported by the frozen Billboard account of its four collectible deluxe CDs and widely available standard format contributing to one album entry.",
+        "bond_settled": true,
+        "challenger": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "deadline": 1792024459,
+        "fallback": false,
+        "ground": "EDITION_RULE",
+        "id": "upheld-identity",
+        "market_id": "lover-identity-review",
+        "options": [
+          {
+            "album": 0,
+            "field": "identity_rule",
+            "id": "edition:0:STANDARD_ONLY",
+            "label": "STANDARD_ONLY",
+            "value": "standard_only"
+          }
+        ],
+        "release_url": "",
+        "ruling": {
+          "evidence_quote": "{\"aliases\":[],\"artist\":\"Taylor Swift\",\"chart_week\":\"2019-09-07\",\"identity_rule\":\"combined_standard_deluxe\",\"title\":\"Lover\"}",
+          "option": null,
+          "reason": "The frozen Billboard passage explicitly treats the four collectible deluxe CDs, standard CD, and digital album as parts of the same album’s first-week performance, supporting the proposed combined standard/deluxe identity for this entry.",
+          "release_digest": null,
+          "release_url": null,
+          "rule_quote": "Aiding Lover’s first week: the set’s release in four collectible deluxe CD editions at Target, as well as dozens of merchandise/digital album bundles sold through Swift’s official website. The album also had a standard CD edition that was available widely at retail, along with an equivalent digital album that was available via all digital retailers.",
+          "rules_digest": "73b700456c70d804fcc35ebe7cc987c47113eef0673f4c88ce9180c9437448af",
+          "rules_url": "https://web.archive.org/web/20211010140829id_/https://www.billboard.com/articles/business/chart-beat/8528870/taylor-swift-lover-album-debuts-at-no-1-on-billboard-200-chart/",
+          "status": "ruled",
+          "verdict": "UPHELD"
+        },
+        "source_hash": "6abea85eb65421c8554b66c0317cdc571135be7eef7a51f74f2d5724b9746654",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Taylor Swift",
+              "chart_week": "2019-09-07",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Lover"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1792060286,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1567814400,
+          "ranking_mode": "debut",
+          "resolution_deadline": 1792103486,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 2
+        },
+        "status": "finalized"
+      },
+      "market": {
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "evidence": null,
+        "histogram": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "participants": [],
+        "question": "Where did Lover by Taylor Swift debut on the Billboard 200 chart dated September 7, 2019? Count all standard and deluxe editions together under the standard album entry.",
+        "rejection_reason": "",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Taylor Swift",
+              "chart_week": "2019-09-07",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Lover"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1792060286,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1567814400,
+          "ranking_mode": "debut",
+          "resolution_deadline": 1792103486,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 2
+        },
+        "specification_hash": "6abea85eb65421c8554b66c0317cdc571135be7eef7a51f74f2d5724b9746654",
+        "status": "open",
+        "winner": null
+      }
+    },
+    {
+      "key": "amended",
+      "id": "surrender-chart-week-review",
+      "verdict": "AMENDED",
+      "case": {
+        "argument": "The archived release evidence says July 29, 2022. The proposed August 6 chart week ignores the lag between the Friday-to-Thursday sales tracking period and the dated Billboard chart. Choose the correct provided week if the frozen rule supports it.",
+        "bond_settled": true,
+        "challenger": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "deadline": 1792024804,
+        "fallback": false,
+        "ground": "WRONG_CHART_WEEK",
+        "id": "amended-identity",
+        "market_id": "surrender-chart-week-review",
+        "options": [
+          {
+            "album": 0,
+            "field": "chart_week",
+            "id": "week:0:2022-07-23",
+            "label": "2022-07-23",
+            "value": "2022-07-23"
+          },
+          {
+            "album": 0,
+            "field": "chart_week",
+            "id": "week:0:2022-07-30",
+            "label": "2022-07-30",
+            "value": "2022-07-30"
+          },
+          {
+            "album": 0,
+            "field": "chart_week",
+            "id": "week:0:2022-08-13",
+            "label": "2022-08-13",
+            "value": "2022-08-13"
+          },
+          {
+            "album": 0,
+            "field": "chart_week",
+            "id": "week:0:2022-08-20",
+            "label": "2022-08-20",
+            "value": "2022-08-20"
+          }
+        ],
+        "release_url": "https://en.wikipedia.org/w/index.php?title=Surrender_%28Maggie_Rogers_album%29&oldid=1308571311",
+        "ruling": {
+          "evidence_quote": "Surrender is the second studio album by American indie pop singer-songwriter Maggie Rogers, released on July 29, 2022, by Debay Sounds and Capitol Records. It follows the release of her debut studio album, Heard It in a Past Life (2019).",
+          "option": "week:0:2022-08-13",
+          "reason": "The archived evidence fixes a Friday release date. Under the frozen Billboard mapping, a Friday new release normally corresponds to the Saturday fifteen days later, so the proposed dated chart is too early. A matching provided candidate exists, so the field should be amended.",
+          "release_digest": "489644952f51cabeb2c40c5f64116794f3dc414caf17dcce83b60421da46f0a6",
+          "release_url": "https://en.wikipedia.org/w/index.php?title=Surrender_%28Maggie_Rogers_album%29&oldid=1308571311",
+          "rule_quote": "The Billboard 200 chart ranks the most popular albums of the week in the U.S. based on multi-metric consumption as measured in equivalent album units. Units are comprised of traditional album sales, track equivalent albums (TEA) and streaming equivalent albums (SEA). The new Sept. 7-dated chart (where Lover enters at No. 1) will be posted in full on Billboard's websites on Wednesday, Sept. 4 (one day later than usual, due to the Labor Day holiday in the U.S. on Sept. 2).",
+          "rules_digest": "73b700456c70d804fcc35ebe7cc987c47113eef0673f4c88ce9180c9437448af",
+          "rules_url": "https://web.archive.org/web/20211010140829id_/https://www.billboard.com/articles/business/chart-beat/8528870/taylor-swift-lover-album-debuts-at-no-1-on-billboard-200-chart/",
+          "status": "ruled",
+          "verdict": "AMENDED"
+        },
+        "source_hash": "85b7979288a3525dd39c6fe86a443b296846361e982bbfc38320b0ecca864d7a",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Maggie Rogers",
+              "chart_week": "2022-08-06",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Surrender"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1792060628,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1659744000,
+          "ranking_mode": "debut",
+          "resolution_deadline": 1792103828,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 2
+        },
+        "status": "finalized"
+      },
+      "market": {
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "evidence": null,
+        "histogram": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "participants": [],
+        "question": "Where did Surrender by Maggie Rogers debut on the Billboard 200 chart dated August 6, 2022?",
+        "rejection_reason": "",
+        "review_case": "amended-identity",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Maggie Rogers",
+              "chart_week": "2022-08-13",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Surrender"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1792060628,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1660348800,
+          "ranking_mode": "debut",
+          "resolution_deadline": 1792103828,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 2
+        },
+        "specification_hash": "81e5d988c3f02c2cb3d3bb52bf79d363963d6ac356b0e25338163a6343fafd8b",
+        "status": "open",
+        "winner": null
+      }
+    },
+    {
+      "key": "voided",
+      "id": "surrender-unrepairable-week-review",
+      "verdict": "VOIDED",
+      "case": {
+        "argument": "The proposed June 4 chart week precedes the actual July 29 release by almost two months. The correct debut week is outside every bounded amendment candidate. Check the archived release evidence and decide if this proposed market can be repaired.",
+        "bond_settled": true,
+        "challenger": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "deadline": 1792025606,
+        "fallback": false,
+        "ground": "WRONG_CHART_WEEK",
+        "id": "voided-identity",
+        "market_id": "surrender-unrepairable-week-review",
+        "options": [
+          {
+            "album": 0,
+            "field": "chart_week",
+            "id": "week:0:2022-05-21",
+            "label": "2022-05-21",
+            "value": "2022-05-21"
+          },
+          {
+            "album": 0,
+            "field": "chart_week",
+            "id": "week:0:2022-05-28",
+            "label": "2022-05-28",
+            "value": "2022-05-28"
+          },
+          {
+            "album": 0,
+            "field": "chart_week",
+            "id": "week:0:2022-06-11",
+            "label": "2022-06-11",
+            "value": "2022-06-11"
+          },
+          {
+            "album": 0,
+            "field": "chart_week",
+            "id": "week:0:2022-06-18",
+            "label": "2022-06-18",
+            "value": "2022-06-18"
+          }
+        ],
+        "release_url": "https://en.wikipedia.org/w/index.php?title=Surrender_%28Maggie_Rogers_album%29&oldid=1308571311",
+        "ruling": {
+          "evidence_quote": "Surrender is the second studio album by American indie pop singer-songwriter Maggie Rogers, released on July 29, 2022, by Debay Sounds and Capitol Records. It follows the release of her debut studio album, Heard It in a Past Life (2019).",
+          "option": null,
+          "reason": "The evidence says the album was released on July 29, 2022. Under the frozen Billboard example, a debut uses the release week’s tracking period and the subsequent chart date, so the debut chart week would fall well after the proposed date and outside all provided amendment options. Because no bounded option can repair the identity, it must be voided.",
+          "release_digest": "489644952f51cabeb2c40c5f64116794f3dc414caf17dcce83b60421da46f0a6",
+          "release_url": "https://en.wikipedia.org/w/index.php?title=Surrender_%28Maggie_Rogers_album%29&oldid=1308571311",
+          "rule_quote": "Biggest Overall Week for an Album Since Swift’s Last Album, reputation: As Lover starts with 867,000 equivalent album units earned, it logs the biggest single week for any album, in terms of units, since Swift’s last album, reputation. It debuted with 1.238 million equivalent album units earned in the week ending Nov. 16, 2017 (and bowed at No. 1 on the Billboard 200 chart dated Dec. 2 of that year).",
+          "rules_digest": "73b700456c70d804fcc35ebe7cc987c47113eef0673f4c88ce9180c9437448af",
+          "rules_url": "https://web.archive.org/web/20211010140829id_/https://www.billboard.com/articles/business/chart-beat/8528870/taylor-swift-lover-album-debuts-at-no-1-on-billboard-200-chart/",
+          "status": "ruled",
+          "verdict": "VOIDED"
+        },
+        "source_hash": "6cb5aee1eedf113e0e22e22617a93eaab9d0c204ca473df8736423a8573b20f3",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Maggie Rogers",
+              "chart_week": "2022-06-04",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Surrender"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1792061134,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1654300800,
+          "ranking_mode": "debut",
+          "resolution_deadline": 1792104334,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 2
+        },
+        "status": "finalized"
+      },
+      "market": {
+        "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "evidence": {
+          "challenge_id": "voided-identity",
+          "charts": [],
+          "matches": [],
+          "ruling": {
+            "evidence_quote": "Surrender is the second studio album by American indie pop singer-songwriter Maggie Rogers, released on July 29, 2022, by Debay Sounds and Capitol Records. It follows the release of her debut studio album, Heard It in a Past Life (2019).",
+            "option": null,
+            "reason": "The evidence says the album was released on July 29, 2022. Under the frozen Billboard example, a debut uses the release week’s tracking period and the subsequent chart date, so the debut chart week would fall well after the proposed date and outside all provided amendment options. Because no bounded option can repair the identity, it must be voided.",
+            "release_digest": "489644952f51cabeb2c40c5f64116794f3dc414caf17dcce83b60421da46f0a6",
+            "release_url": "https://en.wikipedia.org/w/index.php?title=Surrender_%28Maggie_Rogers_album%29&oldid=1308571311",
+            "rule_quote": "Biggest Overall Week for an Album Since Swift’s Last Album, reputation: As Lover starts with 867,000 equivalent album units earned, it logs the biggest single week for any album, in terms of units, since Swift’s last album, reputation. It debuted with 1.238 million equivalent album units earned in the week ending Nov. 16, 2017 (and bowed at No. 1 on the Billboard 200 chart dated Dec. 2 of that year).",
+            "rules_digest": "73b700456c70d804fcc35ebe7cc987c47113eef0673f4c88ce9180c9437448af",
+            "rules_url": "https://web.archive.org/web/20211010140829id_/https://www.billboard.com/articles/business/chart-beat/8528870/taylor-swift-lover-album-debuts-at-no-1-on-billboard-200-chart/",
+            "status": "ruled",
+            "verdict": "VOIDED"
+          },
+          "status": "identity_voided"
+        },
+        "histogram": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "participants": [],
+        "question": "Where did Surrender by Maggie Rogers debut on the Billboard 200 chart dated June 4, 2022?",
+        "rejection_reason": "",
+        "review_case": "voided-identity",
+        "spec": {
+          "albums": [
+            {
+              "aliases": [],
+              "artist": "Maggie Rogers",
+              "chart_week": "2022-06-04",
+              "identity_rule": "combined_standard_deluxe",
+              "title": "Surrender"
+            }
+          ],
+          "bins": [
+            {
+              "lower": 1,
+              "upper": 2
+            },
+            {
+              "lower": 2,
+              "upper": 6
+            },
+            {
+              "lower": 6,
+              "upper": 11
+            },
+            {
+              "lower": 11,
+              "upper": 51
+            },
+            {
+              "lower": 51,
+              "upper": 201
+            },
+            {
+              "lower": null,
+              "upper": null
+            }
+          ],
+          "entry_deadline": 1792061134,
+          "historical": true,
+          "market_type": "rank",
+          "missing_evidence": "pending until deadline then void",
+          "observation_time": 1654300800,
+          "ranking_mode": "debut",
+          "resolution_deadline": 1792104334,
+          "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+          "version": 2
+        },
+        "specification_hash": "6cb5aee1eedf113e0e22e22617a93eaab9d0c204ca473df8736423a8573b20f3",
+        "status": "void",
+        "winner": null
+      }
+    }
+  ],
+  "upcoming": [
+    {
+      "key": "andy",
+      "id": "big-stupid-heart-2026",
+      "chart": "2026-10-31",
+      "entryCutoff": 1792108800,
+      "resolutionDeadline": 1794614400,
+      "pool": "big-stupid-heart-2026-music-pool-1"
+    },
+    {
+      "key": "bernie",
+      "id": "the-sea-has-no-mercy-2026",
+      "chart": "2026-11-07",
+      "entryCutoff": 1792713600,
+      "resolutionDeadline": 1795219200,
+      "pool": "the-sea-has-no-mercy-2026-music-pool-2"
+    },
+    {
+      "key": "vanhalen",
+      "id": "a-different-kind-of-truth-reissue-2026",
+      "chart": "2026-11-07",
+      "entryCutoff": 1792713600,
+      "resolutionDeadline": 1795219200,
+      "pool": "a-different-kind-of-truth-reissue-2026-music-pool-5"
+    }
+  ],
+  "upcomingChallenge": {
+    "argument": "The actual October 23 physical reissue is the same 2012 album, not a newly debuted album. Check whether the archived Billboard treatment of standard and deluxe formats requires the combined album entry rather than a distinct physical-edition row.",
+    "bond_settled": true,
+    "challenger": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+    "creator": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+    "deadline": 1792026398,
+    "fallback": false,
+    "ground": "EDITION_RULE",
+    "id": "vanhalen-identity",
+    "market_id": "a-different-kind-of-truth-reissue-2026",
+    "options": [
+      {
+        "album": 0,
+        "field": "identity_rule",
+        "id": "edition:0:STANDARD_ONLY",
+        "label": "STANDARD_ONLY",
+        "value": "standard_only"
+      },
+      {
+        "album": 0,
+        "field": "identity_rule",
+        "id": "edition:0:MERGE_ALL_EDITIONS",
+        "label": "MERGE_ALL_EDITIONS",
+        "value": "combined_standard_deluxe"
+      }
+    ],
+    "release_url": "",
+    "ruling": {
+      "evidence_quote": "{\"aliases\":[\"A Different Kind of Truth (2026 physical reissue)\"],\"artist\":\"Van Halen\",\"chart_week\":\"2026-11-07\",\"identity_rule\":\"exact_edition\",\"title\":\"A Different Kind of Truth\"}",
+      "option": "edition:0:MERGE_ALL_EDITIONS",
+      "reason": "The proposed identity uses exact_edition, but the archived Billboard rule shows deluxe and standard editions are combined into one Billboard 200 entry (Lover's Target deluxe CDs, standard CD and digital all counted together). A 2026 physical reissue is not a distinct album. The correct fix is MERGE_ALL_EDITIONS.",
+      "release_digest": null,
+      "release_url": null,
+      "rule_quote": "Aiding Lover’s first week: the set’s release in four collectible deluxe CD editions at Target, as well as dozens of merchandise/digital album bundles sold through Swift’s official website. The album also had a standard CD edition that was available widely at retail, along with an equivalent digital album that was available via all digital retailers.",
+      "rules_digest": "73b700456c70d804fcc35ebe7cc987c47113eef0673f4c88ce9180c9437448af",
+      "rules_url": "https://web.archive.org/web/20211010140829id_/https://www.billboard.com/articles/business/chart-beat/8528870/taylor-swift-lover-album-debuts-at-no-1-on-billboard-200-chart/",
+      "status": "ruled",
+      "verdict": "AMENDED"
+    },
+    "source_hash": "e9f8e2217575e35dba040b6e24ac4666451ed63f3cf10d9ba6e11a3797217132",
+    "spec": {
+      "albums": [
+        {
+          "aliases": [
+            "A Different Kind of Truth (2026 physical reissue)"
+          ],
+          "artist": "Van Halen",
+          "chart_week": "2026-11-07",
+          "identity_rule": "exact_edition",
+          "title": "A Different Kind of Truth"
+        }
+      ],
+      "bins": [
+        {
+          "lower": 1,
+          "upper": 2
+        },
+        {
+          "lower": 2,
+          "upper": 6
+        },
+        {
+          "lower": 6,
+          "upper": 11
+        },
+        {
+          "lower": 11,
+          "upper": 51
+        },
+        {
+          "lower": 51,
+          "upper": 201
+        },
+        {
+          "lower": null,
+          "upper": null
+        }
+      ],
+      "entry_deadline": 1792713600,
+      "historical": false,
+      "market_type": "rank",
+      "missing_evidence": "pending until deadline then void",
+      "observation_time": 1794009600,
+      "ranking_mode": "chart_position",
+      "resolution_deadline": 1795219200,
+      "snapshot_policy": "earliest complete 200-row CDX capture after observation; first eight chronological candidates; immutable dated Billboard 200 URL",
+      "version": 2
+    },
+    "status": "finalized"
+  },
+  "season": {
+    "competitive": {
+      "average_closeness": null,
+      "best_streak": 0,
+      "entries": 0,
+      "hit_rate": null,
+      "hits": 0,
+      "points": 0,
+      "streak": 0
+    },
+    "historical": {
+      "average_closeness": 98,
+      "best_streak": 5,
+      "entries": 5,
+      "hit_rate": 100,
+      "hits": 5,
+      "points": 796,
+      "streak": 5
+    },
+    "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+    "results": [
+      {
+        "category": "music",
+        "closeness": 100,
+        "correct": true,
+        "entry_deadline": 1791817554,
+        "has_exact": true,
+        "historical": true,
+        "market_id": "renaissance-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 200,
+        "release": "previous",
+        "specification_hash": "880248bbc31f86e8e19c62de00673b8aea0e30774ea716058cf02b6ec06ae219",
+        "void": false
+      },
+      {
+        "category": "music",
+        "closeness": 100,
+        "correct": true,
+        "entry_deadline": 1791817805,
+        "has_exact": true,
+        "historical": true,
+        "market_id": "surrender-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 200,
+        "release": "previous",
+        "specification_hash": "6c271efa4c6b0f6576358e4b66948297efe39c87fb175fd38c1213725bc531fe",
+        "void": false
+      },
+      {
+        "category": "music",
+        "closeness": 0,
+        "correct": true,
+        "entry_deadline": 1791817992,
+        "has_exact": false,
+        "historical": true,
+        "market_id": "patina-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 100,
+        "release": "previous",
+        "specification_hash": "26ae0e2ac0aec3b257566a5f19ff69271a4e07739e69775fa9f9ee88652b8556",
+        "void": false
+      },
+      {
+        "category": "music",
+        "closeness": 0,
+        "correct": true,
+        "entry_deadline": 1791818206,
+        "has_exact": false,
+        "historical": true,
+        "market_id": "pairing-music-proof",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 100,
+        "release": "previous",
+        "specification_hash": "fdfbc614094a7d2376a2a6ca1d2a16853dfa122d87e3d926f44038412e702d5b",
+        "void": false
+      },
+      {
+        "category": "film",
+        "closeness": 96,
+        "correct": true,
+        "entry_deadline": 1790986872,
+        "has_exact": true,
+        "historical": true,
+        "market_id": "barbie-network-demo",
+        "participant": "0xdb433ff614bdd1ece21aa97221c3e0a7ecf79c92",
+        "points": 196,
+        "release": "current",
+        "specification_hash": "5f1d8209678dd12f54eadafed1dca03f4af9fb35e4e17bc0f21977b60a975d96",
+        "void": false
+      }
+    ]
+  },
+  "credit": {
+    "available": "0",
+    "withdrawal": {
+      "amount": 28000000000000000,
+      "attempt": 1,
+      "claim_hash": "0xae6294441d59ea3cea1d07cd684165fe4b5c38fb43ffe63d0ea523a7b2d7f9a7",
+      "status": "paid",
+      "transfer_hash": "0xa0fe43e2e07631006943310079e5ae38286eb653fb54779c900c11082e7bbed6"
+    }
+  },
+  "balance": "0",
+  "walletBalances": {
+    "beforePackage": "19996999999999999956",
+    "afterPackage": "19996999999999999956",
+    "deltaOutsidePackage": "0",
+    "note": "Exact deposited/paid ledger and finalized native transfers prove package returns. Other wallet activity is outside this package."
+  },
+  "retiredCandidateReturn": {
+    "verifiedAt": "2026-10-14T22:20:54.604Z",
+    "contractBalance": "0",
+    "totalDeposited": "15000000000000000",
+    "totalPaid": "15000000000000000",
+    "nativeTransfer": "0x90e88ea2a47d1dc1d1604c03bd1a7a167d87ed2384198006bcec52598d60e68c",
+    "walletBalanceIncreaseOutsidePackage": "8000000000000000000",
+    "balanceNote": "Before/after wallet balances include activity outside this proof package; exact package returns are established by the finalized native receipt and contract ledger."
+  },
+  "retainedFailedDeposit": {
+    "hash": "0x6031f959a68de3a7f6af83283ecbcafd9d68ea7a83810c7c0e5da3200ac6c569",
+    "amount": "0.004",
+    "recipient": "0x104Df79F8DBa6d0fC85F9108936795Bb905843C7",
+    "recoverable": false
+  }
+}

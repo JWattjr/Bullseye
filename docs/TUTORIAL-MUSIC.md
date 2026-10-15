@@ -1,5 +1,21 @@
 # From an album question to a verified chart result
 
+## Music+ pre-stake review
+
+Music+ adds bonded review to the existing Music implementation described below. Check [the current checkpoint](MUSICPLUS-WIP.md) and its dated manifest for actual deployment status. The original release remains accessible at `/music/previous`; its past entries and native payouts are preserved.
+
+The new proposal form signs `list_market` on Challenges with a 0.004 simulated StudioNet GEN listing deposit. Validators compile the exact question, then activate the review window after finality. The app displays the compiled album, artist, Saturday chart date, edition policy and original proposal. The default review lasts 24 hours; the demonstration explicitly uses ten minutes. An entry cutoff must allow the full window plus one minute. Staking remains unavailable during review.
+
+During that window, open **Challenge this specification**, select a ground and explain the issue. Wrong album/artist and wrong chart week require frozen release evidence: an allowlisted Archive.org `id_` snapshot or a Wikipedia `oldid` revision. Live pages are rejected. Edition-rule and outcome-bin disputes can cite the exact compiled specification. Each ground can be used once; one unresolved challenge blocks another. The wallet signs an exact 0.001 GEN bond.
+
+Independent validators compare the frozen proposal with the archived Billboard reference and release evidence. They rerun the judgment, compare verdict and bounded option, and check retained quotations against their own fetches. UPHELD preserves the proposal. AMENDED applies only a code-generated week, edition policy or corrected-bin choice, then displays before/after specifications and both quotes. VOIDED permanently prevents staking and refunds all original deposits. Genuine uncertainty returns the bond; an expired decision is labelled a deadline fallback rather than a validator ruling.
+
+The window must finish and every challenge must finalize before the approved hash can open. Opening and GEN pool creation are permissionless zero-GEN operations, performed by the app or keeper. The ticket then accepts the existing 0.01–100 GEN range stakes. Upcoming album outcomes remain undecided; historical tests remain excluded from competitive rankings. Reissues use an explicit chart-position/re-entry mode rather than claiming a second debut.
+
+Unused listing credit unlocks when the reviewed market opens or its deadline expires. An amendment returns the bond plus a 0.001 GEN reward from the deposit; an upheld challenge assigns the bond to the creator. Void cases refund every original deposit. Choose **Collect review credit** and sign a zero-value withdrawal. A successful parent call is only a request: the app waits for independently verified native credit. A confirmed failed transfer restores the credit for retry. A failed payable entry can also recover an exact credited deposit through its finalized receipt, without sending another deposit.
+
+Run `npm run settle:music -- MARKET_ID` from the repository to resume review and settlement maintenance. The journal retains submitted hashes; rerunning does not blindly resend them. Resolution begins at the frozen observation time, waits for complete archive evidence, and voids at the fixed deadline if evidence remains missing. Pool refunds are available one day later. Exact upcoming dates and commands are in the checkpoint. The owner uploads the recorded Music+ walkthrough and submits the Portal draft.
+
 Bullseye Music extends the Film programme with Billboard 200 album debut markets. It does not use Hot 100 song rankings. The app runs on StudioNet, chain 61999, whose native GEN is simulated development currency. Historical examples disclose that their outcomes are already public and contribute to exhibition standings rather than competitive rankings. This tutorial follows the actual implementation in `contracts/music_market_logic.py`, the generated standalone `music_markets.py`, `music_rows.py`, `music_pools.py`, and `seasons.py`.
 
 ## Write a question, then review the compilation

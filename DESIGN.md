@@ -1,6 +1,6 @@
 ---
 name: Bullseye
-description: A film-festival programme for free opening-weekend forecasting.
+description: A film-festival programme for Film and Music forecasting with simulated GEN and free points.
 colors:
   paper: "#f5f2e9"
   ink: "#24261f"
@@ -77,6 +77,24 @@ typography:
     fontFamily: "'Bebas Neue', sans-serif"
     fontSize: "4.5rem"
     lineHeight: "1"
+  music-section:
+    fontFamily: "'Bebas Neue', sans-serif"
+    fontSize: "2rem"
+  music-review-summary:
+    fontFamily: "'Bebas Neue', sans-serif"
+    fontSize: "1.5rem"
+  music-subheading:
+    fontFamily: "'DM Sans', sans-serif"
+    fontSize: "1rem"
+  music-support:
+    fontFamily: "'DM Sans', sans-serif"
+    fontSize: ".8rem"
+  music-caption:
+    fontFamily: "'DM Sans', sans-serif"
+    fontSize: ".78rem"
+  music-compact-section:
+    fontFamily: "'Bebas Neue', sans-serif"
+    fontSize: "1.7rem"
 rounded:
   tag: "3px"
   interval: "4px"
@@ -225,6 +243,7 @@ Both fonts are self-hosted through @fontsource. Bebas Neue is loaded at regular 
 - **Body**: regular DM Sans provides the base reading rhythm. Paragraphs have a maximum measure of 70ch. Introductory copy uses 17px on desktop and 14px on mobile; evidence passages use 16px and 14px.
 - **Action**: bold DM Sans labels distinguish buttons and orange text actions from reading copy.
 - **Label**: tags use compact bold uppercase labels. Supporting metadata generally ranges from 10px to 13px on desktop and 9px to 11px on mobile.
+- **Music review**: the shared music-section, music-review-summary, music-subheading, music-support, music-caption and music-compact-section roles record reused sizes from the Music stylesheets. Identity-review summary headings use music-review-summary at both widths; the later disclosure selector overrides the earlier review heading declarations, including the mobile 1.6rem declaration. Review arguments and quotations use .88rem, quotations use 1.7 line height, form labels use .85rem, and explanatory captions use music-caption. These are scoped Music reading roles, not a replacement Film ramp.
 - **Record**: code uses the browser monospace family at 12px, stepping to 10px on mobile; long hashes and URLs wrap.
 
 **The Film Title Rule.** Reserve Bebas Neue for titles, brand lettering, artwork, and large results. Reading copy, range labels, and technical explanations use DM Sans or monospace.
@@ -311,11 +330,24 @@ The proposal form names album, artist and exact chart week, then local entry/res
 
 Combined season keeps Competitive and Historical exhibition as separate aria-pressed controls with ink-filled selected state. Profile values form four columns, then two on mobile; standings retain a compact five-column table and ruled category timelines. Empty standings are honest; personal free-points records and GEN pool positions have separate locations. Charts and counts never imply forecast probabilities.
 
+### Music+ identity review and collection
+
+Identity review is a native disclosure between result/context and the trade area. Fine top and bottom paper rules enclose it, with 28px vertical padding and 30px/38px top/bottom margins. At 760px it uses 24px padding and margins. The summary aligns a condensed heading and chevron across a 20px gap and a 44px minimum target; the chevron turns 180 degrees when open. It opens during compilation, compiled review, active challenge or available review credit. Cleared review is otherwise compact so the prediction task stays prominent.
+
+Rulings remain unboxed ruled articles with 24px top padding, 22px top margin and separate sans-serif ground headings. Verdict labels use Film Pink with Album Artwork Ink, 6px/10px padding and .8rem reading type. Frozen rule and evidence quotes sit on Light Paper at a maximum 75ch, wrap long evidence and use 1.7 line height. Definition lists pair 150px labels with flexible values, stacking at 760px. Mobile quotes use 16px padding. These reuse programme material rather than introducing a new visual identity.
+
+The challenge form is a second native disclosure with a 44px summary target and an orange underlined continuation. Its grid has 12px gaps, a maximum width of 650px and 20px top margin. Inputs, select and textarea use Light Paper, Paper Rule borders, 6px corners, 12px padding, orange caret and at least 44px height. The submit action becomes full width on mobile. Four named grounds, already-reviewed options, evidence requirements and bond/reward explanations remain explicit. Frozen references, quoted passages and bounded amendments belong to the review record; an expired deadline fallback explicitly says it is not a validator ruling.
+
+The preopening ticket says staking opens after identity review clears and keeps choices disabled through compilation, review and opening finality. A closed ticket promises the chart result after verification; only settled results direct visitors to existing archived chart evidence. Completed-review copy invites stakes only while the market is open and before its entry deadline. Demo review duration is disclosed separately from the 24-hour production default. The previous-release link keeps original Music results and payouts reachable.
+
+Review credit uses one shared status component on directory/proposal and within identity review. Positive available credit enables collection unless the wallet, transaction or nonterminal withdrawal is busy. A recorded withdrawal remains visible at zero available credit: pending verification stays locked, failed collection explains restored credit and offers Retry review collection, and paid status retains independently verified native GEN credit. Parent transaction finality alone is never styled as receipt of funds. A failed native child switches the receipt to the existing error surface; only a credited child receives the received label and check mark. Collected pool payouts are a separate ruled record, not review credit.
+
 ### Music documentation and reviewed boundary
 
-This extension is extracted from app/music.css, components/music-app.tsx and the twelve final desktop/mobile directory, result, proposal, season, ticket and pairing captures in .impeccable/review/music/. The finish-review.md disposition is **ship for the four scored fixes only**: mobile continuation, result hierarchy, authored secondary controls and pairing question truth. It does not certify the complete milestone, replacement-contract proof, deployment or Portal readiness.
+Music+ is recorded from app/music.css, app/music-review.css, components/music-app.tsx, components/music-review.tsx, components/music-credit.tsx and lib/use-music.ts. The earlier Music review in .impeccable/review/music remains historical evidence for its own four scored fixes. Music+ finish-review.md and verdict.md live in .impeccable/review/musicplus. The final verdict is **ship for the two scored fixes only**: failed native-transfer/persistent review-withdrawal states, and preopening versus closed/result copy. It does not certify the whole surface, contract correctness, engineering proofs, production deployment, video or Portal readiness.
 
-Directory/result/season captures record actual StudioNet reads from an unfunded candidate now superseded. Ticket/pairing captures and SDK transaction-flow checks use controlled transport. The rasters document visual hierarchy and labels, not wallet transfers, funded pool settlement, native collection credit or current replacement-contract behavior. Full-page screenshots cannot establish focus movement; that continuation rule is supported by sampled source and the parent's passing browser report. No additional browser, detector or review pass forms part of this merge.
+Round-2 captures in .impeccable/review/musicplus/round-2 contain desktop/mobile directory, live, amended, voided, proposal, previous, paid and season surfaces, plus ten controlled affected-state captures: preopening, closed, pending-credit, retry-credit and paid-credit at each width. Actual route captures record actual reads; controlled captures and assertions establish state presentation without broadcasting or proving a new native transfer or validator ruling. Source establishes polling, status persistence and locking; screenshots alone cannot establish those behaviors. No new browser, detector or review pass forms part of this documentation merge. The supplied detector's font-size findings remain advisory; recurring implemented roles are recorded above, and superseded declarations do not become tokens merely to clear a finding.
+
 ## Do's and Don'ts
 
 ### Do:

@@ -57,3 +57,23 @@ Recorded owner demo: https://youtu.be/IUI4EQOu00M. The October 9 recovery correc
 | 1:40–2:00 | Open Season, choose Historical exhibition, connect the proof wallet or show the recorded standing. | Existing Film plus finalized Music free predictions, points/closeness/streaks, separate competitive table. |
 
 The update draft is `docs/submission/milestone-music.json`; only the owner submits it. The existing YouTube video is a Film demonstration and does not establish this new Music flow. Record an updated walkthrough with this script if the Portal asks for a new video. The live proof manifest is the source of truth for completion; missing funded proof must remain disclosed.
+
+## Music+ production recording
+
+The recorder is `scripts/record-musicplus-demo.ts`. Run `npx tsx scripts/record-musicplus-demo.ts` only after production serves the final verified registry, the bonded amendment is finalized and the upcoming GEN pool is open. It refuses a different deployed Challenges address. It uses Playwright at 1440×900 against production, without an injected wallet or mocked network. The recording has not been completed while those release gates remain open.
+
+Matching captions/narration:
+
+| Chapter | Narration | Planned seconds |
+|---|---|---|
+| Music directory | Real upcoming albums have unknown outcomes. All GEN here is simulated StudioNet currency. | 10 |
+| Upcoming ticket | Choose a chart range and stake GEN. This upcoming result has not been settled. | 10 |
+| Proposal | A plain-English question starts compilation. This exact proposal was compiled earlier; the recording sends no new deposit. | 11 |
+| Actual compiled spec | The finalized specification freezes the album, chart week, entry cutoff and outcomes. | 11 |
+| Identity challenge | A bonded challenge corrected the wrong chart week with a code-generated option. Independent validators checked both frozen sources. | 12 |
+| Quoted evidence | The ruling retains exact rule and release quotations. The approved week is August 13, 2022. | 12 |
+| Previous historical result | Renaissance resolved #1 from an archived complete 200-row chart, with its matched row and snapshot. | 12 |
+| Verified pool claim | The existing 0.01 GEN claim was collected. Its finalized claim and credited native transfer are linked; no new claim is broadcast. | 12 |
+| Film + Music season | Both categories share a season. Known historical results stay separate from competitive forecasts. | 12 |
+
+The recorder removes loading intervals by cutting actual recorded video into these chapters, writes `docs/media/bullseye-musicplus-2026-10-14.webm` and a recording metadata JSON, and checks the actual output resolution and duration below 150 seconds. It does not substitute still images or fabricate transactions. Inspect the resulting recording before delivery. The owner uploads it to YouTube and replaces `OWNER_UPLOAD_NEW_MUSICPLUS_VIDEO` in the Portal draft; the earlier Film YouTube link is preserved only as prior-release evidence. Never submit the Portal automatically.

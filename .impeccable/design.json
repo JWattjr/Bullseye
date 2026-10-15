@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-12T10:42:56Z",
+  "generatedAt": "2026-10-15T09:05:19.155012Z",
   "title": "Design System: Bullseye",
   "extensions": {
     "colorMeta": {
@@ -527,6 +527,30 @@
       "music-result-rank": {
         "displayName": "Observed Chart Rank",
         "purpose": "Archived result emphasis; 3.5rem on mobile."
+      },
+      "music-section": {
+        "displayName": "Music Section",
+        "purpose": "Shared Music result/empty headings; condensed section size, overridden by the compact review disclosure heading."
+      },
+      "music-review-summary": {
+        "displayName": "Identity Review Summary",
+        "purpose": "Native identity-review disclosure heading at both desktop and mobile widths."
+      },
+      "music-subheading": {
+        "displayName": "Music Reading Subheading",
+        "purpose": "DM Sans ruling-ground headings and mobile market questions."
+      },
+      "music-support": {
+        "displayName": "Music Supporting Copy",
+        "purpose": "Shared Music ticket, rules, sources and verdict text."
+      },
+      "music-caption": {
+        "displayName": "Music Caption",
+        "purpose": "Review captions and challenge-form explanations; supporting context, never the sole action label."
+      },
+      "music-compact-section": {
+        "displayName": "Compact Music Section",
+        "purpose": "Collected-payout record heading and mobile chart-result heading."
       }
     },
     "shadows": [],
@@ -577,25 +601,43 @@
     "musicDocumentation": {
       "sourceFiles": [
         "app/music.css",
-        "components/music-app.tsx"
+        "app/music-review.css",
+        "components/music-app.tsx",
+        "components/music-review.tsx",
+        "components/music-credit.tsx",
+        "lib/use-music.ts"
       ],
       "captures": [
         "desktop-directory",
-        "mobile-directory",
-        "desktop-result",
-        "mobile-result",
+        "desktop-live",
+        "desktop-amended",
+        "desktop-voided",
         "desktop-proposal",
-        "mobile-proposal",
+        "desktop-previous",
+        "desktop-paid",
         "desktop-season",
+        "mobile-directory",
+        "mobile-live",
+        "mobile-amended",
+        "mobile-voided",
+        "mobile-proposal",
+        "mobile-previous",
+        "mobile-paid",
         "mobile-season",
-        "desktop-ticket",
-        "mobile-ticket",
-        "desktop-pairing",
-        "mobile-pairing"
+        "desktop-controlled-preopening",
+        "desktop-controlled-closed",
+        "desktop-controlled-pending-credit",
+        "desktop-controlled-retry-credit",
+        "desktop-controlled-paid-credit",
+        "mobile-controlled-preopening",
+        "mobile-controlled-closed",
+        "mobile-controlled-pending-credit",
+        "mobile-controlled-retry-credit",
+        "mobile-controlled-paid-credit"
       ],
-      "captureDirectory": ".impeccable/review/music",
-      "review": "ship for four scored fixes only",
-      "limits": "Directory/result/season: actual reads from an unfunded now-superseded StudioNet candidate. Ticket/pairing: controlled transport. Not proof of wallet transfers, funded pool settlement, native credit, replacement-contract behavior, deployment or Portal readiness. No new review/browser/detector pass."
+      "captureDirectory": ".impeccable/review/musicplus/round-2",
+      "review": "ship for two scored fixes only; both resolved (.impeccable/review/musicplus/verdict.md)",
+      "limits": "Actual route captures record actual reads. Ten controlled affected-state captures establish presentation without broadcast, new native transfers or new validator judgments. Source grounds persistence, polling and collection locks. Not whole-surface approval, contract correctness, live proof, deployment, video, Portal or milestone readiness. Earlier Music review remains historical evidence in .impeccable/review/music. No fresh browser, detector or review pass."
     }
   },
   "components": [
@@ -698,11 +740,18 @@
       "description": "Decorative original letter/title study; adjoining text supplies album identity.",
       "html": "<div class=\"ds-album-art\" aria-hidden=\"true\"><span class=\"ds-album-letter\">R</span><span class=\"ds-album-title\">Renaissance</span><span class=\"ds-album-artist\">Beyoncé</span></div>",
       "css": ".ds-album-art{background:var(--pink,#eed5dc);color:#61333e;aspect-ratio:1;width:230px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:18px}.ds-album-letter{font-family:\"Bebas Neue\",sans-serif;font-size:12rem;line-height:.86;position:absolute;top:6px;left:12px;color:#824455;user-select:none}.ds-album-title,.ds-album-artist{position:relative;background:var(--pink,#eed5dc);width:fit-content;max-width:100%;overflow-wrap:anywhere}.ds-album-title{font-family:\"Bebas Neue\",sans-serif;font-size:1.7rem;line-height:1.05;margin:0 0 5px}.ds-album-artist{font-family:\"DM Sans\",sans-serif;font-size:.7rem}"
+    },
+    {
+      "name": "Music Identity Review",
+      "kind": "custom",
+      "description": "Native ruled disclosure with frozen rule/evidence passages and persistent pending review-withdrawal status. This example represents verification at zero available credit, so it has no collect action.",
+      "html": "<section class=\"ds-music-review\"><details open><summary><h2>Identity review complete</h2><svg aria-hidden=\"true\" width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"m6 9 6 6 6-6\"/></svg></summary><p>The review window cleared. The approved frozen specification is recorded below.</p><p><a href=\"#\">Frozen Billboard rules reference</a></p><article><h3>Edition rule</h3><strong class=\"ds-review-verdict\">AMENDED</strong><h4>Quoted rule</h4><blockquote>Frozen evidence is recorded here.</blockquote></article><section class=\"ds-review-credit\" aria-label=\"Review credit\"><p role=\"status\">Review withdrawal: pending · 0.005 GEN. Native transfer verification is in progress. Wait before collecting again.</p></section></details></section>",
+      "css": ".ds-music-review{font-family:\"DM Sans\",sans-serif;color:var(--ink,#24261f);border-top:1px solid var(--line,#d3d0c5);border-bottom:1px solid var(--line,#d3d0c5);padding:28px 0;margin:30px 0 38px}.ds-music-review summary{display:flex;align-items:center;justify-content:space-between;gap:20px;cursor:pointer;min-height:44px;list-style:none}.ds-music-review summary::-webkit-details-marker{display:none}.ds-music-review summary h2{font-family:\"Bebas Neue\",sans-serif;font-size:1.5rem;font-weight:400;margin:0}.ds-music-review details[open]>summary{margin-bottom:18px}.ds-music-review details[open]>summary svg{transform:rotate(180deg)}.ds-music-review p{font-size:.88rem;line-height:1.65;max-width:72ch}.ds-music-review a{color:#ad3817;text-underline-offset:4px}.ds-music-review article{padding:24px 0;border-top:1px solid var(--line,#d3d0c5);margin-top:22px}.ds-music-review h3{font-family:\"DM Sans\",sans-serif;font-size:1rem;margin:0 0 12px}.ds-music-review h4{font-size:.8rem;margin:22px 0 6px}.ds-review-verdict{display:inline-block;color:#61333e;background:var(--pink,#eed5dc);padding:6px 10px;font-size:.8rem;margin:8px 0 0}.ds-music-review blockquote{margin:8px 0 18px;background:var(--white,#fffdf7);font-size:.88rem;line-height:1.7;max-width:75ch;overflow-wrap:anywhere}.ds-review-credit{margin-top:24px}.ds-music-review :focus-visible{outline:2px solid #ad3817;outline-offset:4px}.ds-music-review a:hover{color:#ad3817}@media(max-width:760px){.ds-music-review{margin:24px 0;padding:24px 0}.ds-music-review blockquote{padding:16px}}"
     }
   ],
   "narrative": {
     "northStar": "The Film-Festival Programme",
-    "overview": "Bullseye feels like a warm printed programme made interactive: condensed film titles, quietly ruled schedules, aligned numerical intervals, and an orange mark that points to the next call. The paper surface supports reading and evidence; original typographic film art gives the programme its cinema character.\r\n\r\nThe system combines expressive headlines with restrained controls and plain language. Its bullseye geometry is limited to branding, the title band, original artwork, and small status icons. Honest empty states, practice labels, pending receipts, and disclosed evidence belong to this world as naturally as successful predictions.\r\n\r\nMusic extends this existing programme to album debuts and chart calls. It retains the same warm canvas, condensed titles, orange actions, original type artwork and ruled reading surfaces; chart ranks and named album pairings provide the new subject matter. The Film identity and its existing rules remain authoritative for Film.",
+    "overview": "Bullseye feels like a warm printed programme made interactive: condensed film titles, quietly ruled schedules, aligned numerical intervals, and an orange mark that points to the next call. The paper surface supports reading and evidence; original typographic film art gives the programme its cinema character.\n\nThe system combines expressive headlines with restrained controls and plain language. Its bullseye geometry is limited to branding, the title band, original artwork, and small status icons. Honest empty states, practice labels, pending receipts, and disclosed evidence belong to this world as naturally as successful predictions.\n\nMusic extends this existing programme to album debuts and chart calls. It retains the same warm canvas, condensed titles, orange actions, original type artwork and ruled reading surfaces; chart ranks and named album pairings provide the new subject matter. The Film identity and its existing rules remain authoritative for Film.",
     "keyCharacteristics": [
       "Warm paper and dark ink with a vivid orange action accent.",
       "Self-hosted condensed display type paired with readable sans-serif text.",

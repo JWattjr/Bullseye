@@ -1,0 +1,25 @@
+WARNING: File `gltest.config.yaml` not found in the current directory, using default config, create a `gltest.config.yaml` file to manage multiple networks
+INFO: Clearing artifacts directory: artifacts\gltest
+INFO: Using the following configuration:
+INFO:   RPC URL: http://127.0.0.1:4000/api
+INFO:   Selected Network: localnet
+INFO:   Available networks: ['localnet', 'studionet', 'testnet_asimov', 'testnet_bradbury']
+INFO:   Selected chain type: localnet
+INFO:   Available chains: localnet, studionet, testnet_asimov, testnet_bradbury
+INFO:   Contracts directory: contracts
+INFO:   Artifacts directory: artifacts\gltest
+INFO:   Environment: .env
+INFO:   Default wait interval: 3000 ms
+INFO:   Default wait retries: 50
+INFO:   Leader only mode: False
+........................................................................ [ 28%]
+........................................................................ [ 57%]
+........................................................................ [ 86%]
+..................................                                       [100%]
+============================== warnings summary ===============================
+..\..\..\AppData\Roaming\Python\Python314\site-packages\_pytest\cacheprovider.py:475
+  C:\Users\User\AppData\Roaming\Python\Python314\site-packages\_pytest\cacheprovider.py:475: PytestCacheWarning: could not create cache path C:\Users\User\Desktop\Genlayer apps\bullseye\.pytest_cache\v\cache\nodeids: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\User\\Desktop\\Genlayer apps\\bullseye\\.pytest_cache\\v\\cache'
+    config.cache.set("cache/nodeids", sorted(self.cached_nodeids))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+250 passed, 1 warning in 31.59s

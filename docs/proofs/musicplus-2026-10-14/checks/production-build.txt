@@ -1,0 +1,100 @@
+
+> bullseye@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+✓ Running next.config.ts took 75ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.1s
+  Running TypeScript ...
+  Finished TypeScript in 5.0s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/14) ...
+  Generating static pages using 11 workers (3/14)
+  Generating static pages using 11 workers (6/14)
+  Generating static pages using 11 workers (10/14)
+✓ Generating static pages using 11 workers (14/14) in 513ms
+  Finalizing page optimization ...
+Turbopack build encountered 2 warnings:
+./lib/music-server.ts:25:46
+Warning: Dynamic filesystem access causes tracing of the whole project
+  23 | ...se<MusicContracts> {
+  24 | ... () => {
+> 25 | ...(process.cwd(), previous ? 'public/music-previous-proof.json' : 'public/music-proof.jso...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  26 | ...y => /^0x[a-fA-F0-9]{40}$/.test(config.contracts?.[key] ?? ''))) throw Error('Music dep...
+  27 | ...
+  28 | ...
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.join(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./lib/music-server.ts
+    ./app/api/music/route.ts
+
+
+./lib/music-server.ts:59:104
+Warning: Dynamic filesystem access causes tracing of the whole project
+  57 | ...
+  58 | ...
+> 59 | ...in(process.cwd(), previous?'public/music-previous-proof.json':'public/music-proof.json'...
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  60 | ...
+  61 | ...payout receipt'];
+  62 | ...index) => {
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.join(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./lib/music-server.ts
+    ./app/api/music/route.ts
+
+
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/cron/settle
+├ ƒ /api/film-pools
+├ ƒ /api/league
+├ ƒ /api/live
+├ ƒ /api/music
+├ ƒ /api/pools
+├ ƒ /api/protocol
+├ ƒ /api/synthetic-evidence
+├ ƒ /api/wallet
+├ ○ /create
+├ ○ /league
+├ ○ /music
+├ ƒ /music/[id]
+├ ○ /music/previous
+├ ƒ /music/previous/[id]
+├ ○ /music/propose
+├ ○ /pools
+├ ○ /pools/rehearsal
+├ ○ /practice
+├ ○ /predictions
+├ ƒ /rounds/[id]
+├ ƒ /rounds/[id]/result
+└ ○ /season
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
