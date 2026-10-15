@@ -1,5 +1,7 @@
 # Hosted demonstration
 
+**Explorer-link correction — October 15, 2026:** Runtime source `3d90ab223ffc647dd7a3462e225f0ef22c9144c3` is now live as `dpl_BcEG5ca4aNVmR16cAmQXgo9TGMw5`, [immutable build](https://bullseye-genlayer-53m3eym8f-wattxs-projects.vercel.app). Contract evidence uses `explorer-studio.genlayer.com/address/`; transaction evidence uses `/tx/`. The Portal recognizes all four contracts. Typecheck, targeted ESLint, remote production build, protected registry/assets and actual public payout/contract links passed. The same staged production build was promoted. No contract replacement or funds broadcast occurred. See [correction verification](proofs/musicplus-2026-10-14/explorer-links.json). The original release checks below remain dated history.
+
 ## Music+ release — October 15, 2026
 
 Music+ is live at [the public Music directory](https://bullseye-genlayer.vercel.app/music), deployment `dpl_GRG7ydh4JspGCx2PJcGKJXhdYPYE`, [immutable deployment](https://bullseye-genlayer-og93ihzb6-wattxs-projects.vercel.app). The immutable deployment retains Vercel authentication; the public alias passed anonymously.

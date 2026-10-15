@@ -6,6 +6,8 @@ const proof=JSON.parse(await readFile(folder+'/manifest.json','utf8'));
 const verification=JSON.parse(await readFile(folder+'/verification.json','utf8'));
 const browser=JSON.parse(await readFile(folder+'/browser-live.json','utf8'));
 const release=JSON.parse(await readFile(folder+'/release-verification.json','utf8'));
+const explorerFix=JSON.parse(await readFile(folder+'/explorer-links.json','utf8'));
+assert.equal(explorerFix.status,'verified-production');
 const video=JSON.parse(await readFile('docs/media/bullseye-musicplus-2026-10-14.json','utf8'));
 assert.equal(verification.contracts.challenges,proof.contracts.challenges);assert.equal(browser.mockedNetwork,false);assert.equal(browser.walletInjected,false);
 assert.equal(browser.url,'https://bullseye-genlayer.vercel.app');assert.equal(release.status,'verified-production');
@@ -27,7 +29,7 @@ const draft={
  network:'StudioNet 61999. Native GEN is simulated development currency. No production-chain or real-money wagering claim.',
  contracts:Object.entries(roles).map(([role,[name,description]])=>({name,address:proof.contracts[role],description,explorer:explorer+'address/'+proof.contracts[role]})),
  liveUrl:'https://bullseye-genlayer.vercel.app/music',source:'https://github.com/JWattjr/Bullseye',sourceCommit:proof.sourceCommit,
- tutorial:repo+'docs/TUTORIAL-MUSIC.md',architecture:repo+'docs/ARCHITECTURE.md',proofManifest:repo+folder+'/manifest.json',verification:repo+folder+'/verification.json',appReleaseCommit:release.sourceCommit,deploymentVerification:repo+folder+'/release-verification.json',
+ tutorial:repo+'docs/TUTORIAL-MUSIC.md',architecture:repo+'docs/ARCHITECTURE.md',proofManifest:repo+folder+'/manifest.json',verification:repo+folder+'/verification.json',appReleaseCommit:explorerFix.sourceCommit,deploymentVerification:repo+folder+'/explorer-links.json',baseDeploymentVerification:repo+folder+'/release-verification.json',
  challengeProofs:verification.cases.map((item:{key:string;id:string;verdict:string;case:{fallback:boolean;ruling:{rule_quote:string;evidence_quote:string}}})=>{assert.equal(item.case.fallback,false);return {market:item.id,verdict:item.verdict,receipt:explorer+'tx/'+proof.markets[item.key].rulingTransaction,ruleQuote:item.case.ruling.rule_quote,evidenceQuote:item.case.ruling.evidence_quote};}),
  upcomingMarkets:verification.upcoming.map((item:{id:string;chart:string;entryCutoff?:number;resolutionDeadline?:number;pool:string|null;status?:string})=>({market:item.id,chartDate:item.chart,status:item.pool?'Open; undecided at verification':item.status,entryCutoff:item.entryCutoff?new Date(item.entryCutoff*1000).toISOString():undefined,resolutionDeadline:item.resolutionDeadline?new Date(item.resolutionDeadline*1000).toISOString():undefined,pool:item.pool})),
  settlement:'Run npm run settle:music -- big-stupid-heart-2026 at/after 2026-10-31 00:00 UTC; run it for the-sea-has-no-mercy-2026 and any open a-different-kind-of-truth-reissue-2026 at/after 2026-11-07 00:00 UTC. Retry until a complete eligible archive exists. Deadlines: November 14/21; pool refund bounds one day later. The zero-GEN keeper journals hashes for restart and recovers callbacks. It never signs deposits or claims. No daily scheduler is configured; a caller must run it.',

@@ -1,0 +1,61 @@
+{
+  "verifiedAt": "2026-10-15T15:18:03.305979+00:00",
+  "status": "verified-production",
+  "sourceCommit": "3d90ab223ffc647dd7a3462e225f0ef22c9144c3",
+  "deployment": {
+    "id": "dpl_BcEG5ca4aNVmR16cAmQXgo9TGMw5",
+    "url": "https://bullseye-genlayer-53m3eym8f-wattxs-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/wattxs-projects/bullseye-genlayer/BcEG5ca4aNVmR16cAmQXgo9TGMw5",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_BcEG5ca4aNVmR16cAmQXgo9TGMw5"
+  },
+  "change": "Correct public explorer URLs only; deployed contract bytes, addresses and settlement logic are unchanged.",
+  "routes": {
+    "contract": "https://explorer-studio.genlayer.com/address/<address>",
+    "transaction": "https://explorer-studio.genlayer.com/tx/<hash>"
+  },
+  "portal": {
+    "recognizedContractLinks": 4,
+    "formatErrors": false,
+    "notesCharacters": 990,
+    "evidence": [
+      "https://bullseye-genlayer.vercel.app/music",
+      "https://github.com/JWattjr/Bullseye/blob/main/docs/proofs/musicplus-2026-10-14/manifest.json",
+      "https://github.com/JWattjr/Bullseye/blob/main/docs/media/bullseye-musicplus-2026-10-14.webm",
+      "https://explorer-studio.genlayer.com/address/0xee03ebD002BfACFba5379Ab01F17572081a8E373",
+      "https://explorer-studio.genlayer.com/tx/0x4b10296527ae03c59cbe87a7b4b4cd69c94692705395cae0f9aae004eac19479",
+      "https://explorer-studio.genlayer.com/tx/0xac9ac7018e5e32009f4f50e809347b82a7859c7f78e9564f3ed4bd1bdd5fe550",
+      "https://explorer-studio.genlayer.com/tx/0x699ab346284c4b1455c2e489ef9954decca74b3a4226cfe84d161c6dffd38630",
+      "https://github.com/JWattjr/Bullseye/blob/main/docs/proofs/musicplus-2026-10-14/verification.json",
+      "https://explorer-studio.genlayer.com/address/0x51F0427e7D523FDC005B80b6758e48ACa2898833",
+      "https://explorer-studio.genlayer.com/address/0x190f37c4FeC9D3ECF1A0f900afed8d270A7E32aa",
+      "https://explorer-studio.genlayer.com/address/0x50Bfbd7BA19856E020455be55C2E669A9dad9f59"
+    ],
+    "submitted": false
+  },
+  "contractPages": [
+    "https://explorer-studio.genlayer.com/address/0xee03ebD002BfACFba5379Ab01F17572081a8E373",
+    "https://explorer-studio.genlayer.com/address/0x51F0427e7D523FDC005B80b6758e48ACa2898833",
+    "https://explorer-studio.genlayer.com/address/0x190f37c4FeC9D3ECF1A0f900afed8d270A7E32aa",
+    "https://explorer-studio.genlayer.com/address/0x50Bfbd7BA19856E020455be55C2E669A9dad9f59"
+  ],
+  "checks": {
+    "typecheck": "passed",
+    "targetedEslint": "passed",
+    "productionBuild": "passed",
+    "stagedRegistry": "matched all final roles",
+    "stagedPublishedAssets": "correct address/tx links present; old contracts/transactions links absent",
+    "publicBrowser": {
+      "verifiedAt": "2026-10-15T15:17:30.007Z",
+      "url": "https://bullseye-genlayer.vercel.app/music/previous/funded-music-proof",
+      "marketContract": "https://explorer-studio.genlayer.com/address/0xE5ec1394569C0E7770641F230Bb8aD9ddbc42177",
+      "nativeReceipt": "https://explorer-studio.genlayer.com/tx/0x0bc2af19984065e50c0391cd8e086443857a72fa72eb18419b4a73bca3787ecf",
+      "walletInjected": false,
+      "mockedNetwork": false
+    }
+  },
+  "baseReleaseVerification": "release-verification.json",
+  "fundsBroadcast": false,
+  "submitted": false
+}
