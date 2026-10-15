@@ -1,6 +1,6 @@
 # Music+ proof and release record — 14–15 October 2026
 
-This update is in progress and has not been submitted to the Portal. The production alias still serves the previous release until the new live proof and browser checks pass.
+Music+ is live on the public alias, with the read-only network verifier, protected staged checks and sixteen anonymous desktop/mobile production checks passed. It has not been submitted to the Portal. [Exact runtime archive and deployment](DEPLOYMENT.md) are recorded separately from immutable contract source.
 
 The default contract review window is 24 hours. This StudioNet demo explicitly uses 600 seconds (10 minutes), with a two-hour ruling deadline. Listing deposits are 0.004 simulated GEN, bonds 0.001 GEN, and an amendment reward 0.001 GEN. No monetary value is implied for StudioNet GEN.
 
@@ -73,4 +73,6 @@ npm run settle:music
 
 An observation date is the earliest settlement attempt, not a promise of immediate archive availability. Missing or ambiguous evidence stays pending until the fixed resolution deadline, then voids. Unresolved pools permit refunds one day later: 15 November or 22 November at 00:00 UTC. No daily scheduler or new server secret is configured. The owner must run the keeper, or another permissionless caller can execute it.
 
-Remaining completion gates: updated production, actual Playwright WebM, and final submission draft/documentation. The finish reviewer scored both material UI fixes resolved; the final actual desktop/mobile API matrix also passed. All three required bonded verdicts and the upcoming reissue's genuine edition amendment have finalized. The owner submits the Portal update and uploads the video.
+The implementation, production release, verification and submission pack are complete. The [actual Playwright recording](media/bullseye-musicplus-2026-10-14.webm) is 101.96 seconds at 1440×900. The [owner-copyable Portal draft](submission/milestone-music.json) is generated from actual verified receipts, with every text field at most 1000 characters. The finish reviewer scored both material UI fixes resolved; the final actual desktop/mobile production matrix passed. The owner uploads the video, replaces `OWNER_UPLOAD_NEW_MUSICPLUS_VIDEO`, and submits. No Portal submission was sent.
+
+Manifest market fields retain step snapshots from compilation, activation and ruling. The read-only `verification.json` re-reads final ruling, pool and paid-credit state; intermediate listing/bond flags are not a claim that funds remain reserved. Both the earlier 0.015 GEN package and the final 0.028 GEN package returned in full. The first candidate's separate 0.004 GEN failed-call loss remains unrecoverable and disclosed.

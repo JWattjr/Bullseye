@@ -1,5 +1,13 @@
 # Release verification
 
+## Music+ — October 15, 2026
+
+The [current dated verifier](proofs/musicplus-2026-10-14/verification.json) passed actual deployed source bytes and source-commit hashes, payable ABI, bindings, finality, genuine non-fallback UPHELD/AMENDED/VOIDED quotations, bounded amendment, three open future pools with unknown outcomes, the upcoming reissue's genuine edition amendment, five imported Film/Music entries and the complete 0.028 GEN native-credit/paid-ledger reconciliation. Remaining contract balance is zero. The retired candidate's 0.015 GEN return and first candidate's unrecoverable failed 0.004 GEN deposit are retained separately.
+
+Actual checks: 250 direct contract/parser/Film/Music regression tests; 31 app tests; GenVM lint/validation for all four pinned final contracts; TypeScript, ESLint and production build. [Check outputs](proofs/musicplus-2026-10-14/checks/) have trailing whitespace normalized only. [Controlled browser transport](proofs/musicplus-2026-10-14/browser-controlled.json) covers bonds, frozen evidence requirements, finality/reload locks, failed-deposit recovery, quoted amendments, callback recovery, missing-compilation expiry, delayed native credit, failed/retry/paid withdrawals and preopening/closed tickets at 1440×960 and 390×844. All provider sends and maintenance posts are intercepted in that fixture.
+
+[Actual production browser checks](proofs/musicplus-2026-10-14/browser-live.json) separately passed all sixteen route/viewport combinations with no injected wallet or mocked network. The final finish reviewer scored both material UI corrections resolved; that verdict covers the scored fixes, not protocol correctness. [Release verification](proofs/musicplus-2026-10-14/release-verification.json) records the exact source archive and promotion. `npm run verify:music` reruns previous and current read-only network checks; it never signs transactions.
+
 Payout recovery correction: October 9, 2026. Product: five upcoming GEN markets and three historical practice markets at [Bullseye](https://bullseye-genlayer.vercel.app), StudioNet 61999. [CLAIM-RECOVERY.md](CLAIM-RECOVERY.md) describes the new contracts, protocol assumptions, exact balances and immutable legacy deployments.
 
 ## Verification matrix

@@ -45,7 +45,7 @@ Unedited published-app captures; these are not wallet-transaction recordings:
 Recorded owner demo: https://youtu.be/IUI4EQOu00M. The October 9 recovery correction is documented separately in [CLAIM-RECOVERY.md](CLAIM-RECOVERY.md); the existing video does not establish that later failure test. Run the read-only recovery verifier and the controlled browser test linked there.
 
 
-## Music update: two-minute owner/reviewer script
+## Earlier Music v1 owner/reviewer script
 
 | Time | Action | Evidence |
 | --- | --- | --- |
@@ -56,15 +56,17 @@ Recorded owner demo: https://youtu.be/IUI4EQOu00M. The October 9 recovery correc
 | 1:20–1:40 | Show the dated music proof's stake, settlement and verified native claim receipts when complete. | 0.01 GEN owner-approved stake; successful parent alone is insufficient. No new broadcast required for review. |
 | 1:40–2:00 | Open Season, choose Historical exhibition, connect the proof wallet or show the recorded standing. | Existing Film plus finalized Music free predictions, points/closeness/streaks, separate competitive table. |
 
-The update draft is `docs/submission/milestone-music.json`; only the owner submits it. The existing YouTube video is a Film demonstration and does not establish this new Music flow. Record an updated walkthrough with this script if the Portal asks for a new video. The live proof manifest is the source of truth for completion; missing funded proof must remain disclosed.
+The update draft is `docs/submission/milestone-music.json`; only the owner submits it. The existing YouTube video is a Film demonstration and does not establish this new Music flow. The recorded Music+ walkthrough below replaces this earlier script for the current milestone. The live proof manifest is the source of truth for completion; missing funded proof must remain disclosed.
 
 ## Music+ production recording
 
-The recorder is `scripts/record-musicplus-demo.ts`. Run `npx tsx scripts/record-musicplus-demo.ts` only after production serves the final verified registry, the bonded amendment is finalized and the upcoming GEN pool is open. It refuses a different deployed Challenges address. It uses Playwright at 1440×900 against production, without an injected wallet or mocked network. The recording has not been completed while those release gates remain open.
+Recorded from the verified public app on 2026-10-15 using Playwright at 1440×900. The actual output is **101.96 seconds**, below the 150-second limit. No wallet was injected and no network response was mocked. The proposal demonstrates the exact previously compiled question, correct cutoffs and non-historical flag without sending another deposit. The pool chapter shows the actual earlier collected 0.01 GEN claim and native credit; it does not broadcast a new claim.
+
+[Watch/download the Music+ WebM](media/bullseye-musicplus-2026-10-14.webm) · [recording metadata and exact captions](media/bullseye-musicplus-2026-10-14.json). Recorder: `npx tsx scripts/record-musicplus-demo.ts`.
 
 Matching captions/narration:
 
-| Chapter | Narration | Planned seconds |
+| Chapter | Narration | Seconds |
 |---|---|---|
 | Music directory | Real upcoming albums have unknown outcomes. All GEN here is simulated StudioNet currency. | 10 |
 | Upcoming ticket | Choose a chart range and stake GEN. This upcoming result has not been settled. | 10 |
@@ -76,4 +78,4 @@ Matching captions/narration:
 | Verified pool claim | The existing 0.01 GEN claim was collected. Its finalized claim and credited native transfer are linked; no new claim is broadcast. | 12 |
 | Film + Music season | Both categories share a season. Known historical results stay separate from competitive forecasts. | 12 |
 
-The recorder removes loading intervals by cutting actual recorded video into these chapters, writes `docs/media/bullseye-musicplus-2026-10-14.webm` and a recording metadata JSON, and checks the actual output resolution and duration below 150 seconds. It does not substitute still images or fabricate transactions. Inspect the resulting recording before delivery. The owner uploads it to YouTube and replaces `OWNER_UPLOAD_NEW_MUSICPLUS_VIDEO` in the Portal draft; the earlier Film YouTube link is preserved only as prior-release evidence. Never submit the Portal automatically.
+The recorder removes loading intervals by cutting actual recorded video into these chapters, writes `docs/media/bullseye-musicplus-2026-10-14.webm` and a recording metadata JSON, and checks the actual output resolution and duration below 150 seconds. It does not substitute still images or fabricate transactions. The delivered recording metadata and representative chapter frames were checked. The owner uploads it to YouTube and replaces `OWNER_UPLOAD_NEW_MUSICPLUS_VIDEO` in the Portal draft; the earlier Film YouTube link is preserved only as prior-release evidence. Never submit the Portal automatically.

@@ -1,5 +1,17 @@
 # Hosted demonstration
 
+## Music+ release — October 15, 2026
+
+Music+ is live at [the public Music directory](https://bullseye-genlayer.vercel.app/music), deployment `dpl_GRG7ydh4JspGCx2PJcGKJXhdYPYE`, [immutable deployment](https://bullseye-genlayer-og93ihzb6-wattxs-projects.vercel.app). The immutable deployment retains Vercel authentication; the public alias passed anonymously.
+
+The exact runtime application source is Git commit `c630132a07b362a7f1211f2903525d50d1403005`, archived into `release-preview/musicplus-20261015-c630132`. The archive excludes private environments, managed wallet keys, local data and test caches. It reuses the existing `wattxs-projects/bullseye-genlayer` project (`prj_3JZjqLUBvWShEakPzXevI2HMLMsc`), Node 24, Next.js 16.3.8 and browser practice storage. Immutable GenVM contract source is pinned separately to `91ca4370a5b730ec3d059b783929a07333e71cbe` in the dated proof.
+
+The production build was staged with `vercel deploy --prod --skip-domain --yes --scope wattxs-projects`. Eight protected JSON checks passed before `vercel promote`: exact current roles, three undecided sources, bound GEN pool, actual AMENDED/VOIDED identities, the previous 0.01 GEN native payout, five-entry Film+Music exhibition and preserved Film. Promotion used that same build. All sixteen public Music browser checks then passed at 1440×960 and 390×844, with no injected wallet, mocked API or additional screenshots. Anonymous checks independently matched all four contract addresses and preserved Film state.
+
+[Staged checks](proofs/musicplus-2026-10-14/stage-verification.json), [promoted release verification](proofs/musicplus-2026-10-14/release-verification.json), [production browser report](proofs/musicplus-2026-10-14/browser-live.json), [read-only network verification](proofs/musicplus-2026-10-14/verification.json). Controlled wallet/error tests are labelled separately and never counted as live transfers. The final 0.028 GEN review package returned in full through exact finalized native credit; the retired first-candidate 0.004 GEN loss remains explicitly disclosed in the proof record.
+
+No new credential or daily Music scheduler was created. The resumable permissionless `npm run settle:music` command handles future observation dates and deterministic deadline/refund paths. The owner uploads the new Music+ walkthrough and submits the Portal update; no submission is sent automatically. Later documentation/video commits do not change this recorded runtime archive.
+
 ## Music milestone — October 12, 2026
 
 Music is promoted on [the public app](https://bullseye-genlayer.vercel.app/music), backed by deployment `dpl_GnsCP6gUthgPWMpciofEB4TPS1rM` at [its immutable URL](https://bullseye-genlayer-d1y1c2lyo-wattxs-projects.vercel.app). The immutable URL retains Vercel authentication; the public alias is checked anonymously.
